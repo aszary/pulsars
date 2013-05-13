@@ -6,9 +6,8 @@ admin.autodiscover()
 
 urlpatterns = patterns('',
     # Examples:
-    # url(r'^$', 'pulsars.views.home', name='home'),
-    # url(r'^pulsars/', include('pulsars.foo.urls')),
-    # url(r'^database/', include('database.urls')),
+    url(r'^$', 'pulsars.views.home', name='home'),
+    url(r'^database/', include('database.urls')),
 
     # Uncomment the admin/doc line below to enable admin documentation:
     # url(r'^admin/doc/', include('django.contrib.admindocs.urls')),

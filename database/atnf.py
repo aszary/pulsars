@@ -1,5 +1,7 @@
 __author__ = 'aszary'
 
+from decimal import Decimal
+
 from urllib import urlopen
 from django.core.exceptions import ObjectDoesNotExist
 from pulsars.settings import MEDIA_ROOT
@@ -93,7 +95,6 @@ def parse_page():
         # set pulsar parameters
         record_from_list(p, res)
         p.save()
-        break
 
 
 def record_from_list(p, res):
@@ -123,7 +124,10 @@ def record_from_list(p, res):
     p.RaJD = to_float(res[24])
     p.DecJD = to_float(res[25])
 
-    p.P0 = res[26]
+    try:
+        p.P0 = Decimal(res[26])
+    except:
+        p.P0 = Decimal('0')
     p.P0_err = to_float(res[27])
     p.P1 = to_float(res[28])
     p.P1_err = to_float(res[29])
@@ -207,6 +211,8 @@ def record_from_list(p, res):
 
 
 def to_float(str_):
+    if str_.startswith('nan'):
+        return 0.
     try:
         return float(str_)
     except ValueError:

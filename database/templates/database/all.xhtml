@@ -22,7 +22,7 @@
     <div class="tiles" style="width:800px;">
         <div class="tilerow">
             {% for psr in psrs %}
-                <div class="tile one limebg"><a href="{{ psr.id }}"><img src="{% static "database/images/psr.png" %}" /><p>{{ psr.Name }}</p></a></div>
+                <div class="tile one limebg"> <a href="/database/psrs/{{ psr.id }}"><img src="{% static "database/images/psr.png" %}" /><p>{{ psr.Name }}</p></a></div>
             {% endfor %}
         </div>
     </div>

@@ -1,0 +1,194 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html
+        PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+    <title>Pulsars with X-ray data</title>
+    {% load staticfiles %}
+    <link rel="stylesheet" type="text/css" href="{% static "database/css/table.css" %}" />
+</head>
+<body>
+
+ATNF DATABASE
+
+<table class='gridtable' width="100%" >
+    <tr align="center">
+        <th>Name</th>
+        <th>JName</th>
+        <th>RaJ</th>
+        <th>DecJ</th>
+        <th>PMRA</th>
+        <th>PMDec</th>
+        <th>PX</th>
+        <th>ELong</th>
+        <th>ELat</th>
+        <th>PMELong</th>
+        <th>PMELat</th>
+        <th>GL</th>
+        <th>GB</th>
+        <th>RaJD</th>
+        <th>DecJD</th>
+    </tr>
+    <tr align="center">
+        <td>{{psr.Name}}</td>
+        <td>{{psr.JName}}</td>
+        <td>{{psr.RaJ}}</td>
+        <td>{{psr.DecJ}}</td>
+        <td>{{psr.PMRA}}</td>
+        <td>{{psr.PMDec}}</td>
+        <td>{{psr.PX}}</td>
+        <td>{{psr.ELong}}</td>
+        <td>{{psr.ELat}}</td>
+        <td>{{psr.PMElong}}</td>
+        <td>{{psr.PMElat}}</td>
+        <td>{{psr.GL}}</td>
+        <td>{{psr.GB}}</td>
+        <td>{{psr.RaJD}}</td>
+        <td>{{psr.DecJD}}</td>
+    </tr>
+</table>
+
+<br />
+
+<table  class='gridtable'  width="100%">
+    <tr align="center">
+        <th>PO</th>
+        <th>P1</th>
+        <th>FO</th>
+        <th>F1</th>
+        <th>F2</th>
+        <th>F3</th>
+        <th>PEpoch</th>
+        <th>DM</th>
+        <th>DM1</th>
+        <th>RM</th>
+        <th>W50</th>
+        <th>W10</th>
+        <th>Tau_sc</th>
+        <th>S400</th>
+        <th>S1400</th>
+        <th>S2000</th>
+    </tr>
+    <tr align="center">
+        <td>{{psr.P0}}</td>
+        <td>{{psr.P1}}</td>
+        <td>{{psr.F0}}</td>
+        <td>{{psr.F1}}</td>
+        <td>{{psr.F2}}</td>
+        <td>{{psr.F3}}</td>
+        <td>{{psr.PEpoch}}</td>
+        <td>{{psr.DM}}</td>
+        <td>{{psr.DM1}}</td>
+        <td>{{psr.RM}}</td>
+        <td>{{psr.W50}}</td>
+        <td>{{psr.W10}}</td>
+        <td>{{psr.Tau_sc}}</td>
+        <td>{{psr.S400}}</td>
+        <td>{{psr.S1400}}</td>
+        <td>{{psr.S2000}}</td>
+    </tr>
+</table>
+
+<br />
+
+<table  class='gridtable'  width="100%">
+    <tr align="center">
+        <th>Binary</th>
+        <th>T0</th>
+        <th>PB</th>
+        <th>A1</th>
+        <th>OM</th>
+        <th>Ecc</th>
+        <th>Tasc</th>
+        <th>Eps1</th>
+        <th>Eps2</th>
+        <th>MinMass</th>
+        <th>MedMass</th>
+        <th>Dist</th>
+        <th>Dist_DM</th>
+        <th>DMsinb</th>
+        <th>ZZ</th>
+        <th>XX</th>
+        <th>YY</th>
+    </tr>
+    <tr align="center">
+        <td>{{psr.Binary}}</td>
+        <td>{{psr.T0}}</td>
+        <td>{{psr.PB}}</td>
+        <td>{{psr.A1}}</td>
+        <td>{{psr.OM}}</td>
+        <td>{{psr.ECC}}</td>
+        <td>{{psr.TASC}}</td>
+        <td>{{psr.Eps1}}</td>
+        <td>{{psr.Eps2}}</td>
+        <td>{{psr.MinMass}}</td>
+        <td>{{psr.MedMass}}</td>
+        <td>{{psr.Dist}}</td>
+        <td>{{psr.Dist_DM}}</td>
+        <td>{{psr.DMsinb}}</td>
+        <td>{{psr.ZZ}}</td>
+        <td>{{psr.XX}}</td>
+        <td>{{psr.YY}}</td>
+    </tr>
+</table>
+
+<br />
+
+<table  class='gridtable'  width="100%" >
+    <tr align="center">
+        <th>Assoc</th>
+        <th>Survey</th>
+        <th>OSurvey</th>
+        <th>Date</th>
+        <th>Type</th>
+        <th>NGlt</th>
+    </tr>
+    <tr align="center">
+        <td>{{psr.Assoc}}</td>
+        <td>{{psr.Survey}}</td>
+        <td>{{psr.OSurvey}}</td>
+        <td>{{psr.Date}}</td>
+        <td>{{psr.Type}}</td>
+        <td>{{psr.NGlt}}</td>
+    </tr>
+</table>
+
+<br />
+
+<table  class='gridtable'  width="100%" >
+    <tr align="center">
+        <th>R_lum</th>
+        <th>R_lum14</th>
+        <th>Age</th>
+        <th>Bsurf</th>
+        <th>Edot</th>
+        <th>Edotd2</th>
+        <th>PMtot</th>
+        <th>VTrans</th>
+        <th>P1_i</th>
+        <th>Age_i</th>
+        <th>Bsurf_i</th>
+        <th>B_LC</th>
+    </tr>
+    <tr align="center">
+        <td>{{psr.R_Lum}}</td>
+        <td>{{psr.R_Lum14}}</td>
+        <td>{{psr.Age|stringformat:".2e"}}</td>
+        <td>{{psr.BSurf|stringformat:".2e"}}</td>
+        <td>{{psr.Edot|stringformat:".2e"}}</td>
+        <td>{{psr.Edotd2|stringformat:".2e"}}</td>
+        <td>{{psr.PMTot}}</td>
+        <td>{{psr.VTrans}}</td>
+        <td>{{psr.P1_i}}</td>
+        <td>{{psr.Age_i|stringformat:".2e"}}</td>
+        <td>{{psr.BSurf_i|stringformat:".2e"}}</td>
+        <td>{{psr.B_LC|stringformat:".2e"}}</td>
+    </tr>
+</table>
+<br />
+Simbad link:
+<a href="{{psr.simbad_link}}">{{psr.name}}</a>
+
+</body>
+</html>

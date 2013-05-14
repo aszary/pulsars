@@ -16,8 +16,10 @@ def psrs(request, id=None):
     """ show all pulsars
     """
     if id != None:
-        pass
-        return HttpResponse('Not yet implemented...')
+        psr = Pulsar.objects.get(id=id)
+        template = loader.get_template('database/x-ray.xhtml')
+        c = Context({'psr':psr,})
+        return HttpResponse(template.render(c))
     else:
         psrs = Pulsar.objects.all()
         template = loader.get_template('database/all.xhtml')

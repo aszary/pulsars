@@ -6,7 +6,7 @@ class Pulsar(models.Model):
     """ using same notation (for attributes) as in ATNF database
     """
 
-    #values from ATNF
+    # data from ATNF
     Name = models.CharField(max_length=200, default='None', verbose_name=
                             'Pulsar name.  The B name if exists, otherwise'
                             'the J name')
@@ -240,3 +240,12 @@ class Pulsar(models.Model):
                                ' rate from P1_i (ergs/s)')
     B_LC = models.FloatField(default=0., verbose_name='Magnetic field at light'
                                                       ' cylinder')
+
+    # additional information
+    simbad_link = models.TextField(default="http://simbad.u-strasbg.fr",
+                                   verbose_name='Simbad database link')
+
+
+    def __unicode__(self):
+        result = "Name : %s   ID : %d   P0 : %s"%(self.name, self.id, self.p0)
+        return result

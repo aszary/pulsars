@@ -2,16 +2,13 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="791c5b0b-ef7c-48c3-878a-0bb95fb1bec9" name="Default" comment="">
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/pulsars.db" afterPath="$PROJECT_DIR$/pulsars.db" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/database/atnf.py" afterPath="$PROJECT_DIR$/database/atnf.py" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/database/models.py" afterPath="$PROJECT_DIR$/database/models.py" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
     </list>
     <ignored path="pulsars.iws" />
     <ignored path=".idea/workspace.xml" />
     <file path="/Dummy.txt" changelist="791c5b0b-ef7c-48c3-878a-0bb95fb1bec9" time="1368499978902" ignored="false" />
     <file path="/models.py" changelist="791c5b0b-ef7c-48c3-878a-0bb95fb1bec9" time="1368513988730" ignored="false" />
-    <file path="/atnf.py" changelist="791c5b0b-ef7c-48c3-878a-0bb95fb1bec9" time="1368514538105" ignored="false" />
+    <file path="/atnf.py" changelist="791c5b0b-ef7c-48c3-878a-0bb95fb1bec9" time="1368515312819" ignored="false" />
     <file path="/urls.py" changelist="791c5b0b-ef7c-48c3-878a-0bb95fb1bec9" time="1368502084148" ignored="false" />
     <file path="/admin.py" changelist="791c5b0b-ef7c-48c3-878a-0bb95fb1bec9" time="1368433812364" ignored="false" />
     <file path="/views.py" changelist="791c5b0b-ef7c-48c3-878a-0bb95fb1bec9" time="1368509619392" ignored="false" />
@@ -87,10 +84,21 @@
           </provider>
         </entry>
       </file>
+      <file leaf-file-name="models.py" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/../pulsar/data/models.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state line="383" column="0" selection-start="26350" selection-end="26350" vertical-scroll-proportion="0.0">
+              <folding>
+                <element signature="e#0#19#0" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
       <file leaf-file-name="atnf.py" pinned="false" current="true" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/database/atnf.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="88" column="31" selection-start="3783" selection-end="3783" vertical-scroll-proportion="0.58583105">
+            <state line="100" column="11" selection-start="4191" selection-end="4191" vertical-scroll-proportion="0.9019074">
               <folding>
                 <element signature="e#23#49#0" expanded="true" />
               </folding>
@@ -607,6 +615,22 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/database/models.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="142" column="57" selection-start="9802" selection-end="9802" vertical-scroll-proportion="0.0">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/../pulsar/data/models.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="383" column="0" selection-start="26350" selection-end="26350" vertical-scroll-proportion="0.0">
+          <folding>
+            <element signature="e#0#19#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/database/urls.py">
       <provider selected="true" editor-type-id="text-editor">
         <state line="9" column="54" selection-start="307" selection-end="307" vertical-scroll-proportion="0.0">
@@ -616,25 +640,9 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/../pulsar/data/models.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="323" column="0" selection-start="23832" selection-end="23832" vertical-scroll-proportion="0.52615386">
-          <folding>
-            <element signature="e#0#19#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/database/models.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="142" column="57" selection-start="9802" selection-end="9802" vertical-scroll-proportion="0.0">
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/database/atnf.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="88" column="31" selection-start="3783" selection-end="3783" vertical-scroll-proportion="0.58583105">
+        <state line="100" column="11" selection-start="4191" selection-end="4191" vertical-scroll-proportion="0.9019074">
           <folding>
             <element signature="e#23#49#0" expanded="true" />
           </folding>

@@ -77,18 +77,22 @@ def parse_page():
             # ATNF index
             nums.append(int(lines[i][:5]))
             line_ind.append(i)
-        except:
+        except ValueError:
             pass
-
     # parse records
-    for i in line_ind:
+    for ii, i in enumerate(line_ind):
         res = lines[i].split()
         try:
-            p = Pulsar.objects.get(id=int(res[0]))
+            p = Pulsar.objects.get(Name=res[1])
+            print 'ATNF Id = %d  Name = %s  (updating existing record...)' % (
+                nums[ii], res[1])
         except ObjectDoesNotExist:
-            p = Pulsar(id=int(res[0]))
+            p = Pulsar(Name=res[1])
+            print 'ATNF Id = %d  Name = %s  (creating new record...)' % (
+                nums[ii], res[1])
         # set pulsar parameters
         record_from_list(p, res)
+        #p.save()
         break
 
 
@@ -197,11 +201,9 @@ def record_from_list(p, res):
     p.Edot = res[94]
     p.Edotd2 = res[95]
     p.PMTot = res[96]
-    p.VTrans =  res[97]
+    p.VTrans = res[97]
     p.P1_i = res[98]
     p.Age_i = res[99]
     p.BSurf_i = res[100]
     p.Edot_i = res[101]
     p.B_LC = res[102]
-
-

@@ -92,7 +92,7 @@ def parse_page():
                 nums[ii], res[1])
         # set pulsar parameters
         record_from_list(p, res)
-        #p.save()
+        p.save()
         break
 
 
@@ -100,110 +100,121 @@ def record_from_list(p, res):
     p.Name = res[1]
     p.JName = res[2]
     p.RaJ = res[3]
-    p.RaJ_err = res[4]
+    p.RaJ_err = to_float(res[4])
     p.DecJ = res[5]
-    p.DecJ_err = res[6]
-    p.PMRA = res[7]
-    p.PMRA_err = res[8]
-    p.PMDec = res[9]
-    p.PMDec_err = res[10]
-    p.PX = res[11]
-    p.PX_err = res[12]
-    p.PosEpoch = res[13]
-    p.ELong = res[14]
-    p.ELong_err = res[15]
-    p.ELat = res[16]
-    p.ELat_err = res[17]
-    p.PMElong = res[18]
-    p.PMElong_err = res[19]
-    p.PMElat = res[20]
-    p.PMElat_err = res[21]
-    p.GL = res[22]
-    p.GB = res[23]
-    p.RaJD = res[24]
-    p.DecJD = res[25]
+    p.DecJ_err = to_float(res[6])
+    p.PMRA = to_float(res[7])
+    p.PMRA_err = to_float(res[8])
+    p.PMDec = to_float(res[9])
+    p.PMDec_err = to_float(res[10])
+    p.PX = to_float(res[11])
+    p.PX_err = to_float(res[12])
+    p.PosEpoch = to_float(res[13])
+    p.ELong = to_float(res[14])
+    p.ELong_err = to_float(res[15])
+    p.ELat = to_float(res[16])
+    p.ELat_err = to_float(res[17])
+    p.PMElong = to_float(res[18])
+    p.PMElong_err = to_float(res[19])
+    p.PMElat = to_float(res[20])
+    p.PMElat_err = to_float(res[21])
+    p.GL = to_float(res[22])
+    p.GB = to_float(res[23])
+    p.RaJD = to_float(res[24])
+    p.DecJD = to_float(res[25])
 
     p.P0 = res[26]
-    p.P0_err = res[27]
-    p.P1 = res[28]
-    p.P1_err = res[29]
-    p.F0 = res[30]
-    p.F0_err = res[31]
-    p.F1 = res[32]
-    p.F1_err = res[33]
-    p.F2 = res[34]
-    p.F2_err = res[35]
-    p.F3 = res[36]
-    p.F3_err = res[37]
-    p.PEpoch = res[38]
-    p.DM = res[39]
-    p.DM_err = res[40]
-    p.DM1 = res[41]
-    p.DM1_err = res[42]
-    p.RM = res[43]
-    p.RM_err = res[44]
-    p.W50 = res[45]
-    p.W50_err = res[46]
-    p.W10 = res[47]
-    p.W10_err = res[48]
+    p.P0_err = to_float(res[27])
+    p.P1 = to_float(res[28])
+    p.P1_err = to_float(res[29])
+    p.F0 = to_float(res[30])
+    p.F0_err = to_float(res[31])
+    p.F1 = to_float(res[32])
+    p.F1_err = to_float(res[33])
+    p.F2 = to_float(res[34])
+    p.F2_err = to_float(res[35])
+    p.F3 = to_float(res[36])
+    p.F3_err = to_float(res[37])
+    p.PEpoch = to_float(res[38])
+    p.DM = to_float(res[39])
+    p.DM_err = to_float(res[40])
+    p.DM1 = to_float(res[41])
+    p.DM1_err = to_float(res[42])
+    p.RM = to_float(res[43])
+    p.RM_err = to_float(res[44])
+    p.W50 = to_float(res[45])
+    p.W50_err = to_float(res[46])
+    p.W10 = to_float(res[47])
+    p.W10_err = to_float(res[48])
     p.Units = res[49]
-    p.Tau_sc = res[50]
-    p.Tau_sc_err = res[51]
-    p.S400 = res[52]
-    p.S400_err = res[53]
-    p.S1400 = res[54]
-    p.S1400_err = res[55]
-    p.S2000 = res[56]
-    p.S2000_err = res[57]
+    p.Tau_sc = to_float(res[50])
+    p.Tau_sc_err = to_float(res[51])
+    p.S400 = to_float(res[52])
+    p.S400_err = to_float(res[53])
+    p.S1400 = to_float(res[54])
+    p.S1400_err = to_float(res[55])
+    p.S2000 = to_float(res[56])
+    p.S2000_err = to_float(res[57])
 
     p.Binary = res[58]
-    p.T0 = res[59]
-    p.T0_err = res[60]
-    p.PB = res[61]
-    p.PB_err = res[62]
-    p.A1 = res[63]
-    p.A1_err = res[64]
-    p.OM = res[65]
-    p.OM_err = res[66]
-    p.ECC = res[67]
-    p.ECC_err = res[68]
-    p.TASC = res[69]
-    p.TASC_err = res[70]
-    p.Eps1 = res[71]
-    p.Eps1_err = res[72]
-    p.Eps2 = res[73]
-    p.Eps2_err = res[74]
-    p.MinMass = res[75]
-    p.MedMass = res[76]
+    p.T0 = to_float(res[59])
+    p.T0_err = to_float(res[60])
+    p.PB = to_float(res[61])
+    p.PB_err = to_float(res[62])
+    p.A1 = to_float(res[63])
+    p.A1_err = to_float(res[64])
+    p.OM = to_float(res[65])
+    p.OM_err = to_float(res[66])
+    p.ECC = to_float(res[67])
+    p.ECC_err = to_float(res[68])
+    p.TASC = to_float(res[69])
+    p.TASC_err = to_float(res[70])
+    p.Eps1 = to_float(res[71])
+    p.Eps1_err = to_float(res[72])
+    p.Eps2 = to_float(res[73])
+    p.Eps2_err = to_float(res[74])
+    p.MinMass = to_float(res[75])
+    p.MedMass = to_float(res[76])
     p.BinComp = res[77]
 
-    p.Dist = res[78]
-    p.Dist_DM = res[79]
-    p.DMsinb = res[80]
-    p.ZZ = res[81]
-    p.XX = res[82]
-    p.YY = res[83]
+    p.Dist = to_float(res[78])
+    p.Dist_DM = to_float(res[79])
+    p.DMsinb = to_float(res[80])
+    p.ZZ = to_float(res[81])
+    p.XX = to_float(res[82])
+    p.YY = to_float(res[83])
 
     p.Assoc = res[84]
     p.Survey = res[85]
     p.OSurvey = str(res[86])
-    p.Date = res[87]
+    p.Date = to_int(res[87])
     p.Type = res[88]
-    try:
-        p.NGlt = int(float(res[89]))
-    except ValueError:
-        p.NGlt = 0
+    p.NGlt = to_int(res[89])
 
-    p.R_Lum = res[90]
-    p.R_Lum14 = res[91]
-    p.Age = res[92]
-    p.BSurf = res[93]
-    p.Edot = res[94]
-    p.Edotd2 = res[95]
-    p.PMTot = res[96]
-    p.VTrans = res[97]
-    p.P1_i = res[98]
-    p.Age_i = res[99]
-    p.BSurf_i = res[100]
-    p.Edot_i = res[101]
-    p.B_LC = res[102]
+    p.R_Lum = to_float(res[90])
+    p.R_Lum14 = to_float(res[91])
+    p.Age = to_float(res[92])
+    p.BSurf = to_float(res[93])
+    p.Edot = to_float(res[94])
+    p.Edotd2 = to_float(res[95])
+    p.PMTot = to_float(res[96])
+    p.VTrans = to_float(res[97])
+    p.P1_i = to_float(res[98])
+    p.Age_i = to_float(res[99])
+    p.BSurf_i = to_float(res[100])
+    p.Edot_i = to_float(res[101])
+    p.B_LC = to_float(res[102])
+
+
+def to_float(str_):
+    try:
+        return float(str_)
+    except ValueError:
+        return 0.
+
+def to_int(str_):
+    try:
+        return int(str_)
+    except ValueError:
+        return 0
+

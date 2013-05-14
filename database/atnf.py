@@ -209,6 +209,10 @@ def record_from_list(p, res):
     p.Edot_i = to_float(res[101])
     p.B_LC = to_float(res[102])
 
+    p.simbad_link = "http://simbad.u-strasbg.fr/simbad/sim-id?Ident=PSR+" + \
+                    p.Name.replace("+", "%2B").replace("_", "+") + "&NbIdent" \
+                    "=1&Radius=2&Radius.unit=arcmin&submit=submit+id"
+
 
 def to_float(str_):
     if str_.startswith('nan'):
@@ -218,9 +222,9 @@ def to_float(str_):
     except ValueError:
         return 0.
 
+
 def to_int(str_):
     try:
         return int(str_)
     except ValueError:
         return 0
-

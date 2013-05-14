@@ -247,5 +247,5 @@ class Pulsar(models.Model):
 
 
     def __unicode__(self):
-        result = "Name : %s   ID : %d   P0 : %s"%(self.name, self.id, self.p0)
+        result = "%s   ID : %d   P0 : %s"%(self.Name, self.id, self.P0)
         return result

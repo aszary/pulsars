@@ -1,6 +1,6 @@
 # Create your views here.
 from django.http import HttpResponse
-from atnf import get_page
+from atnf import get_page, parse_page
 
 
 def index(request):
@@ -9,7 +9,7 @@ def index(request):
     return x_ray(request)
 
 
-def all(request):
+def all_(request):
     """ show all pulsars
     """
     output = 'All pulsars'
@@ -24,5 +24,13 @@ def x_ray(request):
 
 
 def get_atnf(request):
-    get_page()
-    return HttpResponse('ATNF data downloaded successfully..')
+    if False:
+        get_page()
+        return HttpResponse('ATNF data downloaded successfully..')
+    else:
+        return HttpResponse('ATNF download disabled! (check views.py)')
+
+
+def sync_atnf(request):
+    parse_page()
+    return HttpResponse('ATNF data sync successfully..')

@@ -208,7 +208,7 @@ class Pulsar(models.Model):
                                'eys that detected the pulsar encoded as bits '
                                'in integer')
     Date = models.IntegerField(default=0, verbose_name='Date of discovery'
-                                                      ' publication.')
+                                                       ' publication.')
     Type = models.CharField(max_length=200, default="0", verbose_name='Type '
                             'codes for the pulsar. Click here for available '
                             'types.')

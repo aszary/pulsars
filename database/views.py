@@ -1,5 +1,8 @@
 # Create your views here.
 from django.http import HttpResponse
+from django.template import Context, loader
+
+from models import Pulsar
 from atnf import get_page, parse_page
 
 
@@ -9,11 +12,17 @@ def index(request):
     return x_ray(request)
 
 
-def all_(request):
+def psrs(request, id=None):
     """ show all pulsars
     """
-    output = 'All pulsars'
-    return HttpResponse(output)
+    if id != None:
+        pass
+        return HttpResponse('Not yet implemented...')
+    else:
+        psrs = Pulsar.objects.all()
+        template = loader.get_template('database/all.xhtml')
+        c = Context({'psrs':psrs,})
+        return HttpResponse(template.render(c))
 
 
 def x_ray(request):

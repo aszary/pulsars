@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html
+        PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+    <title>Pulsars</title>
+    {% load staticfiles %}
+    <link rel="stylesheet/less" type="text/css" href="{% static "database/less/metro.less" %}" />
+    <style>
+			body { width: 900px; margin: 0 auto; }
+	</style>
+    <script src="{% static "database/scripts/less-1.2.1.min.js"%}" type="text/javascript"></script>
+    <!--<script src="//ajax.aspnetcdn.com/ajax/jquery/jquery-1.7.2.min.js"></script>-->
+	<script type="text/javascript" src="{% static "database/scripts/jquery.metro.js" %}"></script>
+	<script type="text/javascript" src="{% static "database/scripts/tilt.js" %}"></script>
+
+
+</head>
+<body>
+
+    <div class="tiles" style="width:800px;">
+        <div class="tilerow">
+            {% for psr in psrs %}
+                <div class="tile one limebg"><a href="{{ psr.id }}"><img src="{% static "database/images/psr.png" %}" /><p>{{ psr.Name }}</p></a></div>
+            {% endfor %}
+        </div>
+    </div>
+
+
+		<script>
+			var defaults = {
+				animationDuration: 350,
+				headerOpacity: 0.25,
+				fixedHeaders: false,
+				headerSelector: function (item) { return item.children("h3").first(); },
+				itemSelector: function (item) { return item.children(".pivot-item"); },
+				headerItemTemplate: function () { return $("<span class='header' />"); },
+				pivotItemTemplate: function () { return $("<div class='pivotItem' />"); },
+				itemsTemplate: function () { return $("<div class='items' />"); },
+				headersTemplate: function () { return $("<div class='headers' />"); },
+				controlInitialized: undefined,
+				selectedItemChanged: undefined
+			};
+
+			$(function () {
+				$("div.metro-pivot").metroPivot(defaults);
+
+				$(".tile").each(addTileTilt);
+
+			});
+		</script>
+
+
+
+</body>
+</html>

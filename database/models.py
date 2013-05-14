@@ -52,7 +52,7 @@ class Pulsar(models.Model):
                                                     '(degrees)')
     GB = models.FloatField(default=0., verbose_name='Galactic latitude '
                                                     '(degrees)')
-    RAJD = models.FloatField(default=0., verbose_name='Right ascension (J2000)'
+    RaJD = models.FloatField(default=0., verbose_name='Right ascension (J2000)'
                                                       ' (degrees)')
     DecJD = models.FloatField(default=0., verbose_name='Declination (J2000) '
                                                        '(degrees)')
@@ -113,6 +113,8 @@ class Pulsar(models.Model):
     W10_err = models.FloatField(default=0., verbose_name='Width of pulse at '
                                 '10% (ms). Note the comments above for W50.'
                                 ' Error')
+    Units = models.CharField(max_length=200, default="None", verbose_name=
+                             'no idea what it is..')
     Tau_sc = models.FloatField(default=0., verbose_name='Temporal broadening '
                                'of pulses at 1 GHz due to interestellar '
                                'scattering (s)')
@@ -136,9 +138,9 @@ class Pulsar(models.Model):
                                                         'index')
     spindx_err = models.FloatField(default=0., verbose_name='Measured spectral'
                                                             ' index Error')
-    Binary = models.CharField(max_length=200, default="*", verbose_name='Binar'
-                              'y model (normally one of several recognised by '
-                              'the pulsar timing program TEMPO')
+    Binary = models.CharField(max_length=200, default="None", verbose_name=
+                              'Binary model (normally one of several '
+                              'recognised by the pulsar timing program TEMPO')
     T0 = models.FloatField(default=0., verbose_name='Epoch of periastron '
                                                     '(MJD)')
     T0_err = models.FloatField(default=0., verbose_name='Epoch of periastron '
@@ -156,7 +158,7 @@ class Pulsar(models.Model):
     OM_err = models.FloatField(default=0., verbose_name='Longitude of'
                                                         ' periastron Error')
     ECC = models.FloatField(default=0., verbose_name='Eccentricity')
-    Ecc_err = models.FloatField(default=0., verbose_name='Eccentricity Error')
+    ECC_err = models.FloatField(default=0., verbose_name='Eccentricity Error')
     TASC = models.FloatField(default=0., verbose_name='Epoch of ascending node'
                                                       '(MJD)')
     TASC_err = models.FloatField(default=0., verbose_name='Epoch of ascending'
@@ -205,7 +207,7 @@ class Pulsar(models.Model):
     OSurvey = models.CharField(max_length=200, default="0", verbose_name='Surv'
                                'eys that detected the pulsar encoded as bits '
                                'in integer')
-    Date = models.FloatField(default=0., verbose_name='Date of discovery'
+    Date = models.IntegerField(default=0, verbose_name='Date of discovery'
                                                       ' publication.')
     Type = models.CharField(max_length=200, default="0", verbose_name='Type '
                             'codes for the pulsar. Click here for available '

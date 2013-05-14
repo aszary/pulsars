@@ -83,9 +83,125 @@ def parse_page():
     # parse records
     for i in line_ind:
         res = lines[i].split()
-        #print res
         try:
             p = Pulsar.objects.get(id=int(res[0]))
         except ObjectDoesNotExist:
             p = Pulsar(id=int(res[0]))
+        # set pulsar parameters
+        record_from_list(p, res)
+        break
+
+
+def record_from_list(p, res):
+    p.Name = res[1]
+    p.JName = res[2]
+    p.RaJ = res[3]
+    p.RaJ_err = res[4]
+    p.DecJ = res[5]
+    p.DecJ_err = res[6]
+    p.PMRA = res[7]
+    p.PMRA_err = res[8]
+    p.PMDec = res[9]
+    p.PMDec_err = res[10]
+    p.PX = res[11]
+    p.PX_err = res[12]
+    p.PosEpoch = res[13]
+    p.ELong = res[14]
+    p.ELong_err = res[15]
+    p.ELat = res[16]
+    p.ELat_err = res[17]
+    p.PMElong = res[18]
+    p.PMElong_err = res[19]
+    p.PMElat = res[20]
+    p.PMElat_err = res[21]
+    p.GL = res[22]
+    p.GB = res[23]
+    p.RaJD = res[24]
+    p.DecJD = res[25]
+
+    p.P0 = res[26]
+    p.P0_err = res[27]
+    p.P1 = res[28]
+    p.P1_err = res[29]
+    p.F0 = res[30]
+    p.F0_err = res[31]
+    p.F1 = res[32]
+    p.F1_err = res[33]
+    p.F2 = res[34]
+    p.F2_err = res[35]
+    p.F3 = res[36]
+    p.F3_err = res[37]
+    p.PEpoch = res[38]
+    p.DM = res[39]
+    p.DM_err = res[40]
+    p.DM1 = res[41]
+    p.DM1_err = res[42]
+    p.RM = res[43]
+    p.RM_err = res[44]
+    p.W50 = res[45]
+    p.W50_err = res[46]
+    p.W10 = res[47]
+    p.W10_err = res[48]
+    p.Units = res[49]
+    p.Tau_sc = res[50]
+    p.Tau_sc_err = res[51]
+    p.S400 = res[52]
+    p.S400_err = res[53]
+    p.S1400 = res[54]
+    p.S1400_err = res[55]
+    p.S2000 = res[56]
+    p.S2000_err = res[57]
+
+    p.Binary = res[58]
+    p.T0 = res[59]
+    p.T0_err = res[60]
+    p.PB = res[61]
+    p.PB_err = res[62]
+    p.A1 = res[63]
+    p.A1_err = res[64]
+    p.OM = res[65]
+    p.OM_err = res[66]
+    p.ECC = res[67]
+    p.ECC_err = res[68]
+    p.TASC = res[69]
+    p.TASC_err = res[70]
+    p.Eps1 = res[71]
+    p.Eps1_err = res[72]
+    p.Eps2 = res[73]
+    p.Eps2_err = res[74]
+    p.MinMass = res[75]
+    p.MedMass = res[76]
+    p.BinComp = res[77]
+
+    p.Dist = res[78]
+    p.Dist_DM = res[79]
+    p.DMsinb = res[80]
+    p.ZZ = res[81]
+    p.XX = res[82]
+    p.YY = res[83]
+
+    p.Assoc = res[84]
+    p.Survey = res[85]
+    p.OSurvey = str(res[86])
+    p.Date = res[87]
+    p.Type = res[88]
+    try:
+        p.NGlt = int(float(res[89]))
+    except ValueError:
+        p.NGlt = 0
+
+    p.R_Lum = res[90]
+    p.R_Lum14 = res[91]
+    p.Age = res[92]
+    p.BSurf = res[93]
+    p.Edot = res[94]
+    p.Edotd2 = res[95]
+    p.PMTot = res[96]
+    p.VTrans =  res[97]
+    p.P1_i = res[98]
+    p.Age_i = res[99]
+    p.BSurf_i = res[100]
+    p.Edot_i = res[101]
+    p.B_LC = res[102]
+
 

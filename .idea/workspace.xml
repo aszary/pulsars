@@ -2,43 +2,19 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="791c5b0b-ef7c-48c3-878a-0bb95fb1bec9" name="Default" comment="">
-      <change type="DELETED" beforePath="$PROJECT_DIR$/pulsars/static/pulsars/jibbr.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/pulsars/static/pulsars/less/bootstrap.less" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/pulsars/static/pulsars/less/bootstrap/layouts.less" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/pulsars/static/pulsars/less/bootstrap/mixins.less" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/pulsars/static/pulsars/less/bootstrap/progress-bars.less" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/pulsars/static/pulsars/less/bootstrap/reset.less" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/pulsars/static/pulsars/less/bootstrap/utilities.less" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/pulsars/static/pulsars/less/bootstrap/variables.less" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/pulsars/static/pulsars/less/colours.less" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/pulsars/static/pulsars/less/metro.less" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/pulsars/static/pulsars/less/metroblog.less" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/pulsars/static/pulsars/less/pivot.less" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/pulsars/static/pulsars/less/tiles.less" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/pulsars/static/pulsars/less/type.less" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/pulsars/static/pulsars/less/variables.less" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/pulsars/static/pulsars/samurai.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/pulsars/static/pulsars/scripts/jquery.metro.js" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/pulsars/static/pulsars/scripts/less-1.2.1.min.js" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/pulsars/static/pulsars/scripts/tilt.js" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/pulsars/templates/admin/base.html" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/pulsars/templates/admin/base_site.html" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/pulsars/templates/hello.xhtml" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/pulsars/templates/pulsars/hello.xhtml" afterPath="" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/media/database/atnf.html" afterPath="$PROJECT_DIR$/media/database/atnf.html" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/pulsars.db" afterPath="$PROJECT_DIR$/pulsars.db" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/database/atnf.py" afterPath="$PROJECT_DIR$/database/atnf.py" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/database/urls.py" afterPath="$PROJECT_DIR$/database/urls.py" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/database/views.py" afterPath="$PROJECT_DIR$/database/views.py" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/database/models.py" afterPath="$PROJECT_DIR$/database/models.py" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
     </list>
     <ignored path="pulsars.iws" />
     <ignored path=".idea/workspace.xml" />
     <file path="/Dummy.txt" changelist="791c5b0b-ef7c-48c3-878a-0bb95fb1bec9" time="1368499978902" ignored="false" />
-    <file path="/models.py" changelist="791c5b0b-ef7c-48c3-878a-0bb95fb1bec9" time="1368432151401" ignored="false" />
-    <file path="/atnf.py" changelist="791c5b0b-ef7c-48c3-878a-0bb95fb1bec9" time="1368508205171" ignored="false" />
+    <file path="/models.py" changelist="791c5b0b-ef7c-48c3-878a-0bb95fb1bec9" time="1368513988730" ignored="false" />
+    <file path="/atnf.py" changelist="791c5b0b-ef7c-48c3-878a-0bb95fb1bec9" time="1368514538105" ignored="false" />
     <file path="/urls.py" changelist="791c5b0b-ef7c-48c3-878a-0bb95fb1bec9" time="1368502084148" ignored="false" />
     <file path="/admin.py" changelist="791c5b0b-ef7c-48c3-878a-0bb95fb1bec9" time="1368433812364" ignored="false" />
-    <file path="/views.py" changelist="791c5b0b-ef7c-48c3-878a-0bb95fb1bec9" time="1368508114496" ignored="false" />
+    <file path="/views.py" changelist="791c5b0b-ef7c-48c3-878a-0bb95fb1bec9" time="1368509619392" ignored="false" />
     <file path="/settings.py" changelist="791c5b0b-ef7c-48c3-878a-0bb95fb1bec9" time="1368499849617" ignored="false" />
     <file path="/base_site.html" changelist="791c5b0b-ef7c-48c3-878a-0bb95fb1bec9" time="1368437447822" ignored="false" />
     <file path="/hello.xhtml" changelist="791c5b0b-ef7c-48c3-878a-0bb95fb1bec9" time="1368499997916" ignored="false" />
@@ -92,7 +68,7 @@
       <file leaf-file-name="views.py" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/database/views.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="26" column="11" selection-start="472" selection-end="472" vertical-scroll-proportion="0.0">
+            <state line="27" column="8" selection-start="483" selection-end="483" vertical-scroll-proportion="0.0">
               <folding>
                 <element signature="e#26#62#0" expanded="true" />
               </folding>
@@ -100,10 +76,10 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="urls.py" pinned="false" current="true" current-in-tab="true">
+      <file leaf-file-name="urls.py" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/database/urls.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="9" column="54" selection-start="307" selection-end="307" vertical-scroll-proportion="0.475">
+            <state line="9" column="54" selection-start="307" selection-end="307" vertical-scroll-proportion="0.0">
               <folding>
                 <element signature="e#22#64#0" expanded="true" />
               </folding>
@@ -111,10 +87,10 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="atnf.py" pinned="false" current="false" current-in-tab="false">
+      <file leaf-file-name="atnf.py" pinned="false" current="true" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/database/atnf.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="90" column="0" selection-start="3810" selection-end="3810" vertical-scroll-proportion="0.0">
+            <state line="88" column="31" selection-start="3783" selection-end="3783" vertical-scroll-proportion="0.58583105">
               <folding>
                 <element signature="e#23#49#0" expanded="true" />
               </folding>
@@ -123,12 +99,10 @@
         </entry>
       </file>
       <file leaf-file-name="models.py" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/../pulsar/data/models.py">
+        <entry file="file://$PROJECT_DIR$/database/models.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="312" column="0" selection-start="23186" selection-end="23186" vertical-scroll-proportion="0.0">
-              <folding>
-                <element signature="e#0#19#0" expanded="true" />
-              </folding>
+            <state line="142" column="57" selection-start="9802" selection-end="9802" vertical-scroll-proportion="0.0">
+              <folding />
             </state>
           </provider>
         </entry>
@@ -151,7 +125,6 @@
   <component name="IdeDocumentHistory">
     <option name="changedFiles">
       <list>
-        <option value="$PROJECT_DIR$/database/models.py" />
         <option value="$PROJECT_DIR$/pulsars/admin.py" />
         <option value="$PROJECT_DIR$/pulsars/urls.py" />
         <option value="$PROJECT_DIR$/pulsars/templates/admin/base_site.html" />
@@ -163,14 +136,16 @@
         <option value="$PROJECT_DIR$/templates/pulsars/hello.xhtml" />
         <option value="$PROJECT_DIR$/database/urls.py" />
         <option value="$PROJECT_DIR$/database/views.py" />
+        <option value="$PROJECT_DIR$/database/models.py" />
         <option value="$PROJECT_DIR$/database/atnf.py" />
       </list>
     </option>
   </component>
   <component name="ProjectFrameBounds">
-    <option name="y" value="46" />
-    <option name="width" value="1366" />
-    <option name="height" value="722" />
+    <option name="x" value="-2" />
+    <option name="y" value="43" />
+    <option name="width" value="1370" />
+    <option name="height" value="729" />
   </component>
   <component name="ProjectLevelVcsManager" settingsEditedManually="false">
     <OptionsSetting value="true" id="Add" />
@@ -461,18 +436,18 @@
     </todo-panel>
   </component>
   <component name="ToolWindowManager">
-    <frame x="0" y="46" width="1366" height="722" extended-state="2" />
+    <frame x="-2" y="43" width="1370" height="729" extended-state="6" />
     <editor active="true" />
     <layout>
       <window_info id="Changes" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.328125" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.328125" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
       <window_info id="Database" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
-      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.26139817" sideWeight="0.671875" order="0" side_tool="false" content_ui="combo" />
+      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.18484849" sideWeight="0.67581475" order="0" side_tool="false" content_ui="combo" />
       <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.4" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="2" side_tool="true" content_ui="tabs" />
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="true" content_ui="tabs" />
-      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.328125" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
+      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.32418525" sideWeight="0.97159094" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.328125" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Cvs" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
       <window_info id="Message" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
@@ -579,11 +554,6 @@
         <state line="2" column="0" selection-start="68" selection-end="68" vertical-scroll-proportion="0.0" />
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/database/models.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="3" column="0" selection-start="31" selection-end="31" vertical-scroll-proportion="0.0" />
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/pulsars/views.py">
       <provider selected="true" editor-type-id="text-editor">
         <state line="9" column="40" selection-start="241" selection-end="241" vertical-scroll-proportion="0.475">
@@ -630,36 +600,43 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/database/views.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="26" column="11" selection-start="472" selection-end="472" vertical-scroll-proportion="0.0">
+        <state line="27" column="8" selection-start="483" selection-end="483" vertical-scroll-proportion="0.0">
           <folding>
             <element signature="e#26#62#0" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/database/urls.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="9" column="54" selection-start="307" selection-end="307" vertical-scroll-proportion="0.0">
+          <folding>
+            <element signature="e#22#64#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/../pulsar/data/models.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="312" column="0" selection-start="23186" selection-end="23186" vertical-scroll-proportion="0.0">
+        <state line="323" column="0" selection-start="23832" selection-end="23832" vertical-scroll-proportion="0.52615386">
           <folding>
             <element signature="e#0#19#0" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/database/atnf.py">
+    <entry file="file://$PROJECT_DIR$/database/models.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="90" column="0" selection-start="3810" selection-end="3810" vertical-scroll-proportion="0.0">
-          <folding>
-            <element signature="e#23#49#0" expanded="true" />
-          </folding>
+        <state line="142" column="57" selection-start="9802" selection-end="9802" vertical-scroll-proportion="0.0">
+          <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/database/urls.py">
+    <entry file="file://$PROJECT_DIR$/database/atnf.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="9" column="54" selection-start="307" selection-end="307" vertical-scroll-proportion="0.475">
+        <state line="88" column="31" selection-start="3783" selection-end="3783" vertical-scroll-proportion="0.58583105">
           <folding>
-            <element signature="e#22#64#0" expanded="true" />
+            <element signature="e#23#49#0" expanded="true" />
           </folding>
         </state>
       </provider>

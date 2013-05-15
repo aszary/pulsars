@@ -59,8 +59,8 @@ class Pulsars:
 
         pu, ad, ge, su, ca, ar, fi, co = \
             self.create_records(name='B0628-28', additional=True,
-                                calculations=True, articles_num=1,
-                                fits_num=[1], components_num=[[2]])
+                                calculations=True, articles_num=2,
+                                fits_num=[2, 2], components_num=[[2, 1], [2, 2]])
         ar[0].num = 0
         ar[0].article = 'http://adsabs.harvard.edu/abs/2005ApJ...630L..57'
         ar[0].cite = '\cite{2005_Tepedelenl}'
@@ -84,6 +84,18 @@ class Pulsars:
         co[0][0][1].lum = 1.67e30
         co[0][0][1].lum_plus = 0.91e30
         co[0][0][1].lum_minus = 0.62e30
+        fi[0][1].spectrum = 'PL'
+        co[0][1][0].spec_type = 'PL'
+        ar[1].num = 1
+        ar[1].article = 'http://adsabs.harvard.edu/abs/2005ApJ...633..367B'
+        ar[1].cite = '\cite{2005_Becker}'
+        ar[1].info = ('...')
+        fi[1][0].spectrum = '??'
+        co[1][0][0].spec_type = 'BB'
+        co[1][0][1].spec_type = 'PL'
+        fi[1][1].spectrum = '?? 2'
+        co[1][1][0].spec_type = 'BB'
+        co[1][1][1].spec_type = 'PL'
         ad.dist_dm_cl = 1.444
         ad.dist_dm_plus = 1.444 - 1.167
         ad.dist_dm_minus = 1.709 - 1.444

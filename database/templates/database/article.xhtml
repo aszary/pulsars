@@ -2,18 +2,30 @@
 
 {% block x-ray_article %}
 
-X-ray article:<br />
+X-ray articles:<br />
 
 {% for article in articles %}
     <table class='gridtable' width="100%" >
-    <tr align="center">
-        <th>ID</th>
-        <th>Link</th>
-    </tr>
-     <tr align="center">
-        <td>{{article.num}}</td>
-        <td><a target="_blank" href="{{article.article}}"> ads link</a></td>
-    </tr>
+
+        <tr align="center">
+            <th>ID</th>
+            <th>Num</th>
+            <th>Cite</th>
+            <th>Link</th>
+            <th>Info</th>
+            <th>Dist</th>
+        </tr>
+        <tr align="center">
+            <td>{{article.id}}</td>
+            <td>{{article.num}}</td>
+            <td>{{article.cite}}</td>
+            <td><a target="_blank" href="{{article.article}}"> ads link</a></td>
+            <td>{{article.info}}</td>
+            <td>{{article.dist}}</td>
+        </tr>
+    </table>
+
+    {% block x-ray_fit %}{% endblock %}
 {% endfor %}
 
 

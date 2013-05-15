@@ -2,7 +2,7 @@
 from django.http import HttpResponse
 from django.template import Context, loader
 
-from models import Pulsar, XrayArticle
+from models import Pulsar, XrayArticle, XrayFit, XrayComponent
 from atnf import get_page, parse_page
 
 
@@ -18,11 +18,19 @@ def psrs(request, id=None):
     if id != None:
         psr = Pulsar.objects.get(id=id)
         articles = XrayArticle.objects.filter(psr_id=psr)
-        print articles
+        fits = []
+        components = []
+        for article in articles:
+            fits += list(XrayFit.objects.filter(article_id=article))
+        for fit in fits:
+            components += list(XrayComponent.objects.filter(fit_id=fit))
         #template = loader.get_template('database/pulsar.xhtml')
         #template = loader.get_template('database/atnf.xhtml')
-        template = loader.get_template('database/article.xhtml')
-        c = Context({'psr':psr, 'articles':articles}, )
+        #template = loader.get_template('database/article.xhtml')
+        #template = loader.get_template('database/fits.xhtml')
+        template = loader.get_template('database/components.xhtml')
+        c = Context({'psr':psr, 'articles':articles, 'fits':fits,
+                     'components':components}, )
         return HttpResponse(template.render(c))
     else:
         psrs = Pulsar.objects.all()

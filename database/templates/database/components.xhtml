@@ -1,0 +1,35 @@
+{% extends "database/fits.xhtml" %}
+
+
+{% block x-ray_component %}
+
+ {% for component in components %}
+    {% if fit.id == component.fit_id_id  %}
+    <table class='gridtable' width="80%" >
+
+        <tr align="center">
+            <th>ID</th>
+            <th>Num</th>
+            <th>Type</th>
+            <th>R</th>
+            <th>T</th>
+            <th>PL</th>
+        </tr>
+        <tr align="center">
+            <td>{{component.id}}</td>
+            <td>{{component.num}}</td>
+            <td>{{component.spec_type}}</td>
+            <td>{{component.r}}</td>
+            <td>{{component.t}}</td>
+            <td>{{component.pl}}</td>
+        </tr>
+    </table>
+    {% endif %}
+
+{% endfor %}
+
+
+
+
+
+{% endblock %}

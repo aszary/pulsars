@@ -2,6 +2,7 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="791c5b0b-ef7c-48c3-878a-0bb95fb1bec9" name="Default" comment="">
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/pulsars.db" afterPath="$PROJECT_DIR$/pulsars.db" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/database/models.py" afterPath="$PROJECT_DIR$/database/models.py" />
     </list>
     <ignored path="pulsars.iws" />
@@ -106,7 +107,7 @@
       <file leaf-file-name="models.py" pinned="false" current="true" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/database/models.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="287" column="0" selection-start="19016" selection-end="19016" vertical-scroll-proportion="0.0037453184">
+            <state line="279" column="66" selection-start="18483" selection-end="18483" vertical-scroll-proportion="0.81835204">
               <folding />
             </state>
           </provider>
@@ -738,7 +739,7 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/database/models.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="287" column="0" selection-start="19016" selection-end="19016" vertical-scroll-proportion="0.0037453184">
+        <state line="279" column="66" selection-start="18483" selection-end="18483" vertical-scroll-proportion="0.81835204">
           <folding />
         </state>
       </provider>

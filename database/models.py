@@ -269,15 +269,15 @@ class XrayFit(models.Model):
                                   ' in X-ray catalogue, sorted by name')
     importance = models.IntegerField(default=0, verbose_name='0 the highest'
                                      ' (included in most graphs/tables)')
-    spectrum = models.CharField(default='', verbose_name='type spectrum fit '
-                                                         'e.g. BB + PL')
+    spectrum = models.CharField(default='', max_length=200, verbose_name='type'
+                                ' spectrum fit e.g. BB + PL')
 
 
 class XrayComponent(models.Model):
     spec_types = (('BB', 'blackbody'), ('PL', 'power-law'),
                  ('AT', 'atmospheric'), ('OT', 'other'))
     xray_id = models.ForeignKey(XrayFit)
-    spec_type = models.CharField(choices=spec_types)
+    spec_type = models.CharField(choices=spec_types, max_length=200)
     lum = models.FloatField(default=0., verbose_name='luminosity [erg s^-1]')
     lum_plus = models.FloatField(default=0., verbose_name='luminosity error +'
                                                           ' [erg s^-1]')
@@ -285,7 +285,7 @@ class XrayComponent(models.Model):
                                                            ' [erg s^-1]')
     flux = models.FloatField(default=0., verbose_name='flux [erg s^-1 cm^-2]')
     flux_plus = models.FloatField(default=0., verbose_name='flux error +'
-                                                           ' [erg s^-1 cm^-2]')
+                                                          ' [erg s^-1 cm^-2]')
     flux_minus = models.FloatField(default=0., verbose_name='flux error -'
                                    ' [erg s^-1 cm^-2]')
     t = models.FloatField(default=0., verbose_name='temperature [K]')

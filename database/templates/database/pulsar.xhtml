@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html
+        PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+    <title>Pulsars with X-ray data</title>
+    {% load staticfiles %}
+    <link rel="stylesheet" type="text/css" href="{% static "database/css/table.css" %}" />
+</head>
+<body>
+
+    {% block atnf %}{% endblock %}
+<br />
+Simbad link: <a href="{{psr.simbad_link}}">{{psr.Name}}</a>
+<br />
+    {% block x-ray_article %}{% endblock %}
+
+
+</body>
+</html>

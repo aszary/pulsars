@@ -1,0 +1,20 @@
+{% extends "database/atnf.xhtml" %}
+
+{% block x-ray_article %}
+
+X-ray article:<br />
+
+{% for article in articles %}
+    <table class='gridtable' width="100%" >
+    <tr align="center">
+        <th>ID</th>
+        <th>Link</th>
+    </tr>
+     <tr align="center">
+        <td>{{article.num}}</td>
+        <td><a target="_blank" href="{{article.article}}"> ads link</a></td>
+    </tr>
+{% endfor %}
+
+
+{% endblock %}

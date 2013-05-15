@@ -253,21 +253,21 @@ class Pulsar(models.Model):
 
 
 class XrayArticle(models.Model):
-    psr_id = models.ForeignKey(Pulsar)
+    psr_id = models.ForeignKey(Pulsar, null=True, default=None)
+    num = models.IntegerField(default=0, verbose_name='0 the highest'
+                                     ' (included in most graphs/tables)')
     article = models.TextField(default='', verbose_name='article link')
     cite = models.TextField(default="\cite{}", verbose_name='latex citation')
     info = models.TextField(default="", verbose_name='Additional information')
     dist = models.FloatField(default=0., verbose_name='distance used to '
                              'calculate luminosities [in kpc]')
-    importance = models.IntegerField(default=0, verbose_name='0 the highest'
-                                     ' (included in most graphs/tables)')
 
 
 class XrayFit(models.Model):
-    psr_id = models.ForeignKey(XrayArticle)
+    article_id = models.ForeignKey(XrayArticle, null=True, default=None)
     ordinal = models.IntegerField(default=-1, verbose_name='Ordinal number'
                                   ' in X-ray catalogue, sorted by name')
-    importance = models.IntegerField(default=0, verbose_name='0 the highest'
+    num = models.IntegerField(default=0, verbose_name='0 the highest'
                                      ' (included in most graphs/tables)')
     spectrum = models.CharField(default='', max_length=200, verbose_name='type'
                                 ' spectrum fit e.g. BB + PL')
@@ -276,7 +276,8 @@ class XrayFit(models.Model):
 class XrayComponent(models.Model):
     spec_types = (('BB', 'blackbody'), ('PL', 'power-law'),
                  ('AT', 'atmospheric'), ('OT', 'other'))
-    xray_id = models.ForeignKey(XrayFit)
+    fit_id = models.ForeignKey(XrayFit, null=True, default=None)
+    num = models.IntegerField(default=0, verbose_name='number of component')
     spec_type = models.CharField(choices=spec_types, max_length=200)
     lum = models.FloatField(default=0., verbose_name='luminosity [erg s^-1]')
     lum_plus = models.FloatField(default=0., verbose_name='luminosity error +'
@@ -302,7 +303,7 @@ class XrayComponent(models.Model):
 
 
 class Geometry(models.Model):
-    psr_id = models.ForeignKey(Pulsar)
+    psr_id = models.ForeignKey(Pulsar, null=True, default=None)
     article = models.TextField(default='', verbose_name='article link')
     cite = models.TextField(default="\cite{}", verbose_name='latex citation')
     info = models.TextField(default="", verbose_name='Additional information')
@@ -313,7 +314,7 @@ class Geometry(models.Model):
 
 
 class Subpulses(models.Model):
-    psr_id = models.ForeignKey(Pulsar)
+    psr_id = models.ForeignKey(Pulsar, null=True, default=None)
     article = models.TextField(default='', verbose_name='article link')
     cite = models.TextField(default="\cite{}", verbose_name='latex citation')
     info = models.TextField(default="", verbose_name='Additional information')
@@ -337,7 +338,7 @@ class Subpulses(models.Model):
 class Additional(models.Model):
     """ all additional pulsar information, dist_dm,
     """
-    psr_id = models.ForeignKey(Pulsar)
+    psr_id = models.ForeignKey(Pulsar, null=True, default=None)
     articles = models.TextField(default='', verbose_name='article links (;)')
     best_age = models.FloatField(default=0., verbose_name='Best estimate of'
                                                           'age')
@@ -356,7 +357,7 @@ class Calculations(models.Model):
     """ all my calculations stored in database
     """
     # geometry
-    psr_id = models.ForeignKey(Pulsar)
+    psr_id = models.ForeignKey(Pulsar, null=True, default=None, blank=True)
     cos_i = models.FloatField(default=0., verbose_name='time averaged cosine '
                               'of the angle between the magnetic axis and the '
                               'line of sight')

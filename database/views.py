@@ -2,7 +2,7 @@
 from django.http import HttpResponse
 from django.template import Context, loader
 
-from models import Pulsar
+from models import Pulsar, XrayArticle
 from atnf import get_page, parse_page
 
 
@@ -17,8 +17,12 @@ def psrs(request, id=None):
     """
     if id != None:
         psr = Pulsar.objects.get(id=id)
-        template = loader.get_template('database/x-ray.xhtml')
-        c = Context({'psr':psr,})
+        articles = XrayArticle.objects.filter(psr_id=psr)
+        print articles
+        #template = loader.get_template('database/pulsar.xhtml')
+        #template = loader.get_template('database/atnf.xhtml')
+        template = loader.get_template('database/article.xhtml')
+        c = Context({'psr':psr, 'articles':articles}, )
         return HttpResponse(template.render(c))
     else:
         psrs = Pulsar.objects.all()
@@ -31,7 +35,14 @@ def x_ray(request):
     """ show pulsars with X-ray data
     """
     output = 'X-ray pulsars'
-    return HttpResponse(output)
+    articles = XrayArticle.objects.filter(num=0)
+    psrs = []
+    for article in articles:
+        psrs.append(article.psr_id)
+    print psrs
+    template = loader.get_template('database/x-rays.xhtml')
+    c = Context({'psrs':psrs,})
+    return HttpResponse(template.render(c))
 
 
 def get_atnf(request):

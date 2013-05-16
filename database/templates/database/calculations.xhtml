@@ -1,0 +1,117 @@
+{% extends "database/atnf.xhtml" %}
+
+{% block calculations %}
+
+    <h2>Calculations:</h2>
+
+    <table class='gridtable' width="100%" >
+        <tr align="center">
+            <th>B_14 [10^14 G]</th>
+            <th>B_14dp</th>
+        <tr align="center">
+            <td>{{ c.b_14 }} {+{{ c.b_14_plus }} } {+{{ c.b_14_minus }}}</td>
+            <td>{{c.b_14dp}}</td>
+        </tr>
+    </table>
+
+    <br />
+
+    <table class='gridtable' width="100%" >
+        <tr align="center">
+            <th>dotP_15</th>
+            <th>bsurf2</th>
+            <th>L_SD</th>
+        </tr>
+        <tr align="center">
+            <td>{{c.dotP_15}}</td>
+            <td>{{c.bsurf2}}</td>
+            <td>{{c.l_sd}}</td>
+        </tr>
+    </table>
+
+    <br />
+
+    <table class='gridtable' width="100%" >
+        <tr align="center">
+            <th></th>
+            <th></th>
+            <th></th>
+            <th></th>
+            <th></th>
+        </tr>
+        <tr align="center">
+            <td>{{c.}}</td>
+            <td>{{c.}}</td>
+            <td>{{c.}}</td>
+            <td>{{c.}}</td>
+            <td>{{c.}}</td>
+        </tr>
+    </table>
+
+
+
+    <h2>Additional data:</h2>
+    {% if g != None  %}
+    <table class='gridtable' width="100%" >
+        <tr align="center">
+            <th>Cite</th>
+            <th>link</th>
+            <th>alpha</th>
+            <th>beta</th>
+            <th>rho</th>
+            <th>info</th>
+        </tr>
+        <tr align="center">
+            <td>{{g.cite}}</td>
+            <td><a href="{{g.link}}">ads link</a></td>
+            <td>{{g.alpha}}</td>
+            <td>{{g.beta}}</td>
+            <td>{{g.rho}}</td>
+            <td>{{g.info}}</td>
+        </tr>
+    </table>
+    {% endif  %}
+
+
+    {% if s != None  %}
+    <table class='gridtable' width="100%" >
+        <tr align="center">
+            <th>Cite</th>
+            <th>link</th>
+            <th>P2 [deg]</th>
+            <th>P3 [P0]</th>
+            <th>P4 [P0]</th>
+            <th>info</th>
+        </tr>
+        <tr align="center">
+            <td>{{s.cite}}</td>
+            <td><a href="{{s.link}}">ads link</a></td>
+            <td>{{s.p2}} {+{{s.p2_plus}}}{-{{s.p2_minus}}}</td>
+            <td>{{s.p3}} {+{{s.p3_plus}}}{-{{s.p3_minus}}}</td>
+            <td>{{s.p4}}</td>
+            <td>{{s.info}}</td>
+        </tr>
+    </table>
+    {% endif  %}
+
+
+    {% if a != None  %}
+    <table class='gridtable' width="100%" >
+        <tr align="center">
+            <th>link</th>
+            <th>Age</th>
+            <th>Dist DM CL [kpc]</th>
+            <th>Dist Pi [kpc]</th>
+        </tr>
+        <tr align="center">
+            <td><a href="{{a.articles}}">ads link</a></td>
+            <td>{{a.best_age}}</td>
+            <td>{{a.dist_dm_cl}} {+{{a.dist_dm_cl_plus}}}{-{{a.dist_dm_cl_minus}}}</td>
+            <td>{{a.dist_pi}} {+{{a.dist_pi_plus}}}{-{{a.dist_pi_minus}}}</td>
+        </tr>
+    </table>
+    {% endif  %}
+
+
+
+{% endblock %}

@@ -253,6 +253,9 @@ class Pulsar(models.Model):
 
 
 class XrayArticle(models.Model):
+    def __unicode__(self):
+        result = "%s   (%s)" % (self.psr_id.Name, self.cite)
+        return result
     psr_id = models.ForeignKey(Pulsar, null=True, default=None)
     num = models.IntegerField(null=True, blank=True,
                               verbose_name='0 the highest'
@@ -266,6 +269,10 @@ class XrayArticle(models.Model):
 
 
 class XrayFit(models.Model):
+    def __unicode__(self):
+        result = "%s   (%s)   %s (%d)" % (self.article_id.psr_id.Name,
+                  self.article_id.cite, self.spectrum, self.num)
+        return result
     article_id = models.ForeignKey(XrayArticle, null=True, default=None)
     ordinal = models.IntegerField(null=True, blank=True,
                                   verbose_name='Ordinal number'
@@ -278,6 +285,11 @@ class XrayFit(models.Model):
 
 
 class XrayComponent(models.Model):
+    def __unicode__(self):
+        result = "%s   (%s)   Spec num (%d)  %s[%d]" % (self.fit_id.article_id.psr_id.Name,
+                  self.fit_id.article_id.cite, self.fit_id.num,
+                  self.spec_type, self.num)
+        return result
     spec_types = (('BB', 'blackbody'), ('PL', 'power-law'),
                  ('AT', 'atmospheric'), ('OT', 'other'))
     fit_id = models.ForeignKey(XrayFit, null=True, default=None)
@@ -319,6 +331,9 @@ class XrayComponent(models.Model):
 
 
 class Geometry(models.Model):
+    def __unicode__(self):
+        result = "%s   ID : %d " % (self.psr_id.Name, self.psr_id_id)
+        return result
     psr_id = models.ForeignKey(Pulsar, null=True, default=None)
     article = models.TextField(default='', verbose_name='article link')
     cite = models.TextField(default="\cite{}", verbose_name='latex citation')
@@ -333,6 +348,9 @@ class Geometry(models.Model):
 
 
 class Subpulses(models.Model):
+    def __unicode__(self):
+        result = "%s   ID : %d " % (self.psr_id.Name, self.psr_id_id)
+        return result
     psr_id = models.ForeignKey(Pulsar, null=True, default=None)
     article = models.TextField(default='', verbose_name='article link')
     cite = models.TextField(default="\cite{}", verbose_name='latex citation')
@@ -364,6 +382,9 @@ class Subpulses(models.Model):
 class Additional(models.Model):
     """ all additional pulsar information, dist_dm,
     """
+    def __unicode__(self):
+        result = "%s   ID : %d " % (self.psr_id.Name, self.psr_id_id)
+        return result
     psr_id = models.ForeignKey(Pulsar, null=True, default=None)
     articles = models.TextField(default='', verbose_name='article links (;)')
     best_age = models.FloatField(null=True, blank=True,
@@ -385,6 +406,9 @@ class Additional(models.Model):
 class Calculations(models.Model):
     """ all my calculations stored in database
     """
+    def __unicode__(self):
+        result = "%s   ID : %d " % (self.psr_id.Name, self.psr_id_id)
+        return result
     # geometry
     psr_id = models.ForeignKey(Pulsar, null=True, default=None, blank=True)
     cos_i = models.FloatField(null=True, blank=True,

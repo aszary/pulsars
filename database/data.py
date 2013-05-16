@@ -125,7 +125,7 @@ class Pulsars:
         ad.articles = 'http://adsabs.harvard.edu/abs/2005ApJ...633..367B'
         su.p2 = 30.
         su.p2_plus = 60.
-        su.p2 = 6.
+        su.p2_minus = 6.
         su.p3 = 7.
         su.p3_plus = 1.
         su.p3_minus = 1.
@@ -134,59 +134,66 @@ class Pulsars:
         self.calculate(pu, ad, ge, su, ca, ar, fi, co)
         self.save_records(pu, ad, ge, su, ca, ar, fi, co)
 
-        t = '''
-        #          ####################################################
+        #    B0834+06      ####################################################
         pu, ad, ge, su, ca, ar, fi, co = \
-            self.create_records(name='', additional=True,
+            self.create_records(name='B0834+06', additional=True,
                                 calculations=True, geometry=True,
                                 subpulse=True,
-                                articles_num=2,
-                                fits_num=[1,1], components_num=[[2], [0]])
-        ge.alpha =
-        ge.beta =
-        ge.rho =
+                                articles_num=1,
+                                fits_num=[1], components_num=[[2]])
+        ge.alpha = 60.7
+        ge.beta = 4.5
+        ge.rho = 7.1
         hot_spot = HotSpots(ge.alpha / 180. * pi, ge.beta / 180. * pi)
         ca.f = hot_spot.f()
         ca.cos_i = hot_spot.c()
         ar[0].num = 0
-        ar[0].article = ''
-        ar[0].cite = '\cite{}'
-        ar[0].info = ()
-        ar[0].dist =
+        ar[0].article = 'http://adsabs.harvard.edu/abs/2008ApJ...686..497G'
+        ar[0].cite = '\cite{2008_Gil}'
+        ar[0].info = ('page 6, no inf -> surface conversion, r_bb calculated '
+                      'from L \eq 4 A \sigma T^4, 1 sigma errors taken, '
+                      'BB(2/3)+PL(1/3) BB+PL fits not included in database '
+                      '(poor statistics..., no l_nonth), A_{\perp}')
+        ar[0].dist = 0.643
         fi[0][0].spectrum = 'BB + PL'
         co[0][0][0].spec_type = 'BB'
-        co[0][0][0].r =
-        co[0][0][0].r_plus =
-        co[0][0][0].r_minus =
-        co[0][0][0].t =
-        co[0][0][0].t_plus =
-        co[0][0][0].t_minus =
+        co[0][0][0].t = self.ev_to_k(170)
+        co[0][0][0].t_plus = self.ev_to_k(65)
+        co[0][0][0].t_minus = self.ev_to_k(55)
+        co[0][0][0].r = self.radius_from_lt_simple(8.6e28 / 4.,
+                                                   co[0][0][0].t) /ca.f ** 0.5
+        co[0][0][0].r_plus = 5643.465323
+        co[0][0][0].r_minus = 1528.715528
         co[0][0][0].lum = self.lbol_radius(co[0][0][0].t, co[0][0][0].r)
+        co[0][0][0].lum_plus = 1.9e28
+        co[0][0][0].lum_minus = 0.5e28
         co[0][0][1].spec_type = 'PL'
-        co[0][0][1].pl =
-        co[0][0][1].pl_plus =
-        co[0][0][1].pl_minus =
-        co[0][0][1].lum =
-        co[0][0][1].lum_plus =
-        co[0][0][1].lum_minus =
-        ar[1].article = ''
-        ar[1].cite = '\cite{}'
-        ar[1].info = ('')
-        ad.dist_dm_cl =
-        ad.dist_dm_cl_plus=
-        ad.dist_dm_cl_minus =
-        ad.articles = ''
-        su.p2 =
-        su.p2_plus =
-        su.p2 =
-        su.p3 =
-        su.p3_plus =
-        su.p3_minus =
-        su.p4 =
-        su.article = ''
+        # TODO add Photon Index!!
+        #co[0][0][1].pl =
+        #co[0][0][1].pl_plus =
+        #co[0][0][1].pl_minus =
+        co[0][0][1].lum = co[0][0][0].lum_plus
+        # TODO add lum errors
+        #co[0][0][1].lum_plus =
+        #co[0][0][1].lum_minus =
+        ad.dist_dm_cl = 0.643
+        ad.dist_dm_cl_plus = 0.723 - 0.643
+        ad.dist_dm_cl_minus = 0.643 - 0.567
+        ad.articles = ('http://adsabs.harvard.edu/abs/2006A%26A...445..243W;'
+                      'http://adsabs.harvard.edu/abs/1997MNRAS.288..631K;'
+                      'http://adsabs.harvard.edu/abs/1988MNRAS.234..477L')
+        su.info = 'other values for p2 and p3 in paper 40deg, 21 P0'
+        su.p2 = 20.
+        su.p2_plus = 55.
+        su.p2_minus = 9.
+        su.p3 = 2.2
+        su.p3_plus = 0.2
+        su.p3_minus = 0.2
+        su.p4 = 38.4678024056707
         self.calculate(pu, ad, ge, su, ca, ar, fi, co)
         self.save_records(pu, ad, ge, su, ca, ar, fi, co)
 
+        t = '''
         #          ####################################################
         pu, ad, ge, su, ca, ar, fi, co = \
             self.create_records(name='', additional=True,
@@ -2879,6 +2886,9 @@ class Pulsars:
             ca.b_14_plus = (b_max - ca.b) * ca.b_14dp
         if ad.best_age is None:
             ad.best_age = pu.Age
+
+    def radius_from_lt_simple(self, l_bol, t):
+        return (l_bol / (c.sigma * t ** 4. * pi)) ** 0.5
 
     def radius_from_area(self, a):
         return (a / pi) ** 0.5

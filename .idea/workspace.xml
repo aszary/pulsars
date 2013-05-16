@@ -2,13 +2,9 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="791c5b0b-ef7c-48c3-878a-0bb95fb1bec9" name="Default" comment="">
-      <change type="DELETED" beforePath="$PROJECT_DIR$/database/const/__init__.py" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/database/const/cgs.h" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/database/const/const.py" afterPath="" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/pulsars.db" afterPath="$PROJECT_DIR$/pulsars.db" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/database/templates/database/calculations.xhtml" afterPath="$PROJECT_DIR$/database/templates/database/calculations.xhtml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/database/templates/database/components.xhtml" afterPath="$PROJECT_DIR$/database/templates/database/components.xhtml" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/database/data.py" afterPath="$PROJECT_DIR$/database/data.py" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/database/old_data_pulsars.py" afterPath="$PROJECT_DIR$/database/old_data_pulsars.py" />
     </list>
     <ignored path="pulsars.iws" />
     <ignored path=".idea/workspace.xml" />
@@ -29,7 +25,7 @@
     <file path="/x-ray.xhtml" changelist="791c5b0b-ef7c-48c3-878a-0bb95fb1bec9" time="1368529588217" ignored="false" />
     <file path="/pulsars.py" changelist="791c5b0b-ef7c-48c3-878a-0bb95fb1bec9" time="1368602807654" ignored="false" />
     <file path="/x-rays.xhtml" changelist="791c5b0b-ef7c-48c3-878a-0bb95fb1bec9" time="1368604450924" ignored="false" />
-    <file path="/data.py" changelist="791c5b0b-ef7c-48c3-878a-0bb95fb1bec9" time="1368693607959" ignored="false" />
+    <file path="/data.py" changelist="791c5b0b-ef7c-48c3-878a-0bb95fb1bec9" time="1368695752941" ignored="false" />
     <file path="/atnf.xhtml" changelist="791c5b0b-ef7c-48c3-878a-0bb95fb1bec9" time="1368669169332" ignored="false" />
     <file path="/pulsar.xhtml" changelist="791c5b0b-ef7c-48c3-878a-0bb95fb1bec9" time="1368669033546" ignored="false" />
     <file path="/article.xhtml" changelist="791c5b0b-ef7c-48c3-878a-0bb95fb1bec9" time="1368669119667" ignored="false" />
@@ -76,7 +72,7 @@
       <file leaf-file-name="data.py" pinned="false" current="true" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/database/data.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="84" column="8" selection-start="3389" selection-end="3389" vertical-scroll-proportion="0.92183286">
+            <state line="140" column="46" selection-start="5915" selection-end="5915" vertical-scroll-proportion="0.43396226">
               <folding>
                 <element signature="e#23#43#0" expanded="true" />
               </folding>
@@ -732,7 +728,7 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/database/data.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="84" column="8" selection-start="3389" selection-end="3389" vertical-scroll-proportion="0.92183286">
+        <state line="140" column="46" selection-start="5915" selection-end="5915" vertical-scroll-proportion="0.43396226">
           <folding>
             <element signature="e#23#43#0" expanded="true" />
           </folding>

@@ -38,48 +38,8 @@ class Pulsars:
 
 
         p2 = Pulsar.objects.get(name='B0834+06')
-        p2.alpha = 60.7
-        p2.beta = 4.5
-        p2.rho = 7.1
-        h = HotSpots(p2.alpha/180.*pi, p2.beta/180.*pi)
-        p2.f = h.f()
-        p2.cos_i = h.c()
-        p2.t = self.ev_to_k(170)
-        p2.t_plus = self.ev_to_k(65)
-        p2.t_minus = self.ev_to_k(55)
-        p2.l_bol = 8.6e28 / 4. # sphere to one spot correction
-        p2.r = self.radius_from_lt_simple(p2.l_bol, p2.t) / p2.f ** 0.5
-        p2.l_bol = self.lbol_radius(p2.t, p2.r)
-        p2.l_bol_sphere = 4. * self.lbol_radius(p2.t, p2.r)
-        p2.l_nonth = p2.l_bol
-        p2.dist_bb = 0.643
-        p2.dist_dm_cl = 0.643
-        p2.dist_dm_cl_plus = 0.723 - 0.643
-        p2.dist_dm_cl_minus = 0.643 - 0.567
-        #self.radius_from_lt(l_bol, 1.9e28, 0.5e28, 1972765.81704, 754292.812397, 638247.764336)
-        p2.r_plus = 5643.465323
-        p2.r_minus = 1528.715528
-        p2.l_bol_plus = 1.9e28
-        p2.l_bol_minus = 0.5e28
-        p2.p2_deg = 20.
-        p2.p2_deg_plus = 55.
-        p2.p2_deg_minus = 9.
-        p2.p3_p0 = 2.2
-        p2.p3_p0_plus = 0.2
-        p2.p3_p0_minus = 0.2
-        p2.p4 = 38.4678024056707
-        p2.w0 = 12.2
-        p2.w0_plus = p2.w0_minus = 1.8
-        p2.spectrum = 'BB + PL'
-        p2.x_ray = True
-        p2.articles = 'http://adsabs.harvard.edu/abs/2008ApJ...686..497G'
-        p2.other_articles = 'http://adsabs.harvard.edu/abs/2006A%26A...445..243W;http://adsabs.harvard.edu/abs/1997MNRAS.288..631K;http://adsabs.harvard.edu/abs/1988MNRAS.234..477L'
-        p2.x_ray_info = 'page 6, no inf -> surface conversion, r_bb calculated from L \eq 4 A \sigma T^4, 1 sigma errors taken, BB(2/3)+PL(1/3) BB+PL fits not included in database (poor statistics..., no l_nonth), A_{\perp} [last update: 2012-03-30]'
-        p2.info = 'other values for p2 and p3 in paper 40deg, 21 P0'
-        p2.cite = '\citet{2008_Gil}'
-        self.calculations(p2)
-        p2.save()
-        self.psrs.append(p2)
+
+
 
         p3 = Pulsar.objects.get(name='B0943+10', duplicate=False)
         p3.alpha = 11.58

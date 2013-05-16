@@ -2,14 +2,13 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="791c5b0b-ef7c-48c3-878a-0bb95fb1bec9" name="Default" comment="">
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/database/templates/database/calculations.xhtml" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/database/const/__init__.py" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/database/const/cgs.h" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/database/const/const.py" afterPath="" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/pulsars.db" afterPath="$PROJECT_DIR$/pulsars.db" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/database/templates/database/article.xhtml" afterPath="$PROJECT_DIR$/database/templates/database/article.xhtml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/database/templates/database/atnf.xhtml" afterPath="$PROJECT_DIR$/database/templates/database/atnf.xhtml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/database/models.py" afterPath="$PROJECT_DIR$/database/models.py" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/database/templates/database/pulsar.xhtml" afterPath="$PROJECT_DIR$/database/templates/database/pulsar.xhtml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/database/views.py" afterPath="$PROJECT_DIR$/database/views.py" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/database/templates/database/calculations.xhtml" afterPath="$PROJECT_DIR$/database/templates/database/calculations.xhtml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/database/templates/database/components.xhtml" afterPath="$PROJECT_DIR$/database/templates/database/components.xhtml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/database/data.py" afterPath="$PROJECT_DIR$/database/data.py" />
     </list>
     <ignored path="pulsars.iws" />
     <ignored path=".idea/workspace.xml" />
@@ -26,18 +25,19 @@
     <file path="/index.xhtml" changelist="791c5b0b-ef7c-48c3-878a-0bb95fb1bec9" time="1368519052503" ignored="false" />
     <file path="/all.xhtml" changelist="791c5b0b-ef7c-48c3-878a-0bb95fb1bec9" time="1368528491985" ignored="false" />
     <file path="/tiles.less" changelist="791c5b0b-ef7c-48c3-878a-0bb95fb1bec9" time="1368521245935" ignored="false" />
-    <file path="/a.dummy" changelist="791c5b0b-ef7c-48c3-878a-0bb95fb1bec9" time="1368521374515" ignored="false" />
+    <file path="/a.dummy" changelist="791c5b0b-ef7c-48c3-878a-0bb95fb1bec9" time="1368692989546" ignored="false" />
     <file path="/x-ray.xhtml" changelist="791c5b0b-ef7c-48c3-878a-0bb95fb1bec9" time="1368529588217" ignored="false" />
     <file path="/pulsars.py" changelist="791c5b0b-ef7c-48c3-878a-0bb95fb1bec9" time="1368602807654" ignored="false" />
     <file path="/x-rays.xhtml" changelist="791c5b0b-ef7c-48c3-878a-0bb95fb1bec9" time="1368604450924" ignored="false" />
-    <file path="/data.py" changelist="791c5b0b-ef7c-48c3-878a-0bb95fb1bec9" time="1368617759809" ignored="false" />
+    <file path="/data.py" changelist="791c5b0b-ef7c-48c3-878a-0bb95fb1bec9" time="1368693607959" ignored="false" />
     <file path="/atnf.xhtml" changelist="791c5b0b-ef7c-48c3-878a-0bb95fb1bec9" time="1368669169332" ignored="false" />
     <file path="/pulsar.xhtml" changelist="791c5b0b-ef7c-48c3-878a-0bb95fb1bec9" time="1368669033546" ignored="false" />
     <file path="/article.xhtml" changelist="791c5b0b-ef7c-48c3-878a-0bb95fb1bec9" time="1368669119667" ignored="false" />
     <file path="/fits.xhtml" changelist="791c5b0b-ef7c-48c3-878a-0bb95fb1bec9" time="1368618035045" ignored="false" />
-    <file path="/components.xhtml" changelist="791c5b0b-ef7c-48c3-878a-0bb95fb1bec9" time="1368667260225" ignored="false" />
+    <file path="/components.xhtml" changelist="791c5b0b-ef7c-48c3-878a-0bb95fb1bec9" time="1368682626362" ignored="false" />
     <file path="/calculations.py" changelist="791c5b0b-ef7c-48c3-878a-0bb95fb1bec9" time="1368665602410" ignored="false" />
-    <file path="/calculations.xhtml" changelist="791c5b0b-ef7c-48c3-878a-0bb95fb1bec9" time="1368673969295" ignored="false" />
+    <file path="/calculations.xhtml" changelist="791c5b0b-ef7c-48c3-878a-0bb95fb1bec9" time="1368686943102" ignored="false" />
+    <file path="/hot_spots.py" changelist="791c5b0b-ef7c-48c3-878a-0bb95fb1bec9" time="1368693030728" ignored="false" />
     <option name="TRACKING_ENABLED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -50,6 +50,11 @@
   </component>
   <component name="DaemonCodeAnalyzer">
     <disable_hints />
+  </component>
+  <component name="DatabaseView">
+    <flatten value="false" />
+    <groupTables value="false" />
+    <sortChildren value="false" />
   </component>
   <component name="ExecutionTargetManager" SELECTED_TARGET="default_target" />
   <component name="FavoritesManager">
@@ -71,7 +76,36 @@
       <file leaf-file-name="data.py" pinned="false" current="true" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/database/data.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="62" column="77" selection-start="2422" selection-end="2422" vertical-scroll-proportion="0.6657682">
+            <state line="84" column="8" selection-start="3389" selection-end="3389" vertical-scroll-proportion="0.92183286">
+              <folding>
+                <element signature="e#23#43#0" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="models.py" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/database/models.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state line="394" column="4" selection-start="24691" selection-end="24691" vertical-scroll-proportion="0.0">
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="components.xhtml" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/database/templates/database/components.xhtml">
+          <provider selected="true" editor-type-id="text-editor">
+            <state line="2" column="16" selection-start="53" selection-end="53" vertical-scroll-proportion="-1.3571428">
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="calculations.xhtml" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/database/templates/database/calculations.xhtml">
+          <provider selected="true" editor-type-id="text-editor">
+            <state line="119" column="0" selection-start="3488" selection-end="3488" vertical-scroll-proportion="-10.857142">
               <folding />
             </state>
           </provider>
@@ -95,22 +129,22 @@
   <component name="IdeDocumentHistory">
     <option name="changedFiles">
       <list>
-        <option value="$PROJECT_DIR$/database/templates/database/all.xhtml" />
         <option value="$PROJECT_DIR$/database/templates/database/x-ray.xhtml" />
         <option value="$PROJECT_DIR$/database/atnf.py" />
         <option value="$PROJECT_DIR$/database/pulsars.py" />
         <option value="$PROJECT_DIR$/database/admin.py" />
         <option value="$PROJECT_DIR$/database/templates/database/x-rays.xhtml" />
-        <option value="$PROJECT_DIR$/database/data.py" />
         <option value="$PROJECT_DIR$/database/templates/database/fits.xhtml" />
         <option value="$PROJECT_DIR$/database/templatetags/calculations.py" />
-        <option value="$PROJECT_DIR$/database/templates/database/components.xhtml" />
         <option value="$PROJECT_DIR$/database/templates/database/pulsar.xhtml" />
         <option value="$PROJECT_DIR$/database/templates/database/article.xhtml" />
         <option value="$PROJECT_DIR$/database/templates/database/atnf.xhtml" />
         <option value="$PROJECT_DIR$/database/views.py" />
-        <option value="$PROJECT_DIR$/database/templates/database/calculations.xhtml" />
         <option value="$PROJECT_DIR$/database/models.py" />
+        <option value="$PROJECT_DIR$/database/templates/database/components.xhtml" />
+        <option value="$PROJECT_DIR$/database/templates/database/calculations.xhtml" />
+        <option value="$PROJECT_DIR$/database/calcs/hot_spots.py" />
+        <option value="$PROJECT_DIR$/database/data.py" />
       </list>
     </option>
   </component>
@@ -236,6 +270,46 @@
             </PATH_ELEMENT>
             <PATH_ELEMENT>
               <option name="myItemId" value="database" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="pulsars" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="pulsars" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="database" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="templates" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="database" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="pulsars" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="pulsars" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="database" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="calcs" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
           </PATH>
@@ -470,9 +544,10 @@
     <layout>
       <window_info id="Changes" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.328125" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.328125" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
-      <window_info id="Database" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
-      <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.19772728" sideWeight="0.68267584" order="1" side_tool="false" content_ui="tabs" />
-      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.31969696" sideWeight="0.68267584" order="0" side_tool="false" content_ui="combo" />
+      <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32933104" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
+      <window_info id="Database" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32954547" sideWeight="0.68267584" order="3" side_tool="false" content_ui="tabs" />
+      <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.19772728" sideWeight="0.68267584" order="1" side_tool="false" content_ui="tabs" />
+      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.31969696" sideWeight="0.68267584" order="0" side_tool="false" content_ui="combo" />
       <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.4" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="2" side_tool="true" content_ui="tabs" />
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="true" content_ui="tabs" />
@@ -482,7 +557,6 @@
       <window_info id="Cvs" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
       <window_info id="Message" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="Ant Build" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
-      <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32933104" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Commander" active="false" anchor="right" auto_hide="false" internal_type="SLIDING" type="SLIDING" visible="false" weight="0.4" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="Hierarchy" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="2" side_tool="false" content_ui="combo" />
@@ -551,11 +625,6 @@
     <breakpoint-manager />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/database/static/database/css/table.css">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="6" column="0" selection-start="135" selection-end="135" vertical-scroll-proportion="0.33043477" />
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/database/templates/database/additional.xhtml">
       <provider selected="true" editor-type-id="text-editor">
         <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="0.0" />
@@ -594,20 +663,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/database/templates/database/calculations.xhtml">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="10" column="0" selection-start="227" selection-end="227" vertical-scroll-proportion="-5.428571">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/database/templates/database/components.xhtml">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="24" column="34" selection-start="652" selection-end="652" vertical-scroll-proportion="0.5181818">
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/database/templates/database/atnf.xhtml">
       <provider selected="true" editor-type-id="text-editor">
         <state line="170" column="21" selection-start="3991" selection-end="3991" vertical-scroll-proportion="0.113702625">
@@ -636,13 +691,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/database/models.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="412" column="13" selection-start="25598" selection-end="25598" vertical-scroll-proportion="0.49595687">
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/database/views.py">
       <provider selected="true" editor-type-id="text-editor">
         <state line="37" column="23" selection-start="1130" selection-end="1130" vertical-scroll-proportion="0.0">
@@ -652,10 +700,42 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/database/templates/database/components.xhtml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="2" column="16" selection-start="53" selection-end="53" vertical-scroll-proportion="-1.3571428">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/database/templates/database/calculations.xhtml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="119" column="0" selection-start="3488" selection-end="3488" vertical-scroll-proportion="-10.857142">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/database/models.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="394" column="4" selection-start="24691" selection-end="24691" vertical-scroll-proportion="0.0">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/database/calcs/hot_spots.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="12" column="0" selection-start="413" selection-end="413" vertical-scroll-proportion="0.6495727">
+          <folding>
+            <element signature="e#127#173#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/database/data.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="62" column="77" selection-start="2422" selection-end="2422" vertical-scroll-proportion="0.6657682">
-          <folding />
+        <state line="84" column="8" selection-start="3389" selection-end="3389" vertical-scroll-proportion="0.92183286">
+          <folding>
+            <element signature="e#23#43#0" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>

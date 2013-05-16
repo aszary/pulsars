@@ -1,16 +1,35 @@
 {% extends "database/atnf.xhtml" %}
 
+{% load calculations %}
+
 {% block calculations %}
 
     <h2>Calculations:</h2>
 
     <table class='gridtable' width="100%" >
         <tr align="center">
+            <th>b</th>
             <th>B_14 [10^14 G]</th>
             <th>B_14dp</th>
         <tr align="center">
-            <td>{{ c.b_14 }} {+{{ c.b_14_plus }} } {+{{ c.b_14_minus }}}</td>
-            <td>{{c.b_14dp}}</td>
+            <td>{{c.b|stringformat:".2f"}}</td>
+            <td>{{ c.b_14|stringformat:".2f" }} {+{{ c.b_14_plus|stringformat:".2f" }} } {+{{ c.b_14_minus|stringformat:".2f" }}}</td>
+            <td>{{c.b_14dp|stringformat:".2f"}}</td>
+        </tr>
+    </table>
+
+    <br />
+
+    <table class='gridtable' width="100%" >
+        <tr align="center">
+            <th>A [cm^2]</th>
+            <th>A_dp [cm^2]</th>
+            <th>R_dp [m]</th>
+        </tr>
+        <tr align="center">
+            <td>{{c.a|stringformat:".1e"}}</td>
+            <td>{{c.a_dp|stringformat:".1e"}}</td>
+            <td>{{c.r_dp|div:1e2|stringformat:".1f"}}</td>
         </tr>
     </table>
 
@@ -23,30 +42,14 @@
             <th>L_SD</th>
         </tr>
         <tr align="center">
-            <td>{{c.dotP_15}}</td>
-            <td>{{c.bsurf2}}</td>
-            <td>{{c.l_sd}}</td>
+            <td>{{c.dotP_15|stringformat:".1e"}}</td>
+            <td>{{c.bsurf2|stringformat:".1e"}}</td>
+            <td>{{c.l_sd|stringformat:".1e"}}</td>
         </tr>
     </table>
 
     <br />
 
-    <table class='gridtable' width="100%" >
-        <tr align="center">
-            <th></th>
-            <th></th>
-            <th></th>
-            <th></th>
-            <th></th>
-        </tr>
-        <tr align="center">
-            <td>{{c.}}</td>
-            <td>{{c.}}</td>
-            <td>{{c.}}</td>
-            <td>{{c.}}</td>
-            <td>{{c.}}</td>
-        </tr>
-    </table>
 
 
 
@@ -64,9 +67,9 @@
         <tr align="center">
             <td>{{g.cite}}</td>
             <td><a href="{{g.link}}">ads link</a></td>
-            <td>{{g.alpha}}</td>
-            <td>{{g.beta}}</td>
-            <td>{{g.rho}}</td>
+            <td>{{g.alpha|stringformat:".2f"}}</td>
+            <td>{{g.beta|stringformat:".2f"}}</td>
+            <td>{{g.rho|stringformat:".2f"}}</td>
             <td>{{g.info}}</td>
         </tr>
     </table>
@@ -86,9 +89,9 @@
         <tr align="center">
             <td>{{s.cite}}</td>
             <td><a href="{{s.link}}">ads link</a></td>
-            <td>{{s.p2}} {+{{s.p2_plus}}}{-{{s.p2_minus}}}</td>
-            <td>{{s.p3}} {+{{s.p3_plus}}}{-{{s.p3_minus}}}</td>
-            <td>{{s.p4}}</td>
+            <td>{{s.p2|stringformat:".1f"}} {+{{s.p2_plus|stringformat:".1f"}}}{-{{s.p2_minus|stringformat:".1f"}}}</td>
+            <td>{{s.p3|stringformat:".1f"}} {+{{s.p3_plus|stringformat:".1f"}}}{-{{s.p3_minus|stringformat:".1f"}}}</td>
+            <td>{{s.p4|stringformat:".1f"}}</td>
             <td>{{s.info}}</td>
         </tr>
     </table>
@@ -105,9 +108,9 @@
         </tr>
         <tr align="center">
             <td><a href="{{a.articles}}">ads link</a></td>
-            <td>{{a.best_age}}</td>
-            <td>{{a.dist_dm_cl}} {+{{a.dist_dm_cl_plus}}}{-{{a.dist_dm_cl_minus}}}</td>
-            <td>{{a.dist_pi}} {+{{a.dist_pi_plus}}}{-{{a.dist_pi_minus}}}</td>
+            <td>{{a.best_age|stringformat:".1e"}}</td>
+            <td>{{a.dist_dm_cl|stringformat:".3f"}} {+{{a.dist_dm_cl_plus|stringformat:".3f"}}}{-{{a.dist_dm_cl_minus|stringformat:".3f"}}}</td>
+            <td>{{a.dist_pi|stringformat:".3f"}} {+{{a.dist_pi_plus|stringformat:".3f"}}}{-{{a.dist_pi_minus|stringformat:".3f"}}}</td>
         </tr>
     </table>
     {% endif  %}

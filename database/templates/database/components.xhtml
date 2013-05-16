@@ -1,5 +1,6 @@
 {% extends "database/fits.xhtml" %}
 
+{% load calculations %}
 
 {% block x-ray_component %}
 
@@ -11,17 +12,21 @@
             <th>ID</th>
             <th>Num</th>
             <th>Type</th>
-            <th>R</th>
-            <th>T</th>
+            <th>Luminosity</th>
+            <th>Flux</th>
+            <th>R [m]</th>
+            <th>T [MK]</th>
             <th>PL</th>
         </tr>
         <tr align="center">
             <td>{{component.id}}</td>
             <td>{{component.num}}</td>
             <td>{{component.spec_type}}</td>
-            <td>{{component.r}}</td>
-            <td>{{component.t}}</td>
-            <td>{{component.pl}}</td>
+            <td>{{component.lum}} {+{{component.lum_plus}}}{-{{component.lum_minus}}}</td>
+            <td>{{component.flux}} {+{{component.flux_plus}}}{-{{component.flux_minus}}}</td>
+            <td>{{component.r|div:1e2}} {+{{component.r_plus|div:1e2}}}{-{{component.r_minus|div:1e2}}}</td>
+            <td>{{component.t|div:1e6}} {+{{component.t_plus|div:1e6}}}{-{{component.t_minus|div:1e6}}}</td>
+            <td>{{component.pl}} {+{{component.pl_plus}}}{-{{component.pl_minus}}}</td>
         </tr>
     </table>
     {% endif %}

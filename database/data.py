@@ -1864,423 +1864,309 @@ class Pulsars:
         self.calculate(pu, ad, ge, su, ca, ar, fi, co)
         self.save_records(pu, ad, ge, su, ca, ar, fi, co)
 
+        #      B1610-50    ####################################################
+        pu, ad, ge, su, ca, ar, fi, co = \
+            self.create_records(name='B1610-50', additional=True,
+                                calculations=True, geometry=False,
+                                subpulse=False,
+                                articles_num=2,
+                                fits_num=[0, 0], components_num=[[], []])
+        ar[0].article = 'http://adsabs.harvard.edu/abs/2000ApJ...528..436P'
+        ar[0].cite = '\cite{2000_Pivovaroff}'
+        ar[0].info = ('X-ray emission from PSR B1610-50 is not detected ??'
+                      'upper limits in Becker')
+        ar[0].dist = 7.3
+        ar[1].article = 'http://adsabs.harvard.edu/abs/2009ASSL..357...91B'
+        ar[1].cite = '\cite{2009_Becker}'
+        ar[1].info = ('')
+        self.calculate(pu, ad, ge, su, ca, ar, fi, co)
+        self.save_records(pu, ad, ge, su, ca, ar, fi, co)
+
+        #   J1846-0258     ####################################################
+        pu, ad, ge, su, ca, ar, fi, co = \
+            self.create_records(name='J1846-0258', additional=True,
+                                calculations=True, geometry=False,
+                                subpulse=False,
+                                articles_num=2,
+                                fits_num=[1, 0], components_num=[[2], []])
+        pu.comment = 'Kes 75'
+        ar[0].article = 'http://adsabs.harvard.edu/abs/2008ApJ...686..508N'
+        ar[0].cite = '\cite{2008_Ng}'
+        ar[0].info = ('page 14 ')
+        ar[0].dist = 6.
+        fi[0][0].spectrum = 'BB + PL'
+        fi[0][0].ordinal = 99
+        co[0][0][0].spec_type = 'BB'
+        co[0][0][0].r = self.radius_from_inf(0.4e5)
+        co[0][0][0].r_plus = self.radius_from_inf(0.2e5)
+        co[0][0][0].r_minus = self.radius_from_inf(0.2e5)
+        co[0][0][0].t = self.t_from_inf(self.ev_to_k(0.9e3))
+        co[0][0][0].t_plus = self.t_from_inf(self.ev_to_k(0.2e3))
+        co[0][0][0].t_minus = self.t_from_inf(self.ev_to_k(0.2e3))
+        co[0][0][0].lum = self.lbol_radius(co[0][0][0].t, co[0][0][0].r)
+        co[0][0][1].spec_type = 'PL'
+        co[0][0][1].pl = 1.9
+        co[0][0][1].pl_plus = 0.1
+        co[0][0][1].pl_minus = 0.1
+        co[0][0][1].lum = 3.1e-11 * 4. * pi * (ar[0].dist * 1e3 *
+                                               3.0857e18) ** 2.
+        co[0][0][1].lum_plus = 0.6e-11 * 4. * pi * (ar[0].dist * 1e3 *
+                                                    3.0857e18) ** 2.
+        co[0][0][1].lum_minus = 0.6e-11 * 4. * pi * (ar[0].dist * 1e3 *
+                                                    3.0857e18) ** 2.
+        ar[1].article = 'http://adsabs.harvard.edu/abs/2003ApJ...582..783H'
+        ar[1].cite = '\cite{2003_Helfand}'
+        self.calculate(pu, ad, ge, su, ca, ar, fi, co)
+        self.save_records(pu, ad, ge, su, ca, ar, fi, co)
+
+        #     B1719-37     ####################################################
+        pu, ad, ge, su, ca, ar, fi, co = \
+            self.create_records(name='B1719-37', additional=True,
+                                calculations=True, geometry=False,
+                                subpulse=False,
+                                articles_num=2,
+                                fits_num=[1, 0], components_num=[[1], []])
+        ar[0].article = 'http://adsabs.harvard.edu/abs/2004NuPhS.132..636O'
+        ar[0].cite = '\cite{2004_Oosterbroek}'
+        ar[0].info = ('page 3 (638), same fit in Beckers paper')
+        ar[0].dist = 1.84
+        fi[0][0].spectrum = 'BB'
+        fi[0][0].ordinal = 99
+        co[0][0][0].spec_type = 'BB'
+        co[0][0][0].r = self.radius_from_inf(0.31e5)
+        co[0][0][0].r_plus = self.radius_from_inf(0.51e5)
+        co[0][0][0].r_minus = self.radius_from_inf(0.16e5)
+        co[0][0][0].t = self.t_from_inf(2.7e6)
+        co[0][0][0].t_plus = self.t_from_inf(0.7e6)
+        co[0][0][0].t_minus = self.t_from_inf(0.58e6)
+        co[0][0][0].lum = self.lbol_radius(co[0][0][0].t, co[0][0][0].r)
+        ar[1].article = 'http://adsabs.harvard.edu/abs/2009ASSL..357...91B'
+        ar[1].cite = '\cite{2009_Becker}'
+        ad.dist_dm_cl = 1.835
+        ad.dist_dm_cl_plus = 1.835 - 1.564
+        ad.dist_dm_cl_minus = 2.132 - 1.835
+        self.calculate(pu, ad, ge, su, ca, ar, fi, co)
+        self.save_records(pu, ad, ge, su, ca, ar, fi, co)
+
+        #     J0631+1036   ####################################################
+        pu, ad, ge, su, ca, ar, fi, co = \
+            self.create_records(name='J0631+1036', additional=True,
+                                calculations=True, geometry=False,
+                                subpulse=False,
+                                articles_num=2,
+                                fits_num=[0, 0], components_num=[[], []])
+        ar[0].article = 'http://adsabs.harvard.edu/abs/2002astro.ph..2055K'
+        ar[0].cite = '\cite{2002_Kennea}'
+        ar[0].info = ('no X-ray radiation (different source in first paper)')
+        ar[0].dist = 6.56
+        ar[1].article = 'http://adsabs.harvard.edu/abs/2001ApJ...551L.151T'
+        ar[1].cite = '\cite{2001_Torii}'
+        self.calculate(pu, ad, ge, su, ca, ar, fi, co)
+        self.save_records(pu, ad, ge, su, ca, ar, fi, co)
+
+        #    B0823+26      ####################################################
+        pu, ad, ge, su, ca, ar, fi, co = \
+            self.create_records(name='B0823+26', additional=True,
+                                calculations=True, geometry=False,
+                                subpulse=False,
+                                articles_num=2,
+                                fits_num=[1, 0], components_num=[[1], [0]])
+        ar[0].article = 'http://adsabs.harvard.edu/abs/2009ASSL..357...91B'
+        ar[0].cite = '\cite{2009_Becker}'
+        ar[0].info = ('')
+        ar[0].dist = 0.34
+        fi[0][0].spectrum = 'PL'
+        fi[0][0].ordinal = 99
+        co[0][0][0].spec_type = 'PL'
+        co[0][0][0].pl = 1.58
+        co[0][0][0].pl_plus = 0.43
+        co[0][0][0].pl_minus = 0.33
+        co[0][0][0].lum, co[0][0][0].lum_plus, co[0][0][0].lum_minus = \
+            self.lnonth_powers([[29.36,0.69,0.56],[28.56,0.26,0.73]])
+        ar[1].article = 'http://adsabs.harvard.edu/abs/2004ApJ...615..908B'
+        ar[1].cite = '\cite{2004_Becker}'
+        self.calculate(pu, ad, ge, su, ca, ar, fi, co)
+        self.save_records(pu, ad, ge, su, ca, ar, fi, co)
+
+        #    B2224+65      ####################################################
+        pu, ad, ge, su, ca, ar, fi, co = \
+            self.create_records(name='B2224+65', additional=True,
+                                calculations=True, geometry=False,
+                                subpulse=False,
+                                articles_num=2,
+                                fits_num=[2, 0], components_num=[[1, 1], []])
+        pu.comment = 'Guitar'
+        ar[0].article = 'http://adsabs.harvard.edu/abs/2012ApJ...747...74H'
+        ar[0].cite = '\cite{2012_Hui}'
+        ar[0].info = ('page 4 (BB), page 19 (PL)')
+        ar[0].dist = 2.
+        fi[0][0].spectrum = 'BB'
+        fi[0][0].ordinal = 99
+        co[0][0][0].spec_type = 'BB'
+        co[0][0][0].r = 1.41e3 * 2.
+        co[0][0][0].r_plus = 2.8e2 * 2.
+        co[0][0][0].r_minus = 1.8e+03
+        co[0][0][0].t = self.ev_to_k(0.5e3)
+        co[0][0][0].t_plus = self.ev_to_k(0.1e3)
+        co[0][0][0].t_minus = self.ev_to_k(0.1e3)
+        co[0][0][0].lum = self.lbol_radius(co[0][0][0].t, co[0][0][0].r)
+        fi[0][1].spectrum = 'PL'
+        fi[0][1].ordinal = 99
+        co[0][1][0].spec_type = 'PL'
+        co[0][1][0].pl = 2.2
+        co[0][1][0].pl_plus = 0.2
+        co[0][1][0].pl_minus = 0.3
+        co[0][1][0].lum = 3.4e-14 * 4. * pi * (ar[0].dist * 1e3 *
+                                               3.0857e18) ** 2.
+        co[0][1][0].lum_plus = 1.7e-14 * 4. * pi * (ar[0].dist * 1e3 *
+                                                    3.0857e18) ** 2.
+        co[0][1][0].lum_minus = 1e-14 * 4. * pi * (ar[0].dist * 1e3 *
+                                                   3.0857e18) ** 2.
+        ar[1].article = 'http://adsabs.harvard.edu/abs/2007A%26A...467.1209H'
+        ar[1].cite = '\cite{2007_Hui_b}'
+        ar[1].info = ('')
+        ad.dist_dm_cl = 2.
+        ad.dist_dm_cl_plus = 1.
+        ad.dist_dm_cl_minus = 1.
+        self.calculate(pu, ad, ge, su, ca, ar, fi, co)
+        self.save_records(pu, ad, ge, su, ca, ar, fi, co)
+
+        #      B1451-68    ####################################################
+        pu, ad, ge, su, ca, ar, fi, co = \
+            self.create_records(name='B1451-68', additional=True,
+                                calculations=True, geometry=True,
+                                subpulse=False,
+                                articles_num=1,
+                                fits_num=[1], components_num=[[2]])
+        ge.article = 'http://adsabs.harvard.edu/abs/1993ApJS...85..145R'
+        ge.alpha = 37
+        ge.beta = -6.
+        ge.rho = 10.9
+        hot_spot = HotSpots(ge.alpha / 180. * pi, ge.beta / 180. * pi)
+        ca.f = hot_spot.f()
+        ca.cos_i = hot_spot.c()
+        ar[0].article = 'http://adsabs.harvard.edu/abs/2012ApJ...749..146P'
+        ar[0].cite = '\cite{2012_Posselt}'
+        ar[0].info = ('page 6')
+        ar[0].dist = 0.48
+        fi[0][0].spectrum = 'BB + PL'
+        fi[0][0].ordinal = 99
+        co[0][0][0].spec_type = 'BB'
+        co[0][0][0].r = 13.8e2
+        co[0][0][0].r_plus = 24.2e2
+        co[0][0][0].r_minus = 12.3e2
+        co[0][0][0].t = self.ev_to_k(0.35e3)
+        co[0][0][0].t_plus = self.ev_to_k(0.12e3)
+        co[0][0][0].t_minus = self.ev_to_k(0.07e3)
+        co[0][0][0].lum = self.lbol_radius(co[0][0][0].t, co[0][0][0].r)
+        co[0][0][1].spec_type = 'PL'
+        co[0][0][1].pl = 1.4
+        co[0][0][1].pl_plus = 0.5
+        co[0][0][1].pl_minus = 0.5
+        co[0][0][1].lum = 5.9e29
+        co[0][0][1].lum_plus = 4.9e29
+        co[0][0][1].lum_minus = 5e29
+        ad.dist_dm_cl = 0.459
+        ad.dist_dm_cl_plus = 0.403 - 0.459
+        ad.dist_dm_cl_minus = 0.459 - 0.415
+        ad.dist_pi = 0.48
+        ad.dist_pi_plus = 0.08
+        ad.dist_pi_minus = 0.06
+        self.calculate(pu, ad, ge, su, ca, ar, fi, co)
+        self.save_records(pu, ad, ge, su, ca, ar, fi, co)
+
+        #    J0437-4715    ####################################################
+        pu, ad, ge, su, ca, ar, fi, co = \
+            self.create_records(name='J0437-4715', additional=True,
+                                calculations=True, geometry=True,
+                                subpulse=False,
+                                articles_num=1,
+                                fits_num=[2], components_num=[[2, 1]])
+        ge.alpha = 36.
+        #ge.beta =
+        #ge.rho =
+        #hot_spot = HotSpots(ge.alpha / 180. * pi, ge.beta / 180. * pi)
+        #ca.f = hot_spot.f()
+        #ca.cos_i = hot_spot.c()
+        ar[0].article = 'http://adsabs.harvard.edu/abs/2013ApJ...762...96B'
+        ar[0].cite = '\cite{2013_Bogdanov}'
+        ar[0].info = ('page 6, many other fits in paper')
+        ar[0].dist = 0.1563
+        fi[0][0].spectrum = 'BB + PL'
+        fi[0][0].ordinal = 99
+        co[0][0][0].spec_type = 'BB'
+        co[0][0][0].r = 0.07e5
+        co[0][0][0].r_plus = 0.02e5
+        co[0][0][0].r_minus = 0.02e5
+        co[0][0][0].t = 2.9e6
+        co[0][0][0].t_plus = 0.05e6
+        co[0][0][0].t_minus = 0.06e6
+        co[0][0][0].lum = self.lbol_radius(co[0][0][0].t, co[0][0][0].r)
+        co[0][0][1].spec_type = 'PL'
+        co[0][0][1].pl = -0.11
+        co[0][0][1].pl_plus = 1.67
+        co[0][0][1].pl_minus = 1.74
+        # TODO add nonthermal luminosities
+        #co[0][0][1].lum =
+        #co[0][0][1].lum_plus =
+        #co[0][0][1].lum_minus =
+        fi[0][1].spectrum = 'BB + ??'
+        co[0][1][0].spec_type = 'BB'
+        co[0][1][0].r = 0.39e5
+        co[0][1][0].r_plus = 0.17e5
+        co[0][1][0].r_minus = 0.14e5
+        co[0][1][0].t = 1.23e6
+        co[0][1][0].t_plus = 0.05e6
+        co[0][1][0].t_minus = 0.06e6
+        co[0][1][0].lum = self.lbol_radius(co[0][1][0].t, co[0][1][0].r)
+        ad.dist_pi = 0.1563
+        ad.dist_pi_plus = 0.0013
+        ad.dist_pi_minus = 0.0013
+        self.calculate(pu, ad, ge, su, ca, ar, fi, co)
+        self.save_records(pu, ad, ge, su, ca, ar, fi, co)
+
+        #    J2021+4026    ####################################################
+        pu, ad, ge, su, ca, ar, fi, co = \
+            self.create_records(name='J2021+4026', additional=True,
+                                calculations=True, geometry=False,
+                                subpulse=False,
+                                articles_num=1,
+                                fits_num=[2], components_num=[[2, 1]])
+        ar[0].article = 'http://arxiv.org/abs/1305.0998'
+        ar[0].cite = '\cite{2013_Lin}'
+        ar[0].info = ('BB + BB (sec BB is incorrect?), BB + PL')
+        ar[0].dist = pu.Dist
+        fi[0][0].spectrum = 'BB + BB?'
+        fi[0][0].ordinal = 99
+        co[0][0][0].spec_type = 'BB'
+        co[0][0][0].r = 223e2
+        co[0][0][0].r_plus = 320e2
+        co[0][0][0].r_minus = 106e2
+        co[0][0][0].t = self.ev_to_k(0.25e3)
+        co[0][0][0].t_plus = self.ev_to_k(0.05e3)
+        co[0][0][0].t_minus = self.ev_to_k(0.05e3)
+        co[0][0][0].lum = self.lbol_radius(co[0][0][0].t, co[0][0][0].r)
+        co[0][0][1].spec_type = 'BB'
+        co[0][0][1].r = 3.6e2
+        co[0][0][1].r_plus = 6.4e2
+        co[0][0][1].r_minus = 2.5e2
+        co[0][0][1].t = self.ev_to_k(1.4e3)
+        co[0][0][1].t_plus = self.ev_to_k(1.8e3)
+        co[0][0][1].t_minus = self.ev_to_k(0.6e3)
+        co[0][0][1].lum = self.lbol_radius(co[0][0][0].t, co[0][0][0].r)
+        fi[0][1].spectrum = 'PL'
+        co[0][1][0].spec_type = 'PL'
+        co[0][1][0].pl = 1.2
+        co[0][1][0].pl_plus = 1.7
+        co[0][1][0].pl_minus = 1.2
+        # TODO add nonthermal luminosities
+        #co[0][1][0].lum =
+        #co[0][1][0].lum_plus =
+        #co[0][1][0].lum_minus =
+        self.calculate(pu, ad, ge, su, ca, ar, fi, co)
+        self.save_records(pu, ad, ge, su, ca, ar, fi, co)
+
         t = '''
-        #          ####################################################
-        pu, ad, ge, su, ca, ar, fi, co = \
-            self.create_records(name='', additional=True,
-                                calculations=True, geometry=False,
-                                subpulse=False,
-                                articles_num=2,
-                                fits_num=[1,1], components_num=[[2], [0]])
-        ge.alpha =
-        ge.beta =
-        ge.rho =
-        hot_spot = HotSpots(ge.alpha / 180. * pi, ge.beta / 180. * pi)
-        ca.f = hot_spot.f()
-        ca.cos_i = hot_spot.c()
-        ar[0].num = 0
-        ar[0].article = ''
-        ar[0].cite = '\cite{}'
-        ar[0].info = ()
-        ar[0].dist =
-        fi[0][0].spectrum = 'BB + PL'
-        co[0][0][0].spec_type = 'BB'
-        co[0][0][0].r =
-        co[0][0][0].r_plus =
-        co[0][0][0].r_minus =
-        co[0][0][0].t =
-        co[0][0][0].t_plus =
-        co[0][0][0].t_minus =
-        co[0][0][0].lum = self.lbol_radius(co[0][0][0].t, co[0][0][0].r)
-        co[0][0][1].spec_type = 'PL'
-        co[0][0][1].pl =
-        co[0][0][1].pl_plus =
-        co[0][0][1].pl_minus =
-        co[0][0][1].lum =
-        co[0][0][1].lum_plus =
-        co[0][0][1].lum_minus =
-        ar[1].article = ''
-        ar[1].cite = '\cite{}'
-        ar[1].info = ('')
-        ad.dist_dm_cl =
-        ad.dist_dm_cl_plus=
-        ad.dist_dm_cl_minus =
-        ad.articles = ''
-        su.p2 =
-        su.p2_plus =
-        su.p2_minus =
-        su.p3 =
-        su.p3_plus =
-        su.p3_minus =
-        su.p4 =
-        su.article = ''
-        self.calculate(pu, ad, ge, su, ca, ar, fi, co)
-        self.save_records(pu, ad, ge, su, ca, ar, fi, co)
-
-        #          ####################################################
-        pu, ad, ge, su, ca, ar, fi, co = \
-            self.create_records(name='', additional=True,
-                                calculations=True, geometry=False,
-                                subpulse=False,
-                                articles_num=2,
-                                fits_num=[1,1], components_num=[[2], [0]])
-        ge.alpha =
-        ge.beta =
-        ge.rho =
-        hot_spot = HotSpots(ge.alpha / 180. * pi, ge.beta / 180. * pi)
-        ca.f = hot_spot.f()
-        ca.cos_i = hot_spot.c()
-        ar[0].num = 0
-        ar[0].article = ''
-        ar[0].cite = '\cite{}'
-        ar[0].info = ()
-        ar[0].dist =
-        fi[0][0].spectrum = 'BB + PL'
-        co[0][0][0].spec_type = 'BB'
-        co[0][0][0].r =
-        co[0][0][0].r_plus =
-        co[0][0][0].r_minus =
-        co[0][0][0].t =
-        co[0][0][0].t_plus =
-        co[0][0][0].t_minus =
-        co[0][0][0].lum = self.lbol_radius(co[0][0][0].t, co[0][0][0].r)
-        co[0][0][1].spec_type = 'PL'
-        co[0][0][1].pl =
-        co[0][0][1].pl_plus =
-        co[0][0][1].pl_minus =
-        co[0][0][1].lum =
-        co[0][0][1].lum_plus =
-        co[0][0][1].lum_minus =
-        ar[1].article = ''
-        ar[1].cite = '\cite{}'
-        ar[1].info = ('')
-        ad.dist_dm_cl =
-        ad.dist_dm_cl_plus=
-        ad.dist_dm_cl_minus =
-        ad.articles = ''
-        su.p2 =
-        su.p2_plus =
-        su.p2_minus =
-        su.p3 =
-        su.p3_plus =
-        su.p3_minus =
-        su.p4 =
-        su.article = ''
-        self.calculate(pu, ad, ge, su, ca, ar, fi, co)
-        self.save_records(pu, ad, ge, su, ca, ar, fi, co)
-
-        #          ####################################################
-        pu, ad, ge, su, ca, ar, fi, co = \
-            self.create_records(name='', additional=True,
-                                calculations=True, geometry=False,
-                                subpulse=False,
-                                articles_num=2,
-                                fits_num=[1,1], components_num=[[2], [0]])
-        ge.alpha =
-        ge.beta =
-        ge.rho =
-        hot_spot = HotSpots(ge.alpha / 180. * pi, ge.beta / 180. * pi)
-        ca.f = hot_spot.f()
-        ca.cos_i = hot_spot.c()
-        ar[0].num = 0
-        ar[0].article = ''
-        ar[0].cite = '\cite{}'
-        ar[0].info = ()
-        ar[0].dist =
-        fi[0][0].spectrum = 'BB + PL'
-        co[0][0][0].spec_type = 'BB'
-        co[0][0][0].r =
-        co[0][0][0].r_plus =
-        co[0][0][0].r_minus =
-        co[0][0][0].t =
-        co[0][0][0].t_plus =
-        co[0][0][0].t_minus =
-        co[0][0][0].lum = self.lbol_radius(co[0][0][0].t, co[0][0][0].r)
-        co[0][0][1].spec_type = 'PL'
-        co[0][0][1].pl =
-        co[0][0][1].pl_plus =
-        co[0][0][1].pl_minus =
-        co[0][0][1].lum =
-        co[0][0][1].lum_plus =
-        co[0][0][1].lum_minus =
-        ar[1].article = ''
-        ar[1].cite = '\cite{}'
-        ar[1].info = ('')
-        ad.dist_dm_cl =
-        ad.dist_dm_cl_plus=
-        ad.dist_dm_cl_minus =
-        ad.articles = ''
-        su.p2 =
-        su.p2_plus =
-        su.p2_minus =
-        su.p3 =
-        su.p3_plus =
-        su.p3_minus =
-        su.p4 =
-        su.article = ''
-        self.calculate(pu, ad, ge, su, ca, ar, fi, co)
-        self.save_records(pu, ad, ge, su, ca, ar, fi, co)
-
-        #          ####################################################
-        pu, ad, ge, su, ca, ar, fi, co = \
-            self.create_records(name='', additional=True,
-                                calculations=True, geometry=False,
-                                subpulse=False,
-                                articles_num=2,
-                                fits_num=[1,1], components_num=[[2], [0]])
-        ge.alpha =
-        ge.beta =
-        ge.rho =
-        hot_spot = HotSpots(ge.alpha / 180. * pi, ge.beta / 180. * pi)
-        ca.f = hot_spot.f()
-        ca.cos_i = hot_spot.c()
-        ar[0].num = 0
-        ar[0].article = ''
-        ar[0].cite = '\cite{}'
-        ar[0].info = ()
-        ar[0].dist =
-        fi[0][0].spectrum = 'BB + PL'
-        co[0][0][0].spec_type = 'BB'
-        co[0][0][0].r =
-        co[0][0][0].r_plus =
-        co[0][0][0].r_minus =
-        co[0][0][0].t =
-        co[0][0][0].t_plus =
-        co[0][0][0].t_minus =
-        co[0][0][0].lum = self.lbol_radius(co[0][0][0].t, co[0][0][0].r)
-        co[0][0][1].spec_type = 'PL'
-        co[0][0][1].pl =
-        co[0][0][1].pl_plus =
-        co[0][0][1].pl_minus =
-        co[0][0][1].lum =
-        co[0][0][1].lum_plus =
-        co[0][0][1].lum_minus =
-        ar[1].article = ''
-        ar[1].cite = '\cite{}'
-        ar[1].info = ('')
-        ad.dist_dm_cl =
-        ad.dist_dm_cl_plus=
-        ad.dist_dm_cl_minus =
-        ad.articles = ''
-        su.p2 =
-        su.p2_plus =
-        su.p2_minus =
-        su.p3 =
-        su.p3_plus =
-        su.p3_minus =
-        su.p4 =
-        su.article = ''
-        self.calculate(pu, ad, ge, su, ca, ar, fi, co)
-        self.save_records(pu, ad, ge, su, ca, ar, fi, co)
-
-        #          ####################################################
-        pu, ad, ge, su, ca, ar, fi, co = \
-            self.create_records(name='', additional=True,
-                                calculations=True, geometry=False,
-                                subpulse=False,
-                                articles_num=2,
-                                fits_num=[1,1], components_num=[[2], [0]])
-        ge.alpha =
-        ge.beta =
-        ge.rho =
-        hot_spot = HotSpots(ge.alpha / 180. * pi, ge.beta / 180. * pi)
-        ca.f = hot_spot.f()
-        ca.cos_i = hot_spot.c()
-        ar[0].num = 0
-        ar[0].article = ''
-        ar[0].cite = '\cite{}'
-        ar[0].info = ()
-        ar[0].dist =
-        fi[0][0].spectrum = 'BB + PL'
-        co[0][0][0].spec_type = 'BB'
-        co[0][0][0].r =
-        co[0][0][0].r_plus =
-        co[0][0][0].r_minus =
-        co[0][0][0].t =
-        co[0][0][0].t_plus =
-        co[0][0][0].t_minus =
-        co[0][0][0].lum = self.lbol_radius(co[0][0][0].t, co[0][0][0].r)
-        co[0][0][1].spec_type = 'PL'
-        co[0][0][1].pl =
-        co[0][0][1].pl_plus =
-        co[0][0][1].pl_minus =
-        co[0][0][1].lum =
-        co[0][0][1].lum_plus =
-        co[0][0][1].lum_minus =
-        ar[1].article = ''
-        ar[1].cite = '\cite{}'
-        ar[1].info = ('')
-        ad.dist_dm_cl =
-        ad.dist_dm_cl_plus=
-        ad.dist_dm_cl_minus =
-        ad.articles = ''
-        su.p2 =
-        su.p2_plus =
-        su.p2_minus =
-        su.p3 =
-        su.p3_plus =
-        su.p3_minus =
-        su.p4 =
-        su.article = ''
-        self.calculate(pu, ad, ge, su, ca, ar, fi, co)
-        self.save_records(pu, ad, ge, su, ca, ar, fi, co)
-
-        #          ####################################################
-        pu, ad, ge, su, ca, ar, fi, co = \
-            self.create_records(name='', additional=True,
-                                calculations=True, geometry=False,
-                                subpulse=False,
-                                articles_num=2,
-                                fits_num=[1,1], components_num=[[2], [0]])
-        ge.alpha =
-        ge.beta =
-        ge.rho =
-        hot_spot = HotSpots(ge.alpha / 180. * pi, ge.beta / 180. * pi)
-        ca.f = hot_spot.f()
-        ca.cos_i = hot_spot.c()
-        ar[0].num = 0
-        ar[0].article = ''
-        ar[0].cite = '\cite{}'
-        ar[0].info = ()
-        ar[0].dist =
-        fi[0][0].spectrum = 'BB + PL'
-        co[0][0][0].spec_type = 'BB'
-        co[0][0][0].r =
-        co[0][0][0].r_plus =
-        co[0][0][0].r_minus =
-        co[0][0][0].t =
-        co[0][0][0].t_plus =
-        co[0][0][0].t_minus =
-        co[0][0][0].lum = self.lbol_radius(co[0][0][0].t, co[0][0][0].r)
-        co[0][0][1].spec_type = 'PL'
-        co[0][0][1].pl =
-        co[0][0][1].pl_plus =
-        co[0][0][1].pl_minus =
-        co[0][0][1].lum =
-        co[0][0][1].lum_plus =
-        co[0][0][1].lum_minus =
-        ar[1].article = ''
-        ar[1].cite = '\cite{}'
-        ar[1].info = ('')
-        ad.dist_dm_cl =
-        ad.dist_dm_cl_plus=
-        ad.dist_dm_cl_minus =
-        ad.articles = ''
-        su.p2 =
-        su.p2_plus =
-        su.p2_minus =
-        su.p3 =
-        su.p3_plus =
-        su.p3_minus =
-        su.p4 =
-        su.article = ''
-        self.calculate(pu, ad, ge, su, ca, ar, fi, co)
-        self.save_records(pu, ad, ge, su, ca, ar, fi, co)
-
-        #          ####################################################
-        pu, ad, ge, su, ca, ar, fi, co = \
-            self.create_records(name='', additional=True,
-                                calculations=True, geometry=False,
-                                subpulse=False,
-                                articles_num=2,
-                                fits_num=[1,1], components_num=[[2], [0]])
-        ge.alpha =
-        ge.beta =
-        ge.rho =
-        hot_spot = HotSpots(ge.alpha / 180. * pi, ge.beta / 180. * pi)
-        ca.f = hot_spot.f()
-        ca.cos_i = hot_spot.c()
-        ar[0].num = 0
-        ar[0].article = ''
-        ar[0].cite = '\cite{}'
-        ar[0].info = ()
-        ar[0].dist =
-        fi[0][0].spectrum = 'BB + PL'
-        co[0][0][0].spec_type = 'BB'
-        co[0][0][0].r =
-        co[0][0][0].r_plus =
-        co[0][0][0].r_minus =
-        co[0][0][0].t =
-        co[0][0][0].t_plus =
-        co[0][0][0].t_minus =
-        co[0][0][0].lum = self.lbol_radius(co[0][0][0].t, co[0][0][0].r)
-        co[0][0][1].spec_type = 'PL'
-        co[0][0][1].pl =
-        co[0][0][1].pl_plus =
-        co[0][0][1].pl_minus =
-        co[0][0][1].lum =
-        co[0][0][1].lum_plus =
-        co[0][0][1].lum_minus =
-        ar[1].article = ''
-        ar[1].cite = '\cite{}'
-        ar[1].info = ('')
-        ad.dist_dm_cl =
-        ad.dist_dm_cl_plus=
-        ad.dist_dm_cl_minus =
-        ad.articles = ''
-        su.p2 =
-        su.p2_plus =
-        su.p2_minus =
-        su.p3 =
-        su.p3_plus =
-        su.p3_minus =
-        su.p4 =
-        su.article = ''
-        self.calculate(pu, ad, ge, su, ca, ar, fi, co)
-        self.save_records(pu, ad, ge, su, ca, ar, fi, co)
-
-        #          ####################################################
-        pu, ad, ge, su, ca, ar, fi, co = \
-            self.create_records(name='', additional=True,
-                                calculations=True, geometry=False,
-                                subpulse=False,
-                                articles_num=2,
-                                fits_num=[1,1], components_num=[[2], [0]])
-        ge.alpha =
-        ge.beta =
-        ge.rho =
-        hot_spot = HotSpots(ge.alpha / 180. * pi, ge.beta / 180. * pi)
-        ca.f = hot_spot.f()
-        ca.cos_i = hot_spot.c()
-        ar[0].num = 0
-        ar[0].article = ''
-        ar[0].cite = '\cite{}'
-        ar[0].info = ()
-        ar[0].dist =
-        fi[0][0].spectrum = 'BB + PL'
-        co[0][0][0].spec_type = 'BB'
-        co[0][0][0].r =
-        co[0][0][0].r_plus =
-        co[0][0][0].r_minus =
-        co[0][0][0].t =
-        co[0][0][0].t_plus =
-        co[0][0][0].t_minus =
-        co[0][0][0].lum = self.lbol_radius(co[0][0][0].t, co[0][0][0].r)
-        co[0][0][1].spec_type = 'PL'
-        co[0][0][1].pl =
-        co[0][0][1].pl_plus =
-        co[0][0][1].pl_minus =
-        co[0][0][1].lum =
-        co[0][0][1].lum_plus =
-        co[0][0][1].lum_minus =
-        ar[1].article = ''
-        ar[1].cite = '\cite{}'
-        ar[1].info = ('')
-        ad.dist_dm_cl =
-        ad.dist_dm_cl_plus=
-        ad.dist_dm_cl_minus =
-        ad.articles = ''
-        su.p2 =
-        su.p2_plus =
-        su.p2_minus =
-        su.p3 =
-        su.p3_plus =
-        su.p3_minus =
-        su.p4 =
-        su.article = ''
-        self.calculate(pu, ad, ge, su, ca, ar, fi, co)
-        self.save_records(pu, ad, ge, su, ca, ar, fi, co)
-
         #          ####################################################
         pu, ad, ge, su, ca, ar, fi, co = \
             self.create_records(name='', additional=True,
@@ -2459,10 +2345,14 @@ class Pulsars:
                 if fi[i][j].ordinal is not None:
                     ii, jj = (i, j)
                     break
-        for k in xrange(len(co[ii][jj])):
-            if co[ii][jj][k].spec_type == 'BB' and co[ii][jj][k].r < ca.r_dp:
-                co_bb = co[ii][jj][k]
-                break
+        try:
+            for k in xrange(len(co[ii][jj])):
+                if co[ii][jj][k].spec_type == 'BB' and co[ii][jj][k].r < ca.r_dp:
+                    co_bb = co[ii][jj][k]
+                    break
+        except IndexError:
+            print 'Warning no X-ray components for %s ...' % pu.Name
+
         if co_bb is not None and co_bb.r is not None:
             ca.a = pi * co_bb.r ** 2.
             ca.b = ca.a_dp / ca.a

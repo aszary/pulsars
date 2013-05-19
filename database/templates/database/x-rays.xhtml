@@ -19,13 +19,31 @@
 </head>
 <body>
 
+
     <div class="tiles" style="width:800px;">
         <div class="tilerow">
-            {% for psr in psrs %}
+            <h2> b > 1 </h2>
+            {% for psr, calc in psrs_calcs %}
+                {%  if calc.b > 0 %}
                 <div class="tile one orangebg"> <a href="/database/psrs/{{ psr.id }}"><img src="{% static "database/images/psr.png" %}" /><p>{{ psr.Name }}</p></a></div>
+                {% endif %}
             {% endfor %}
         </div>
+        <div class="tilerow">
+
+            <br />
+            <h2> b < 1 or unde. </h2>
+            {% for psr, calc in psrs_calcs %}
+                {%  if calc.b == None %}
+                <div class="tile one orangebg"> <a href="/database/psrs/{{ psr.id }}"><img src="{% static "database/images/psr.png" %}" /><p>{{ psr.Name }}</p></a></div>
+                {% endif %}
+            {% endfor %}
+
+        </div>
     </div>
+
+
+
 
 
 </body>

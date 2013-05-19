@@ -452,4 +452,3 @@ class Calculations(models.Model):
     b_14_minus = models.FloatField(null=True, blank=True,
                                    verbose_name='surface magnetic '
                                    'field strength err - [in 10^14 G]')
-

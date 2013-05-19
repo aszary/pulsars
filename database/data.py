@@ -243,7 +243,7 @@ class Pulsars:
         co[0][1][0].lum_plus = 0.8e29
         co[0][1][0].lum_minus = 0.7e29
         ar[1].article = 'http://adsabs.harvard.edu/abs/2006ApJ...636..406K'
-        ar[1].cite = '\cite{2006_Kargaltsev}}'
+        ar[1].cite = '\cite{2006_Kargaltsev}'
         ad.dist_dm_cl = 0.631
         ad.dist_dm_cl_plus = 0.744 - 0.631
         ad.dist_dm_cl_minus = 0.631 - 0.527
@@ -429,7 +429,6 @@ class Pulsars:
                                 articles_num=1,
                                 fits_num=[2], components_num=[[1, 1]])
         pu.comment = 'sol'
-        ar[0].num = 0
         ar[0].article = 'http://adsabs.harvard.edu/abs/2007ApJ...664.1072P'
         ar[0].cite = '\cite{2007_Pavlov}'
         ar[0].info = ('page 2, 8, PL, BB? recalculated from 500pc to 447pc '
@@ -2220,6 +2219,23 @@ class Pulsars:
         self.save_records(pu, ad, ge, su, ca, ar, fi, co)
         # '''
 
+    def sort_ordinals(self):
+        fits = XrayFit.objects.filter(ordinal__gte=0).order_by('article_id__psr_id__RaJD')
+        ord = 1
+        # why I need to use res?!
+        res = fits[0]
+        res.ordinal = 1
+        res.save()
+        for i in xrange(1, len(fits)):
+            if (fits[i-1].article_id.psr_id.Name !=
+                fits[i].article_id.psr_id.Name):
+                ord += 1
+                fits[i].ordinal = ord
+            else:
+                fits[i].ordinal = ord
+            fits[i].save()
+
+
     def remove_all(self):
         ca = Calculations.objects.all()
         for c in ca:
@@ -2413,8 +2429,9 @@ class Pulsars:
 
 def main():
     p = Pulsars()
-    p.add_pulsars()
     #p.remove_all()
+    p.add_pulsars()
+    p.sort_ordinals()
     print 'Bye'
 
 

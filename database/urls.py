@@ -10,5 +10,6 @@ urlpatterns = patterns('',
     url(r'^x-ray', views.x_ray, name='x-ray'),
     url(r'^download', views.get_atnf, name='get_atnf'),
     url(r'^sync', views.sync_atnf, name='sync_atnf'),
+    url(r'^latex/table_bb', views.table_bb, name='table_bb'),
 )
 

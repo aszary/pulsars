@@ -14,9 +14,23 @@
 <br />
 Simbad link: <a href="{{psr.simbad_link}}">{{psr.Name}}</a>
 <br />
+<h2>Additional data:</h2>
+
     {% block calculations %}{% endblock %}
 <br />
-    {% block x-ray_article %}{% endblock %}
+    <h2>X-ray articles:</h2>
+    {% for a in psr.xray_articles.all %}
+        {% block x-ray_article %}{% endblock %}
+        {% for f in a.fits.all %}
+            {% block x-ray_fit %}{% endblock %}
+            {% for c in f.components.all %}
+                {% block x-ray_component %}{% endblock %}
+            {% endfor %}
+        {% endfor %}
+        <br />
+    {% endfor %}
+    End new
+<br />
 
 
 </body>

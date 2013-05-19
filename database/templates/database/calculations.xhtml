@@ -4,7 +4,9 @@
 
 {% block calculations %}
 
-    <h2>Calculations:</h2>
+    <h3>Calculations:</h3>
+
+    {% for ca in cas %}
 
     <table class='gridtable' width="100%" >
         <tr align="center">
@@ -12,13 +14,11 @@
             <th>B_14 [10^14 G]</th>
             <th>B_14dp</th>
         <tr align="center">
-            <td>{{c.b|stringformat:".2f"}}</td>
-            <td>{{ c.b_14|stringformat:".2f" }} {+{{ c.b_14_plus|stringformat:".2f" }} } {+{{ c.b_14_minus|stringformat:".2f" }}}</td>
-            <td>{{c.b_14dp|stringformat:".2f"}}</td>
+            <td>{{ca.b|stringformat:".2f"}}</td>
+            <td>{{ ca.b_14|stringformat:".2f" }} {+{{ ca.b_14_plus|stringformat:".2f" }} } {+{{ ca.b_14_minus|stringformat:".2f" }}}</td>
+            <td>{{ca.b_14dp|stringformat:".2f"}}</td>
         </tr>
     </table>
-
-    <br />
 
     <table class='gridtable' width="100%" >
         <tr align="center">
@@ -27,13 +27,11 @@
             <th>R_dp [m]</th>
         </tr>
         <tr align="center">
-            <td>{{c.a|stringformat:".1e"}}</td>
-            <td>{{c.a_dp|stringformat:".1e"}}</td>
-            <td>{{c.r_dp|div:1e2|stringformat:".1f"}}</td>
+            <td>{{ca.a|stringformat:".1e"}}</td>
+            <td>{{ca.a_dp|stringformat:".1e"}}</td>
+            <td>{{ca.r_dp|div:1e2|stringformat:".1f"}}</td>
         </tr>
     </table>
-
-    <br />
 
     <table class='gridtable' width="100%" >
         <tr align="center">
@@ -42,19 +40,17 @@
             <th>L_SD</th>
         </tr>
         <tr align="center">
-            <td>{{c.dotP_15|stringformat:".1e"}}</td>
-            <td>{{c.bsurf2|stringformat:".1e"}}</td>
-            <td>{{c.l_sd|stringformat:".1e"}}</td>
+            <td>{{ca.dotP_15|stringformat:".1e"}}</td>
+            <td>{{ca.bsurf2|stringformat:".1e"}}</td>
+            <td>{{ca.l_sd|stringformat:".1e"}}</td>
         </tr>
     </table>
+    {% endfor %}
 
     <br />
 
-
-
-
-    <h2>Additional data:</h2>
-    {% if g != None  %}
+    {% for ge in ges %}
+    <h3>Geometry:</h3>
     <table class='gridtable' width="100%" >
         <tr align="center">
             <th>Cite</th>
@@ -65,18 +61,18 @@
             <th>info</th>
         </tr>
         <tr align="center">
-            <td>{{g.cite}}</td>
-            <td><a href="{{g.link}}">ads link</a></td>
-            <td>{{g.alpha|stringformat:".2f"}}</td>
-            <td>{{g.beta|stringformat:".2f"}}</td>
-            <td>{{g.rho|stringformat:".2f"}}</td>
-            <td>{{g.info}}</td>
+            <td>{{ge.cite}}</td>
+            <td><a href="{{ge.link}}">ads link</a></td>
+            <td>{{ge.alpha|stringformat:".2f"}}</td>
+            <td>{{ge.beta|stringformat:".2f"}}</td>
+            <td>{{ge.rho|stringformat:".2f"}}</td>
+            <td>{{ge.info}}</td>
         </tr>
     </table>
-    {% endif  %}
+    {% endfor %}
 
-
-    {% if s != None  %}
+    {% for su in sus %}
+    <h3>Subpulse:</h3>
     <table class='gridtable' width="100%" >
         <tr align="center">
             <th>Cite</th>
@@ -87,18 +83,18 @@
             <th>info</th>
         </tr>
         <tr align="center">
-            <td>{{s.cite}}</td>
-            <td><a href="{{s.link}}">ads link</a></td>
-            <td>{{s.p2|stringformat:".1f"}} {+{{s.p2_plus|stringformat:".1f"}}}{-{{s.p2_minus|stringformat:".1f"}}}</td>
-            <td>{{s.p3|stringformat:".1f"}} {+{{s.p3_plus|stringformat:".1f"}}}{-{{s.p3_minus|stringformat:".1f"}}}</td>
-            <td>{{s.p4|stringformat:".1f"}}</td>
-            <td>{{s.info}}</td>
+            <td>{{su.cite}}</td>
+            <td><a href="{{su.link}}">ads link</a></td>
+            <td>{{su.p2|stringformat:".1f"}} {+{{su.p2_plus|stringformat:".1f"}}}{-{{su.p2_minus|stringformat:".1f"}}}</td>
+            <td>{{su.p3|stringformat:".1f"}} {+{{su.p3_plus|stringformat:".1f"}}}{-{{su.p3_minus|stringformat:".1f"}}}</td>
+            <td>{{su.p4|stringformat:".1f"}}</td>
+            <td>{{su.info}}</td>
         </tr>
     </table>
-    {% endif  %}
+    {% endfor %}
 
-
-    {% if a != None  %}
+    {% for ad in ads %}
+    <h3>More:</h3>
     <table class='gridtable' width="100%" >
         <tr align="center">
             <th>link</th>
@@ -107,14 +103,12 @@
             <th>Dist Pi [kpc]</th>
         </tr>
         <tr align="center">
-            <td><a href="{{a.articles}}">ads link</a></td>
-            <td>{{a.best_age|stringformat:".1e"}}</td>
-            <td>{{a.dist_dm_cl|stringformat:".3f"}} {+{{a.dist_dm_cl_plus|stringformat:".3f"}}}{-{{a.dist_dm_cl_minus|stringformat:".3f"}}}</td>
-            <td>{{a.dist_pi|stringformat:".3f"}} {+{{a.dist_pi_plus|stringformat:".3f"}}}{-{{a.dist_pi_minus|stringformat:".3f"}}}</td>
+            <td><a href="{{ad.articles}}">ads link</a></td>
+            <td>{{ad.best_age|stringformat:".1e"}}</td>
+            <td>{{ad.dist_dm_cl|stringformat:".3f"}} {+{{ad.dist_dm_cl_plus|stringformat:".3f"}}}{-{{ad.dist_dm_cl_minus|stringformat:".3f"}}}</td>
+            <td>{{ad.dist_pi|stringformat:".3f"}} {+{{ad.dist_pi_plus|stringformat:".3f"}}}{-{{ad.dist_pi_minus|stringformat:".3f"}}}</td>
         </tr>
     </table>
-    {% endif  %}
-
-
+    {% endfor  %}
 
 {% endblock %}

@@ -1,7 +1,209 @@
 from django.db import models
 
 
-# Create your models here.
+class XrayComponent(models.Model):
+    def __unicode__(self):
+        result = "XrayComponent ID : %d (%s) NUM : %d" % (self.id,
+            self.spec_type, self.num)
+        return result
+    psr_id = models.ForeignKey('Pulsar', null=True, default=None)
+    spec_types = (('BB', 'blackbody'), ('PL', 'power-law'),
+                 ('AT', 'atmospheric'), ('OT', 'other'))
+    num = models.IntegerField(null=True, blank=True,
+                              verbose_name='number of component')
+    spec_type = models.CharField(choices=spec_types, max_length=200)
+    lum = models.FloatField(null=True, blank=True,
+                            verbose_name='luminosity [erg s^-1]')
+    lum_plus = models.FloatField(null=True, blank=True,
+                                 verbose_name='luminosity error + [erg s^-1]')
+    lum_minus = models.FloatField(null=True, blank=True,
+                                  verbose_name='luminosity error - [erg s^-1]')
+    flux = models.FloatField(null=True, blank=True,
+                             verbose_name='flux [erg s^-1 cm^-2]')
+    flux_plus = models.FloatField(null=True, blank=True,
+                                  verbose_name='flux error + [erg s^-1 cm^-2]')
+    flux_minus = models.FloatField(null=True, blank=True,
+                                   verbose_name='flux error -[erg s^-1 cm^-2]')
+    t = models.FloatField(null=True, blank=True,
+                          verbose_name='temperature [K]')
+    t_plus = models.FloatField(null=True, blank=True,
+                               verbose_name='temperature err +[K]')
+    t_minus = models.FloatField(null=True, blank=True,
+                                verbose_name='temperature err - [K]')
+    r = models.FloatField(null=True, blank=True,
+                          verbose_name='radius from BB fit [cm]')
+    r_plus = models.FloatField(null=True, blank=True,
+                               verbose_name='radius err + [cm]')
+    r_minus = models.FloatField(null=True, blank=True,
+                                verbose_name='radius err - [cm]')
+    pl = models.FloatField(null=True, blank=True,
+                           verbose_name='photon index')
+    pl_plus = models.FloatField(null=True, blank=True,
+                                verbose_name='photon index err +')
+    pl_minus = models.FloatField(null=True, blank=True,
+                                 verbose_name='photon index err -')
+    b_atm = models.FloatField(null=True, blank=True,
+                              verbose_name='Field strength -atmospheric model')
+
+
+class XrayFit(models.Model):
+    def __unicode__(self):
+        result = "XrayFit ID : %d (%s) NUM : %d" % (self.id, self.spectrum,
+                                                     self.num)
+        return result
+    psr_id = models.ForeignKey('Pulsar', null=True, default=None)
+    components = models.ManyToManyField(XrayComponent)
+    ordinal = models.IntegerField(null=True, blank=True,
+                                  verbose_name='Ordinal number'
+                                  ' in X-ray catalogue, sorted by name')
+    num = models.IntegerField(null=True, blank=True,
+                              verbose_name='0 the highest'
+                              ' (included in most graphs/tables)')
+    spectrum = models.CharField(default='', max_length=200, verbose_name='type'
+                                ' spectrum fit e.g. BB + PL')
+
+
+class XrayArticle(models.Model):
+    def __unicode__(self):
+        result = "XrayArticle (%s)" % self.cite
+        return result
+    fits = models.ManyToManyField(XrayFit)
+    num = models.IntegerField(null=True, blank=True,
+                              verbose_name='0 the highest'
+                              ' (included in most graphs/tables)')
+    article = models.TextField(default='', verbose_name='article link')
+    cite = models.TextField(default="\cite{}", verbose_name='latex citation')
+    info = models.TextField(default="", verbose_name='Additional information')
+    dist = models.FloatField(null=True, blank=True,
+                             verbose_name='distance used to '
+                             'calculate luminosities [in kpc]')
+
+
+class Geometry(models.Model):
+    def __unicode__(self):
+        result = "Geometry ID : %d" % (self.id)
+        return result
+    num = models.IntegerField(null=True, blank=True, verbose_name='Number')
+    article = models.TextField(default='', verbose_name='article link')
+    cite = models.TextField(default="\cite{}", verbose_name='latex citation')
+    info = models.TextField(default="", verbose_name='Additional information')
+    alpha = models.FloatField(null=True, blank=True,
+                              verbose_name='inclination angle of '
+                              'magnetic axis [deg]')
+    beta = models.FloatField(null=True, blank=True,
+                             verbose_name='impact parameter [deg]')
+    rho = models.FloatField(null=True, blank=True,
+                            verbose_name='opening angle [deg]')
+
+
+class Subpulse(models.Model):
+    def __unicode__(self):
+        result = "Subpulse ID : %d " % (self.id)
+        return result
+    num = models.IntegerField(null=True, blank=True, verbose_name='Number')
+    article = models.TextField(default='', verbose_name='article link')
+    cite = models.TextField(default="\cite{}", verbose_name='latex citation')
+    info = models.TextField(default="", verbose_name='Additional information')
+    p2 = models.FloatField(null=True, blank=True,
+                           verbose_name='characteristic spaces between '
+                                        'subpulses [deg]')
+    p2_plus = models.FloatField(null=True, blank=True,
+                                verbose_name='characteristic spaces between '
+                                             'subpulses error + [deg]')
+    p2_minus = models.FloatField(null=True, blank=True,
+                                 verbose_name='characteristic '
+                                 'spaces between subpulses error - [deg]')
+    p3 = models.FloatField(null=True, blank=True,
+                           verbose_name='period at which a '
+                           'pattern of pulses crosses the pulse window [P0]')
+    p3_plus = models.FloatField(null=True, blank=True,
+                                verbose_name='period at which a '
+                                'pattern of pulses crosses the pulse window'
+                                ' error + [P0]')
+    p3_minus = models.FloatField(null=True, blank=True,
+                                 verbose_name='period at which a '
+                                 'pattern of pulses crosses the pulse window '
+                                 'error - [P0]')
+    p4 = models.FloatField(null=True, blank=True,
+                           verbose_name='Does it exist?')
+
+
+class Additional(models.Model):
+    """ all additional pulsar information, dist_dm,
+    """
+    def __unicode__(self):
+        result = "Additional ID : %d " % (self.id)
+        return result
+    num = models.IntegerField(null=True, blank=True, verbose_name='Number')
+    articles = models.TextField(default='', verbose_name='article links (;)')
+    best_age = models.FloatField(null=True, blank=True,
+                                 verbose_name='Best estimate of age')
+    dist_dm_cl = models.FloatField(null=True, blank=True,
+                                   verbose_name='CL model [kpc]')
+    dist_dm_cl_plus = models.FloatField(null=True, blank=True,
+                                        verbose_name='err + [kpc]')
+    dist_dm_cl_minus = models.FloatField(null=True, blank=True,
+                                         verbose_name='err - [kpc]')
+    dist_pi = models.FloatField(null=True, blank=True,
+                                verbose_name='parallax distance [kpc]')
+    dist_pi_plus = models.FloatField(null=True, blank=True,
+                                     verbose_name='parallax distance error + [kpc]')
+    dist_pi_minus = models.FloatField(null=True, blank=True,
+                                      verbose_name='parallax distance error - '
+                                                   '[kpc]')
+
+
+class Calculation(models.Model):
+    """ all my calculations stored in database
+    """
+    def __unicode__(self):
+        result = "Calculation ID : %d " % (self.id)
+        return result
+    num = models.IntegerField(null=True, blank=True, verbose_name='Number')
+    # geometry
+    cos_i = models.FloatField(null=True, blank=True,
+                              verbose_name='time averaged cosine '
+                              'of the angle between the magnetic axis and the '
+                              'line of sight')
+    f = models.FloatField(null=True, blank=True,
+                          verbose_name='flux correction factor for'
+                          ' x-ray data (similar to cos_theta, but with '
+                          'gravitational bending)')
+    # checks
+    dotP_15 = models.FloatField(null=True, blank=True,
+                                verbose_name='period derivative')
+    bsurf2 = models.FloatField(null=True, blank=True,
+                               verbose_name='surface magnetic field'
+                               'at the pole')
+    b_14dp = models.FloatField(null=True, blank=True,
+                               verbose_name='surface magnetic '
+                               'field at the pole [in units of 10^14 G]')
+    l_sd = models.FloatField(null=True, blank=True,
+                             verbose_name='Spin-down luminosity -'
+                             ' same as edot')
+    #  X-rays
+    a_dp = models.FloatField(null=True, blank=True,
+                             verbose_name='area of conventional '
+                             'polar cap [cm^2]')
+    r_dp = models.FloatField(null=True, blank=True,
+                             verbose_name='radius of conventional'
+                             'polar cap [cm]')
+    a = models.FloatField(null=True, blank=True,
+                          verbose_name='actual polar cap (from '
+                          'best X-ray obs [cm^2]')
+    b = models.FloatField(null=True, blank=True,
+                          verbose_name='b = B_s / B_d = A_dp / A')
+    b_14 = models.FloatField(null=True, blank=True,
+                             verbose_name='surface magnetic field '
+                             'strength [in 10^14 G]')
+    b_14_plus = models.FloatField(null=True, blank=True,
+                                  verbose_name='surface magnetic '
+                                  'field strength err + [in 10^14 G]')
+    b_14_minus = models.FloatField(null=True, blank=True,
+                                   verbose_name='surface magnetic '
+                                   'field strength err - [in 10^14 G]')
+
+
 class Pulsar(models.Model):
     """ using same notation (for attributes) as in ATNF database
     """
@@ -251,204 +453,11 @@ class Pulsar(models.Model):
     comment = models.TextField(default="", verbose_name='Short comment  e.g. '
                                'popular pulsar name: Crab')
 
-
-class XrayArticle(models.Model):
-    def __unicode__(self):
-        result = "%s   (%s)" % (self.psr_id.Name, self.cite)
-        return result
-    psr_id = models.ForeignKey(Pulsar, null=True, default=None)
-    num = models.IntegerField(null=True, blank=True,
-                              verbose_name='0 the highest'
-                              ' (included in most graphs/tables)')
-    article = models.TextField(default='', verbose_name='article link')
-    cite = models.TextField(default="\cite{}", verbose_name='latex citation')
-    info = models.TextField(default="", verbose_name='Additional information')
-    dist = models.FloatField(null=True, blank=True,
-                             verbose_name='distance used to '
-                             'calculate luminosities [in kpc]')
+    xray_articles = models.ManyToManyField(XrayArticle)
+    geometries = models.ManyToManyField(Geometry)
+    subpulses = models.ManyToManyField(Subpulse)
+    additionals = models.ManyToManyField(Additional)
+    calculations = models.ManyToManyField(Calculation)
 
 
-class XrayFit(models.Model):
-    def __unicode__(self):
-        result = "%s   (%s)   %s (%d)" % (self.article_id.psr_id.Name,
-                  self.article_id.cite, self.spectrum, self.num)
-        return result
-    article_id = models.ForeignKey(XrayArticle, null=True, default=None)
-    ordinal = models.IntegerField(null=True, blank=True,
-                                  verbose_name='Ordinal number'
-                                  ' in X-ray catalogue, sorted by name')
-    num = models.IntegerField(null=True, blank=True,
-                              verbose_name='0 the highest'
-                              ' (included in most graphs/tables)')
-    spectrum = models.CharField(default='', max_length=200, verbose_name='type'
-                                ' spectrum fit e.g. BB + PL')
 
-
-class XrayComponent(models.Model):
-    def __unicode__(self):
-        result = "%s   (%s)   Spec num (%d)  %s[%d]" % (self.fit_id.article_id.psr_id.Name,
-                  self.fit_id.article_id.cite, self.fit_id.num,
-                  self.spec_type, self.num)
-        return result
-    spec_types = (('BB', 'blackbody'), ('PL', 'power-law'),
-                 ('AT', 'atmospheric'), ('OT', 'other'))
-    fit_id = models.ForeignKey(XrayFit, null=True, default=None)
-    num = models.IntegerField(null=True, blank=True,
-                              verbose_name='number of component')
-    spec_type = models.CharField(choices=spec_types, max_length=200)
-    lum = models.FloatField(null=True, blank=True,
-                            verbose_name='luminosity [erg s^-1]')
-    lum_plus = models.FloatField(null=True, blank=True,
-                                 verbose_name='luminosity error + [erg s^-1]')
-    lum_minus = models.FloatField(null=True, blank=True,
-                                  verbose_name='luminosity error - [erg s^-1]')
-    flux = models.FloatField(null=True, blank=True,
-                             verbose_name='flux [erg s^-1 cm^-2]')
-    flux_plus = models.FloatField(null=True, blank=True,
-                                  verbose_name='flux error + [erg s^-1 cm^-2]')
-    flux_minus = models.FloatField(null=True, blank=True,
-                                   verbose_name='flux error -[erg s^-1 cm^-2]')
-    t = models.FloatField(null=True, blank=True,
-                          verbose_name='temperature [K]')
-    t_plus = models.FloatField(null=True, blank=True,
-                               verbose_name='temperature err +[K]')
-    t_minus = models.FloatField(null=True, blank=True,
-                                verbose_name='temperature err - [K]')
-    r = models.FloatField(null=True, blank=True,
-                          verbose_name='radius from BB fit [cm]')
-    r_plus = models.FloatField(null=True, blank=True,
-                               verbose_name='radius err + [cm]')
-    r_minus = models.FloatField(null=True, blank=True,
-                                verbose_name='radius err - [cm]')
-    pl = models.FloatField(null=True, blank=True,
-                           verbose_name='photon index')
-    pl_plus = models.FloatField(null=True, blank=True,
-                                verbose_name='photon index err +')
-    pl_minus = models.FloatField(null=True, blank=True,
-                                 verbose_name='photon index err -')
-    b_atm = models.FloatField(null=True, blank=True,
-                              verbose_name='Field strength -atmospheric model')
-
-
-class Geometry(models.Model):
-    def __unicode__(self):
-        result = "%s   ID : %d " % (self.psr_id.Name, self.psr_id_id)
-        return result
-    psr_id = models.ForeignKey(Pulsar, null=True, default=None)
-    article = models.TextField(default='', verbose_name='article link')
-    cite = models.TextField(default="\cite{}", verbose_name='latex citation')
-    info = models.TextField(default="", verbose_name='Additional information')
-    alpha = models.FloatField(null=True, blank=True,
-                              verbose_name='inclination angle of '
-                              'magnetic axis [deg]')
-    beta = models.FloatField(null=True, blank=True,
-                             verbose_name='impact parameter [deg]')
-    rho = models.FloatField(null=True, blank=True,
-                            verbose_name='opening angle [deg]')
-
-
-class Subpulses(models.Model):
-    def __unicode__(self):
-        result = "%s   ID : %d " % (self.psr_id.Name, self.psr_id_id)
-        return result
-    psr_id = models.ForeignKey(Pulsar, null=True, default=None)
-    article = models.TextField(default='', verbose_name='article link')
-    cite = models.TextField(default="\cite{}", verbose_name='latex citation')
-    info = models.TextField(default="", verbose_name='Additional information')
-    p2 = models.FloatField(null=True, blank=True,
-                           verbose_name='characteristic spaces between '
-                                        'subpulses [deg]')
-    p2_plus = models.FloatField(null=True, blank=True,
-                                verbose_name='characteristic spaces between '
-                                             'subpulses error + [deg]')
-    p2_minus = models.FloatField(null=True, blank=True,
-                                 verbose_name='characteristic '
-                                 'spaces between subpulses error - [deg]')
-    p3 = models.FloatField(null=True, blank=True,
-                           verbose_name='period at which a '
-                           'pattern of pulses crosses the pulse window [P0]')
-    p3_plus = models.FloatField(null=True, blank=True,
-                                verbose_name='period at which a '
-                                'pattern of pulses crosses the pulse window'
-                                ' error + [P0]')
-    p3_minus = models.FloatField(null=True, blank=True,
-                                 verbose_name='period at which a '
-                                 'pattern of pulses crosses the pulse window '
-                                 'error - [P0]')
-    p4 = models.FloatField(null=True, blank=True,
-                           verbose_name='Does it exist?')
-
-
-class Additional(models.Model):
-    """ all additional pulsar information, dist_dm,
-    """
-    def __unicode__(self):
-        result = "%s   ID : %d " % (self.psr_id.Name, self.psr_id_id)
-        return result
-    psr_id = models.ForeignKey(Pulsar, null=True, default=None)
-    articles = models.TextField(default='', verbose_name='article links (;)')
-    best_age = models.FloatField(null=True, blank=True,
-                                 verbose_name='Best estimate of age')
-    dist_dm_cl = models.FloatField(null=True, blank=True,
-                                   verbose_name='CL model [kpc]')
-    dist_dm_cl_plus = models.FloatField(null=True, blank=True,
-                                        verbose_name='err + [kpc]')
-    dist_dm_cl_minus = models.FloatField(null=True, blank=True,
-                                         verbose_name='err - [kpc]')
-    dist_pi = models.FloatField(null=True, blank=True,
-                                verbose_name='parallax distance [kpc]')
-    dist_pi_plus = models.FloatField(null=True, blank=True,
-                                     verbose_name='parallax distance error + [kpc]')
-    dist_pi_minus = models.FloatField(null=True, blank=True,
-                                      verbose_name='parallax distance error - '
-                                                   '[kpc]')
-
-class Calculations(models.Model):
-    """ all my calculations stored in database
-    """
-    def __unicode__(self):
-        result = "%s   ID : %d " % (self.psr_id.Name, self.psr_id_id)
-        return result
-    # geometry
-    psr_id = models.ForeignKey(Pulsar, null=True, default=None, blank=True)
-    cos_i = models.FloatField(null=True, blank=True,
-                              verbose_name='time averaged cosine '
-                              'of the angle between the magnetic axis and the '
-                              'line of sight')
-    f = models.FloatField(null=True, blank=True,
-                          verbose_name='flux correction factor for'
-                          ' x-ray data (similar to cos_theta, but with '
-                          'gravitational bending)')
-    # checks
-    dotP_15 = models.FloatField(null=True, blank=True,
-                                verbose_name='period derivative')
-    bsurf2 = models.FloatField(null=True, blank=True,
-                               verbose_name='surface magnetic field'
-                               'at the pole')
-    b_14dp = models.FloatField(null=True, blank=True,
-                               verbose_name='surface magnetic '
-                               'field at the pole [in units of 10^14 G]')
-    l_sd = models.FloatField(null=True, blank=True,
-                             verbose_name='Spin-down luminosity -'
-                             ' same as edot')
-    #  X-rays
-    a_dp = models.FloatField(null=True, blank=True,
-                             verbose_name='area of conventional '
-                             'polar cap [cm^2]')
-    r_dp = models.FloatField(null=True, blank=True,
-                             verbose_name='radius of conventional'
-                             'polar cap [cm]')
-    a = models.FloatField(null=True, blank=True,
-                          verbose_name='actual polar cap (from '
-                          'best X-ray obs [cm^2]')
-    b = models.FloatField(null=True, blank=True,
-                          verbose_name='b = B_s / B_d = A_dp / A')
-    b_14 = models.FloatField(null=True, blank=True,
-                             verbose_name='surface magnetic field '
-                             'strength [in 10^14 G]')
-    b_14_plus = models.FloatField(null=True, blank=True,
-                                  verbose_name='surface magnetic '
-                                  'field strength err + [in 10^14 G]')
-    b_14_minus = models.FloatField(null=True, blank=True,
-                                   verbose_name='surface magnetic '
-                                   'field strength err - [in 10^14 G]')

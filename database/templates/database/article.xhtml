@@ -2,9 +2,6 @@
 
 {% block x-ray_article %}
 
-<h2>X-ray articles:</h2>
-
-{% for article in articles %}
     <table class='gridtable' width="100%" >
 
         <tr align="center">
@@ -16,17 +13,14 @@
             <th>Dist [kpc]</th>
         </tr>
         <tr align="center">
-            <td>{{article.id}}</td>
-            <td>{{article.num}}</td>
-            <td>{{article.cite}}</td>
+            <td>{{a.id}}</td>
+            <td>{{a.num}}</td>
+            <td>{{a.cite}}</td>
             <td><a target="_blank" href="{{article.article}}"> ads link</a></td>
-            <td>{{article.info}}</td>
-            <td>{{article.dist}}</td>
+            <td>{{a.info}}</td>
+            <td>{{a.dist}}</td>
         </tr>
     </table>
-
-    {% block x-ray_fit %}{% endblock %}
-{% endfor %}
 
 
 {% endblock %}

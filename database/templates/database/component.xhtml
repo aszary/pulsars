@@ -1,0 +1,31 @@
+{% extends "database/fit.xhtml" %}
+
+{% load calculations %}
+
+{% block x-ray_component %}
+
+    <table class='gridtable' width="80%" >
+
+        <tr align="center">
+            <th>ID</th>
+            <th>Num</th>
+            <th>Type</th>
+            <th>Luminosity</th>
+            <th>Flux</th>
+            <th>R [m]</th>
+            <th>T [MK]</th>
+            <th>PL</th>
+        </tr>
+        <tr align="center">
+            <td>{{c.id}}</td>
+            <td>{{c.num}}</td>
+            <td>{{c.spec_type}}</td>
+            <td>{{c.lum|stringformat:".1e"}} {+{{c.lum_plus|stringformat:".1e"}}}{-{{c.lum_minus|stringformat:".1e"}}}</td>
+            <td>{{c.flux|stringformat:".1e"}} {+{{c.flux_plus|stringformat:".1e"}}}{-{{c.flux_minus|stringformat:".1e"}}}</td>
+            <td>{{c.r|div:1e2|stringformat:".1f"}} {+{{c.r_plus|div:1e2|stringformat:".1f"}}}{-{{c.r_minus|div:1e2|stringformat:".1f"}}}</td>
+            <td>{{c.t|div:1e6|stringformat:".1f"}} {+{{c.t_plus|div:1e6|stringformat:".1f"}}}{-{{c.t_minus|div:1e6|stringformat:".1f"}}}</td>
+            <td>{{c.pl|stringformat:".2f"}} {+{{c.pl_plus|stringformat:".2f"}}}{-{{c.pl_minus|stringformat:".2f"}}}</td>
+        </tr>
+    </table>
+
+{% endblock %}

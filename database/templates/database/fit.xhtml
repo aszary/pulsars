@@ -1,0 +1,21 @@
+{% extends "database/article.xhtml" %}
+
+{% block x-ray_fit %}
+
+    <table class='gridtable' width="90%" >
+
+        <tr align="center">
+            <th>ID</th>
+            <th>Num</th>
+            <th>Ordinal</th>
+            <th>Spectrum</th>
+        </tr>
+        <tr align="center">
+            <td>{{f.id}}</td>
+            <td>{{f.num}}</td>
+            <td>{{f.ordinal}}</td>
+            <td>{{f.spectrum}}</td>
+        </tr>
+    </table>
+
+{% endblock %}

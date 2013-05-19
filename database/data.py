@@ -9,7 +9,7 @@ os.environ.setdefault("DJANGO_SETTINGS_MODULE", "pulsars.settings")
 from django.core.exceptions import ObjectDoesNotExist
 #import pulsars.settings
 from database.models import Pulsar, XrayArticle, Additional, XrayFit, \
-    XrayComponent, Geometry, Subpulses, Calculations
+    XrayComponent, Geometry, Subpulse, Calculation
 from database.calcs.const.const import CGS as c
 from database.calcs.hot_spots import HotSpots
 
@@ -24,108 +24,144 @@ class Pulsars:
     def add_pulsars(self):
 
         #    J0108-1431    ####################################################
-        pu, ad, ge, su, ca, ar, fi, co = \
-            self.create_records(name='J0108-1431', additional=True,
-                                calculations=True, articles_num=2,
-                                fits_num=[1,2], components_num=[[2],[1,1]])
-        ar[0].num = 0
-        ar[0].article = 'http://adsabs.harvard.edu/abs/2012ApJ...761..117P'
-        ar[0].cite = '\cite{2012_Posselt}'
-        ar[0].info = ('page 4, 5(lum) BB + PL (51 counts) no inf -> surface '
+        p = Pulsar.objects.get(Name='J0108-1431')
+        a1 = self.article_get_add(p, num=0)
+        a1.article = 'http://adsabs.harvard.edu/abs/2012ApJ...761..117P'
+        a1.cite = '\cite{2012_Posselt}'
+        a1.info = ('page 4, 5(lum) BB + PL (51 counts) no inf -> surface '
                       'conversion, '
                       'second BB fit taken (0.73 c. d.), A_{\perp} here '
                       '[last update: 2013-05-15]')
-        ar[0].dist = 0.210
-        fi[0][0].spectrum = 'BB + PL'
-        fi[0][0].ordinal = 99
-        co[0][0][0].spec_type = 'BB'
-        co[0][0][0].r = 43e2
-        co[0][0][0].r_plus = 24e2
-        co[0][0][0].r_minus = 14e2
-        co[0][0][0].t = self.ev_to_k(0.11e3)
-        co[0][0][0].t_plus = self.ev_to_k(0.03e3)
-        co[0][0][0].t_minus = self.ev_to_k(0.01e3)
-        co[0][0][0].lum = self.lbol_radius(co[0][0][0].t, co[0][0][0].r)
-        co[0][0][1].spec_type = 'PL'
-        co[0][0][1].pl = 3.1
-        co[0][0][1].pl_plus = 0.5
-        co[0][0][1].pl_minus = 0.2
-        co[0][0][1].lum = 3.7e28
-        co[0][0][1].lum_plus = 3.2e28
-        co[0][0][1].lum_minus = 2.1e28
+        a1.dist = 0.210
+        a1.save()
+        f1 = self.fit_get_add(a1, 0)
+        f1.spectrum = 'BB + PL'
+        f1.ordinal = 99
+        f1.psr_id = p
+        f1.save()
+        c1 = self.component_get_add(f1, 0)
+        c1.spec_type = 'BB'
+        c1.r = 43e2
+        c1.r_plus = 24e2
+        c1.r_minus = 14e2
+        c1.t = self.ev_to_k(0.11e3)
+        c1.t_plus = self.ev_to_k(0.03e3)
+        c1.t_minus = self.ev_to_k(0.01e3)
+        c1.lum = self.lbol_radius(c1.t, c1.r)
+        c1.psr_id = p
+        c1.save()
+        c2 = self.component_get_add(f1, 1)
+        c2.spec_type = 'PL'
+        c2.pl = 3.1
+        c2.pl_plus = 0.5
+        c2.pl_minus = 0.2
+        c2.lum = 3.7e28
+        c2.lum_plus = 3.2e28
+        c2.lum_minus = 2.1e28
+        c2.psr_id = p
+        c2.save()
+        ad = self.additional_get_add(p, num=0)
         ad.dist_dm_cl = 0.184
         ad.dist_dm_cl_plus = 0.194 - 0.184
         ad.dist_dm_cl_minus = 0.184 - 0.167
         ad.dist_pi = 0.210
         ad.dist_pi_plus = 0.090
         ad.dist_pi_minus = 0.050
-        ar[1].num = 1
-        ar[1].article = 'http://adsabs.harvard.edu/abs/2009ApJ...691..458P'
-        ar[1].cite = '\cite{2009_Pavlov}'
-        ar[1].info = ('page 4, BB, PL (not enought counts for BB+PL) '
-                      'recalculated for distance 0.184')
-        ar[1].dist = 0.184
-        fi[1][0].spectrum = 'BB'
-        co[1][0][0].spec_type = 'BB'
-        co[1][0][0].r = self.radius_from_area(53e4) * (184./130.)
-        co[1][0][0].r_plus = self.radius_from_area(32e4) * (184./130.)
-        co[1][0][0].r_minus = self.radius_from_area(21e4)* (184./130.)
-        co[1][0][0].t = self.ev_to_k(279)
-        co[1][0][0].t_plus = self.ev_to_k(35)
-        co[1][0][0].t_minus = self.ev_to_k(28)
-        co[1][0][0].lum = self.lbol_radius(co[1][0][0].t, co[1][0][0].r)
-        fi[1][1].spectrum = 'PL'
-        co[1][1][0].spec_type = 'PL'
-        co[1][1][0].pl = 2.2
-        co[1][1][0].pl_plus = 0.31
-        co[1][1][0].pl_minus = 0.28
-        co[1][1][0].lum = 2.1e28
-        co[1][1][0].lum_plus = 3.8e+28
-        self.calculate(pu, ad, ge, su, ca, ar, fi, co)
-        self.save_records(pu, ad, ge, su, ca, ar, fi, co)
+        ad.save()
+        a2 = self.article_get_add(p, num=1)
+        a2.article = 'http://adsabs.harvard.edu/abs/2009ApJ...691..458P'
+        a2.cite = '\cite{2009_Pavlov}'
+        a2.info = ('page 4, BB, PL (not enought counts for BB+PL) '
+                 'recalculated for distance 0.184')
+        a2.dist = 0.184
+        a2.save()
+        f1 = self.fit_get_add(a2, num=0)
+        f1.spectrum = 'BB'
+        f1.psr_id = p
+        f1.save()
+        c1 = self.component_get_add(f1, 0)
+        c1.spec_type = 'BB'
+        c1.r = self.radius_from_area(53e4) * (184./130.)
+        c1.r_plus = self.radius_from_area(32e4) * (184./130.)
+        c1.r_minus = self.radius_from_area(21e4)* (184./130.)
+        c1.t = self.ev_to_k(279)
+        c1.t_plus = self.ev_to_k(35)
+        c1.t_minus = self.ev_to_k(28)
+        c1.lum = self.lbol_radius(c1.t, c1.r)
+        c1.psr_id = p
+        c1.save()
+        f2 = self.fit_get_add(a2, num=1)
+        f2.spectrum = 'PL'
+        f2.psr_id = p
+        f2.save()
+        c1 = self.component_get_add(f2, num=0)
+        c1.spec_type = 'PL'
+        c1.pl = 2.2
+        c1.pl_plus = 0.31
+        c1.pl_minus = 0.28
+        c1.lum = 2.1e28
+        c1.lum_plus = 3.8e+28
+        c1.psr_id = p
+        c1.save()
+        self.calculate(p)
 
         #     B0628-28     ####################################################
-        pu, ad, ge, su, ca, ar, fi, co = \
-            self.create_records(name='B0628-28', additional=True,
-                                calculations=True, geometry=True,
-                                subpulse=True,
-                                articles_num=2,
-                                fits_num=[1, 0], components_num=[[2], []])
+        p = Pulsar.objects.get(Name='B0628-28')
+        ge = self.geometry_get_add(p, 0)
         ge.alpha = 70.
         ge.beta = -12.
+        ge.save()
         hot_spot = HotSpots(ge.alpha / 180. * pi, ge.beta / 180. * pi)
+        ca = self.calculation_get_add(p, 0)
         ca.f = hot_spot.f()
         ca.cos_i = hot_spot.c()
-        ar[0].num = 0
-        ar[0].article = 'http://adsabs.harvard.edu/abs/2005ApJ...630L..57'
-        ar[0].cite = '\cite{2005_Tepedelenl}'
-        ar[0].info = ('page 5, no inf -> surface conversion, looks like '
-                      'A_{\perp}, P3 not mesured')
-        ar[0].dist = 1.45
-        fi[0][0].spectrum = 'BB + PL'
-        fi[0][0].ordinal = 99
-        co[0][0][0].spec_type = 'BB'
-        co[0][0][0].r = 59e2 / ca.f ** 0.5
-        co[0][0][0].r_plus = 65e2 / ca.f ** 0.5
-        co[0][0][0].r_minus = 46e2 / ca.f ** 0.5
-        co[0][0][0].t = 3.28e6
-        co[0][0][0].t_plus = 1.31e6
-        co[0][0][0].t_minus = 0.62e6
-        co[0][0][0].lum = self.lbol_radius(co[0][0][0].t, co[0][0][0].r)
-        co[0][0][1].spec_type = 'PL'
-        co[0][0][1].pl = 2.98
-        co[0][0][1].pl_plus = 0.91
-        co[0][0][1].pl_minus = 0.65
-        co[0][0][1].lum = 1.67e30
-        co[0][0][1].lum_plus = 0.91e30
-        co[0][0][1].lum_minus = 0.62e30
-        ar[1].article = 'http://adsabs.harvard.edu/abs/2005ApJ...633..367B'
-        ar[1].cite = '\cite{2005_Becker}'
-        ar[1].info = ('...')
+        ca.save()
+        ca.save()
+        a1 = self.article_get_add(p, 0)
+        a1.article = 'http://adsabs.harvard.edu/abs/2005ApJ...630L..57'
+        a1.cite = '\cite{2005_Tepedelenl}'
+        a1.info = ('page 5, no inf -> surface conversion, looks like '
+                   'A_{\perp}, P3 not mesured')
+        a1.dist = 1.45
+        a1.save()
+        f1 = self.fit_get_add(a1, 0)
+        f1.spectrum = 'BB + PL'
+        f1.ordinal = 99
+        f1.psr_id = p
+        f1.save()
+        c1 = self.component_get_add(f1, 0)
+        c1.spec_type = 'BB'
+        c1.r = 59e2 / ca.f ** 0.5
+        c1.r_plus = 65e2 / ca.f ** 0.5
+        c1.r_minus = 46e2 / ca.f ** 0.5
+        c1.t = 3.28e6
+        c1.t_plus = 1.31e6
+        c1.t_minus = 0.62e6
+        c1.lum = self.lbol_radius(c1.t, c1.r)
+        c1.psr_id = p
+        c1.save()
+        c2 = self.component_get_add(f1, 1)
+        c2.spec_type = 'PL'
+        c2.pl = 2.98
+        c2.pl_plus = 0.91
+        c2.pl_minus = 0.65
+        c2.lum = 1.67e30
+        c2.lum_plus = 0.91e30
+        c2.lum_minus = 0.62e30
+        c2.psr_id = p
+        c2.save()
+        a2 = self.article_get_add(p, 1)
+        a2.article = 'http://adsabs.harvard.edu/abs/2005ApJ...633..367B'
+        a2.cite = '\cite{2005_Becker}'
+        a2.info = ('...')
+        a2.save()
+        ad = self.additional_get_add(p, 0)
         ad.dist_dm_cl = 1.444
         ad.dist_dm_cl_plus= 1.444 - 1.167
         ad.dist_dm_cl_minus = 1.709 - 1.444
         ad.articles = 'http://adsabs.harvard.edu/abs/2005ApJ...633..367B'
+        ad.save()
+        su = self.subpulse_get_add(p, 0)
         su.p2 = 30.
         su.p2_plus = 60.
         su.p2_minus = 6.
@@ -134,9 +170,10 @@ class Pulsars:
         su.p3_minus = 1.
         su.p4 = 8.71093017305
         su.article = 'http://adsabs.harvard.edu/abs/2006A%26A...445..243W'
-        self.calculate(pu, ad, ge, su, ca, ar, fi, co)
-        self.save_records(pu, ad, ge, su, ca, ar, fi, co)
+        su.save()
+        self.calculate(p)
 
+        '''
         #    B0834+06      ####################################################
         pu, ad, ge, su, ca, ar, fi, co = \
             self.create_records(name='B0834+06', additional=True,
@@ -2165,6 +2202,7 @@ class Pulsars:
         self.calculate(pu, ad, ge, su, ca, ar, fi, co)
         self.save_records(pu, ad, ge, su, ca, ar, fi, co)
 
+        '''
         t = '''
         #          ####################################################
         pu, ad, ge, su, ca, ar, fi, co = \
@@ -2219,16 +2257,80 @@ class Pulsars:
         self.save_records(pu, ad, ge, su, ca, ar, fi, co)
         # '''
 
+    def article_get_add(self, p,  num):
+        try:
+            a = p.xray_articles.get(num=num)
+        except ObjectDoesNotExist:
+            a = XrayArticle(num=num)
+        a.save()
+        p.xray_articles.add(a)
+        return a
+
+    def fit_get_add(self, a, num):
+        try:
+            f = a.fits.get(num=num)
+        except ObjectDoesNotExist:
+            f = XrayFit(num=num)
+        f.save()
+        a.fits.add(f)
+        return f
+
+    def component_get_add(self, f, num):
+        try:
+            c = f.components.get(num=num)
+        except ObjectDoesNotExist:
+            c = XrayComponent(num=num)
+        c.save()
+        f.components.add(c)
+        return c
+
+    def additional_get_add(self, p,  num):
+        try:
+            a = p.additionals.get(num=num)
+        except ObjectDoesNotExist:
+            a = Additional(num=num)
+        a.save()
+        p.additionals.add(a)
+        return a
+
+    def geometry_get_add(self, p,  num):
+        try:
+            g = p.geometries.get(num=num)
+        except ObjectDoesNotExist:
+            g = Geometry(num=num)
+        g.save()
+        p.geometries.add(g)
+        return g
+
+    def subpulse_get_add(self, p,  num):
+        try:
+            s = p.subpulses.get(num=num)
+        except ObjectDoesNotExist:
+            s = Subpulse(num=num)
+        s.save()
+        p.subpulses.add(s)
+        return s
+
+    def calculation_get_add(self, p,  num):
+        try:
+            c = p.calculations.get(num=num)
+        except ObjectDoesNotExist:
+            c = Calculation(num=num)
+        c.save()
+        p.calculations.add(c)
+        return c
+
+
     def sort_ordinals(self):
-        fits = XrayFit.objects.filter(ordinal__gte=0).order_by('article_id__psr_id__RaJD')
+
+        fits = XrayFit.objects.filter(ordinal__gte=0,).order_by('psr_id__RaJD')
         ord = 1
         # why I need to use res?!
         res = fits[0]
         res.ordinal = 1
         res.save()
         for i in xrange(1, len(fits)):
-            if (fits[i-1].article_id.psr_id.Name !=
-                fits[i].article_id.psr_id.Name):
+            if (fits[i-1].psr_id.Name !=fits[i].psr_id.Name):
                 ord += 1
                 fits[i].ordinal = ord
             else:
@@ -2237,7 +2339,7 @@ class Pulsars:
 
 
     def remove_all(self):
-        ca = Calculations.objects.all()
+        ca = Calculation.objects.all()
         for c in ca:
             c.delete()
         xc = XrayComponent.objects.all()
@@ -2252,138 +2354,53 @@ class Pulsars:
         ge = Geometry.objects.all()
         for g in ge:
             g.delete()
-        su = Subpulses.objects.all()
+        su = Subpulse.objects.all()
         for s in su:
             s.delete()
         xa = XrayArticle.objects.all()
         for x in xa:
             x.delete()
 
-    def create_records(self, name='', additional=False, geometry=False,
-                       subpulse=False, calculations=False, articles_num=2,
-                       fits_num=[2, 1], components_num=[[3, 2], [2]]):
-        """ too much tea?
-        """
+    def calculate(self, p, num=0):
 
-        p0 = Pulsar.objects.get(Name=name)
-        if additional is True:
-            try:
-                a0 = Additional.objects.get(psr_id=p0)
-            except ObjectDoesNotExist:
-                a0 = Additional(psr_id=p0)
-        else:
-            a0 = None
-        if geometry is True:
-            try:
-                g0 = Geometry.objects.get(psr_id=p0)
-            except ObjectDoesNotExist:
-                g0 = Geometry(psr_id=p0)
-        else:
-            g0 = None
-        if subpulse is True:
-            try:
-                s0 = Subpulses.objects.get(psr_id=p0)
-            except ObjectDoesNotExist:
-                s0 = Subpulses(psr_id=p0)
-        else:
-            s0 = None
-        if calculations is True:
-            try:
-                ca = Calculations.objects.get(psr_id=p0)
-            except ObjectDoesNotExist:
-                ca = Calculations(psr_id=p0)
-        else:
-            ca = None
+        ca = self.calculation_get_add(p, num=num)
 
-        articles = []
-        fits = []
-        components = []
-
-        for i in xrange(articles_num):
-            try:
-                x0 = XrayArticle.objects.get(psr_id=p0, num=i)
-            except ObjectDoesNotExist:
-                x0 = XrayArticle(psr_id=p0, num=i)
-            x0.save()
-            articles.append(x0)
-            fits.append([])
-            components.append([])
-            for j in xrange(fits_num[i]):
-                try:
-                    f0 = XrayFit.objects.get(article_id=x0, num=j)
-                except ObjectDoesNotExist:
-                    f0 = XrayFit(article_id=x0, num=j)
-                fits[-1].append(f0)
-                f0.save()
-                components[-1].append([])
-                for k in xrange(components_num[i][j]):
-                    try:
-                        c0 = XrayComponent.objects.get(fit_id=f0, num=k)
-                    except ObjectDoesNotExist:
-                        c0 = XrayComponent(fit_id=f0, num=k)
-                    components[-1][-1].append(c0)
-
-        return p0, a0, g0, s0, ca, articles, fits, components
-
-    def save_records(self, pu, ad, ge, su, ca, ar, fi, co):
-        if pu is not None:
-            pu.save()
-        if ad is not None:
-            ad.save()
-        if ge is not None:
-            ge.save()
-        if su is not None:
-            su.save()
-        if ca is not None:
-            ca.save()
-        for i, a in enumerate(ar):
-            if a is not None:
-                a.save()
-            for j, f in enumerate(fi[i]):
-                if f is not None:
-                    f.save()
-                for k, c in enumerate(co[i][j]):
-                    if c is not None:
-                        c.save()
-
-    def calculate(self, pu, ad, ge, su, ca, ar, fi, co):
-        ca.dotP_15 = pu.P1 / 1e-15
-        ca.a_dp = 6.58429132402614e8 / float(pu.P0)
+        ca.dotP_15 = p.P1 / 1e-15
+        ca.a_dp = 6.58429132402614e8 / float(p.P0)
         ca.r_dp = (ca.a_dp / pi ) ** 0.5
-        ca.bsurf2 = 2.02 * 1e12 * float(pu.P0) ** 0.5 * ca.dotP_15 ** 0.5
+        ca.bsurf2 = 2.02 * 1e12 * float(p.P0) ** 0.5 * ca.dotP_15 ** 0.5
         ca.b_14dp = ca.bsurf2 / 1e14
-        ca.l_sd = 3.94784176043574e31 * ca.dotP_15 / float(pu.P0) ** 3.
-        # find the correct fit for hot spot...:
-        ii, jj = (0, 0)
-        co_bb = None
-        for i in xrange(len(ar)):
-            for j in xrange(len(fi[i])):
-                if fi[i][j].ordinal is not None:
-                    ii, jj = (i, j)
-                    break
-        try:
-            for k in xrange(len(co[ii][jj])):
-                if co[ii][jj][k].spec_type == 'BB' and co[ii][jj][k].r < ca.r_dp:
-                    co_bb = co[ii][jj][k]
-                    break
-        except IndexError:
-            print 'Warning no X-ray components for %s ...' % pu.Name
+        ca.l_sd = 3.94784176043574e31 * ca.dotP_15 / float(p.P0) ** 3.
 
-        if co_bb is not None and co_bb.r is not None:
-            ca.a = pi * co_bb.r ** 2.
-            ca.b = ca.a_dp / ca.a
-            ca.b_14 = ca.b * ca.b_14dp
-            r_min = co_bb.r - co_bb.r_minus
-            r_max = co_bb.r + co_bb.r_plus
-            a_min = pi * r_min ** 2.
-            a_max = pi * r_max ** 2.
-            b_max = ca.a_dp / a_min
-            b_min = ca.a_dp / a_max
-            ca.b_14_minus = (ca.b - b_min) * ca.b_14dp
-            ca.b_14_plus = (b_max - ca.b) * ca.b_14dp
-
+        # first BB component with ordinal >= 0
+        skip = False
+        articles = p.xray_articles.all()#filter(ordinal__gt=0)
+        for a in articles:
+            fits = a.fits.filter(ordinal__gt=0)
+            for f in fits:
+                components = f.components.filter(spec_type='BB').order_by('r')
+                if len(components) > 0:
+                    co = components[0]
+                    skip = True
+                    break
+            if skip is True:
+                break
+        ca.a = pi * co.r ** 2.
+        ca.b = ca.a_dp / ca.a
+        ca.b_14 = ca.b * ca.b_14dp
+        r_min = co.r - co.r_minus
+        r_max = co.r + co.r_plus
+        a_min = pi * r_min ** 2.
+        a_max = pi * r_max ** 2.
+        b_max = ca.a_dp / a_min
+        b_min = ca.a_dp / a_max
+        ca.b_14_minus = (ca.b - b_min) * ca.b_14dp
+        ca.b_14_plus = (b_max - ca.b) * ca.b_14dp
+        ad = self.additional_get_add(p, 0)
         if ad.best_age is None:
-            ad.best_age = pu.Age
+            ad.best_age = p.Age
+        ad.save()
+        ca.save()
 
     def lnonth_powers(self, pow_):
         l_nth = 0.

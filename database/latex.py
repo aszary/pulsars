@@ -68,8 +68,11 @@ def table_bb_nondipolar(pulsars):
         print p.Name
         #  surface magnetic field strength
         try:
-            b14_s = '$%.2f^{+%.2f}_{-%.2f}$'%(ca.b_14, ca.b_14_plus,
+            if ca.b > 1.:
+                b14_s = '$%.2f^{+%.2f}_{-%.2f}$'%(ca.b_14, ca.b_14_plus,
                                               ca.b_14_minus)
+            else:
+                b14_s = '--'
         except TypeError:
             b14_s = '--'
         # citation field (all articles)
@@ -83,7 +86,11 @@ def table_bb_nondipolar(pulsars):
                                                   xrayfit__in=fits)
         #articles_ord = p.xray_articles.filter(fits__ordinal__gt=0).distinct()
         #articles_ord.filter.
-        log_lnth, log_xinth = get_lum(pl_comps[0], ca)
+        try:
+            log_lnth, log_xinth = get_lum(pl_comps[0], ca)
+        except IndexError:
+            print 'Warning no PL component'
+            log_lnth, log_xinth = '--', '--'
 
         for i, bb_co in enumerate(bb_comps):
             rad = format_radius(bb_co)

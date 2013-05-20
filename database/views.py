@@ -56,7 +56,8 @@ def sync_atnf(request):
     return HttpResponse('ATNF data sync successfully..')
 
 def table_bb(request):
-    psrs = Pulsar.objects.exclude(calculations__b__isnull=True).distinct()
+    psrs = Pulsar.objects.exclude(calculations__b__isnull=True).\
+        order_by('-calculations__b').distinct()
     res = table_bb_nondipolar(psrs)
     return HttpResponse(res, mimetype="text/plain")
 

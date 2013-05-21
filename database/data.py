@@ -26,7 +26,7 @@ class Pulsars:
         #    J0108-1431    ####################################################
         p = Pulsar.objects.get(Name='J0108-1431')
         a1 = self.article_get_add(p, num=0)
-        a1.article = 'http://adsabs.harvard.edu/abs/2012ApJ...761..117P'
+        a1.articile = 'http://adsabs.harvard.edu/abs/2012ApJ...761..117P'
         a1.cite = '\cite{2012_Posselt}'
         a1.info = ('page 4, 5(lum) BB + PL (51 counts) no inf -> surface '
                       'conversion, '
@@ -450,7 +450,6 @@ class Pulsars:
         self.save_records([ge, ca, ad, su, a1, f1, f2, c1, c2], p)
         self.calculate(p)
 
-
         #    B1257+12      ####################################################
         p = Pulsar.objects.get(Name='B1257+12')
         p.comment = 'sol'
@@ -528,7 +527,7 @@ class Pulsars:
         a2 = self.article_get_add(p, 1)
         a2.article = 'http://adsabs.harvard.edu/abs/2002ApJ...581..470G'
         a2.cite = '\cite{2002_Grindlay}'
-        self.save_records([a1, a2, f1, f2, c1, c2], p)
+        self.save_records([a1, a2, f1, c1, c2], p)
         self.calculate(p)
 
         #   B1929+10       ####################################################
@@ -570,7 +569,7 @@ class Pulsars:
         c2.lum = 1.7e30
         #c2.lum_plus =
         #c2.lum_minus =
-        ad == self.additional_get_add(p)
+        ad = self.additional_get_add(p)
         ad.dist_dm_cl = 0.335
         ad.dist_dm_cl_plus = 0.388 - 0.335
         ad.dist_dm_cl_minus = 0.335 - 0.282
@@ -703,7 +702,7 @@ class Pulsars:
         c1.t_plus = 0.03 * c1.t
         c1.t_minus = 0.03 * c1.t
         c1.lum = self.lbol_radius(c1.t, c1.r)
-        c2 == self.component_get_add(f1, 1)
+        c2 = self.component_get_add(f1, 1)
         c2.spec_type = 'BB'
         c2.r = self.r * sin(37./180. * pi)
         c2.r_plus = 0.06 * c2.r
@@ -1930,7 +1929,7 @@ class Pulsars:
         a2 = self.article_get_add(p, 1)
         a2.article = 'http://adsabs.harvard.edu/abs/2009ASSL..357...91B'
         a2.cite = '\cite{2009_Becker}'
-        self.save_records([ad, a1, a2, a3, f1, f2, c1, c2], p)
+        self.save_records([a1, a2], p)
         self.calculate(p)
 
         #   J1846-0258     ####################################################
@@ -2280,19 +2279,21 @@ class Pulsars:
 
     def sort_ordinals(self):
 
-        fits = XrayFit.objects.filter(ordinal__gte=0,).order_by('psr_id__RaJD')
+        fits = XrayFit.objects.filter(ordinal__gte=0,).\
+            filter(psr_id__P0__gt=0.01).order_by('psr_id__RaJD')
         ord = 1
         # why I need to use res?!
         res = fits[0]
         res.ordinal = 1
         res.save()
         for i in xrange(1, len(fits)):
-            if (fits[i-1].psr_id.Name !=fits[i].psr_id.Name):
+            if (fits[i-1].psr_id.Name != fits[i].psr_id.Name):
                 ord += 1
                 fits[i].ordinal = ord
             else:
                 fits[i].ordinal = ord
             fits[i].save()
+            #print fits[i].psr_id.Name, ord, fits[i].id
 
     def save_records(self, list_, p):
         for l in list_:

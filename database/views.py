@@ -6,7 +6,7 @@ from django.core.exceptions import ObjectDoesNotExist
 from models import Pulsar, XrayArticle, XrayFit, XrayComponent, Geometry, \
     Subpulse, Additional, Calculation
 from atnf import get_page, parse_page
-from latex import table_bb_nondipolar
+import latex
 
 
 def index(request):
@@ -56,8 +56,35 @@ def sync_atnf(request):
     return HttpResponse('ATNF data sync successfully..')
 
 def table_bb(request):
+    # for citealiases
+    #all_psrs = Pulsar.objects.all()
+    #print_latex.citealiases(all_psrs)
+    # data for table
     psrs = Pulsar.objects.exclude(calculations__b__isnull=True).\
+        exclude(P0__lt=0.01).\
         order_by('-calculations__b').distinct()
-    res = table_bb_nondipolar(psrs)
+    res = latex.table_bb(psrs)
+    return HttpResponse(res, mimetype="text/plain")
+
+def table_psrs(request):
+    psrs = Pulsar.objects.filter(xray_articles__fits__ordinal__gt=0).filter(P0__gt=0.01).\
+        order_by('RaJD').distinct()
+    res = latex.table_psrs(psrs)
+    return HttpResponse(res, mimetype="text/plain")
+
+def table_pl(request):
+    # sort does not work (multiple lum values for different components)
+    #psrs = Pulsar.objects.filter(xray_articles__fits__ordinal__gt=0).\
+    #    filter(xray_articles__fits__components__spec_type='PL'). \
+    #    distinct().order_by('xray_articles__fits__components__lum')
+    comps = XrayComponent.objects.filter(spec_type='PL').\
+        filter(xrayfit__ordinal__gt=0).filter(psr_id__P0__gt=0.01).distinct().\
+        order_by('-lum')
+    # data for table
+    psrs = []
+    for co in comps:
+        print co, co.psr_id
+        psrs.append(co.psr_id)
+    res = latex.table_pl(psrs)
     return HttpResponse(res, mimetype="text/plain")
 

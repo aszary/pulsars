@@ -124,11 +124,11 @@ def table_bb(pulsars):
 
     res =  start_table + body + end_table
 
-    f = open(MEDIA_ROOT + 'database/table_bb.tex', 'w')
+    f = open(MEDIA_ROOT + 'database/latex/table_bb.tex', 'w')
     for line in res:
         f.write(line)
     f.close()
-    copyfile(MEDIA_ROOT + 'database/table_bb.tex',
+    copyfile(MEDIA_ROOT + 'database/latex/table_bb.tex',
              '/home/aszary/work/1_x-ray/includes/table_bb.tex')
     return res
 
@@ -199,11 +199,11 @@ def table_psrs(pulsars):
         i += 1
     res = start_float + body + end_float
 
-    f = open(MEDIA_ROOT + 'database/table_psrs.tex', 'w')
+    f = open(MEDIA_ROOT + 'database/latex/table_psrs.tex', 'w')
     for line in res:
         f.write(line)
     f.close()
-    copyfile(MEDIA_ROOT + 'database/table_psrs.tex',
+    copyfile(MEDIA_ROOT + 'database/latex/table_psrs.tex',
              '/home/aszary/work/1_x-ray/includes/table_psrs.tex')
     return res
 
@@ -305,11 +305,11 @@ def table_pl(pulsars):
             body = body + record
     res = start_table + body + end_table
 
-    f = open(MEDIA_ROOT + 'database/table_pl.tex', 'w')
+    f = open(MEDIA_ROOT + 'database/latex/table_pl.tex', 'w')
     for line in res:
         f.write(line)
     f.close()
-    copyfile(MEDIA_ROOT + 'database/table_pl.tex',
+    copyfile(MEDIA_ROOT + 'database/latex/table_pl.tex',
              '/home/aszary/work/1_x-ray/includes/table_pl.tex')
     return res
 

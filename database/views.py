@@ -7,6 +7,7 @@ from models import Pulsar, XrayArticle, XrayFit, XrayComponent, Geometry, \
     Subpulse, Additional, Calculation
 from atnf import get_page, parse_page
 import latex
+import plot
 
 
 def index(request):
@@ -87,4 +88,22 @@ def table_pl(request):
         psrs.append(co.psr_id)
     res = latex.table_pl(psrs)
     return HttpResponse(res, mimetype="text/plain")
+
+def xray_age(request):
+    fits = XrayFit.objects.filter(ordinal__gt=0).\
+        filter(components__spec_type='PL').\
+        filter(components__spec_type='BB').\
+        filter(psr_id__P0__gt=0.01).distinct()
+
+    path, file = plot.xray_age(fits)
+    template = loader.get_template('database/plots/image.xhtml')
+    c = Context({'path':path, 'file':file, })
+    return HttpResponse(template.render(c))
+
+def radio(request):
+    psrs = Pulsar.objects.all()
+    list_ = plot.radio_plots(psrs)
+    template = loader.get_template('database/plots/image.xhtml')
+    c = Context({'list_':list_, })
+    return HttpResponse(template.render(c))
 

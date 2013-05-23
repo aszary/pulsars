@@ -13,6 +13,7 @@ urlpatterns = patterns('',
     url(r'^latex/table_bb', views.table_bb, name='table_bb'),
     url(r'^latex/table_psrs', views.table_psrs, name='table_psrs'),
     url(r'^latex/table_pl', views.table_pl, name='table_pl'),
+    url(r'^plots/xray_age2', views.xray_age2, name='xray_age2'),
     url(r'^plots/xray_age', views.xray_age, name='xray_age'),
     url(r'^plots/radio', views.radio, name='radio'),
 )

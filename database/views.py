@@ -95,9 +95,20 @@ def xray_age(request):
         filter(components__spec_type='BB').\
         filter(psr_id__P0__gt=0.01).distinct()
 
-    path, file = plot.xray_age(fits)
+    list_ = plot.xray_age(fits)
     template = loader.get_template('database/plots/image.xhtml')
-    c = Context({'path':path, 'file':file, })
+    print list_
+    c = Context({'list_':list_, })
+    return HttpResponse(template.render(c))
+
+def xray_age2(request):
+    fits = XrayFit.objects.filter(ordinal__gt=0).\
+        filter(psr_id__P0__gt=0.01).distinct()
+
+    list_ = plot.xray_age2(fits)
+    template = loader.get_template('database/plots/image.xhtml')
+    print list_
+    c = Context({'list_':list_, })
     return HttpResponse(template.render(c))
 
 def radio(request):

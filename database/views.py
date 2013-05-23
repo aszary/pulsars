@@ -97,7 +97,6 @@ def xray_age(request):
 
     list_ = plot.xray_age(fits)
     template = loader.get_template('database/plots/image.xhtml')
-    print list_
     c = Context({'list_':list_, })
     return HttpResponse(template.render(c))
 
@@ -107,7 +106,6 @@ def xray_age2(request):
 
     list_ = plot.xray_age2(fits)
     template = loader.get_template('database/plots/image.xhtml')
-    print list_
     c = Context({'list_':list_, })
     return HttpResponse(template.render(c))
 

@@ -3,9 +3,7 @@
   <component name="ChangeListManager">
     <list default="true" id="791c5b0b-ef7c-48c3-878a-0bb95fb1bec9" name="Default" comment="">
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/database/plot.py" afterPath="$PROJECT_DIR$/database/plot.py" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/database/urls.py" afterPath="$PROJECT_DIR$/database/urls.py" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/database/views.py" afterPath="$PROJECT_DIR$/database/views.py" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
     </list>
     <ignored path="pulsars.iws" />
     <ignored path=".idea/workspace.xml" />
@@ -63,10 +61,10 @@
   </component>
   <component name="FileEditorManager">
     <leaf>
-      <file leaf-file-name="views.py" pinned="false" current="false" current-in-tab="false">
+      <file leaf-file-name="views.py" pinned="false" current="true" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/database/views.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="107" column="25" selection-start="3509" selection-end="3509" vertical-scroll-proportion="0.0">
+            <state line="86" column="8" selection-start="2821" selection-end="2821" vertical-scroll-proportion="0.5089286">
               <folding />
             </state>
           </provider>
@@ -108,10 +106,10 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="plot.py" pinned="false" current="true" current-in-tab="true">
+      <file leaf-file-name="plot.py" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/database/plot.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="11" column="0" selection-start="222" selection-end="222" vertical-scroll-proportion="0.15178572">
+            <state line="51" column="12" selection-start="1783" selection-end="1783" vertical-scroll-proportion="0.0">
               <folding>
                 <element signature="e#0#9#0" expanded="true" />
               </folding>
@@ -160,8 +158,8 @@
         <option value="$PROJECT_DIR$/pulsars/urls.py" />
         <option value="$PROJECT_DIR$/database/templates/database/plots/image.xhtml" />
         <option value="$PROJECT_DIR$/database/urls.py" />
-        <option value="$PROJECT_DIR$/database/views.py" />
         <option value="$PROJECT_DIR$/database/plot.py" />
+        <option value="$PROJECT_DIR$/database/views.py" />
       </list>
     </option>
   </component>
@@ -677,13 +675,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/database/views.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="107" column="25" selection-start="3509" selection-end="3509" vertical-scroll-proportion="0.0">
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/database/urls.py">
       <provider selected="true" editor-type-id="text-editor">
         <state line="15" column="4" selection-start="617" selection-end="617" vertical-scroll-proportion="0.0">
@@ -700,10 +691,17 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/database/plot.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="11" column="0" selection-start="222" selection-end="222" vertical-scroll-proportion="0.15178572">
+        <state line="51" column="12" selection-start="1783" selection-end="1783" vertical-scroll-proportion="0.0">
           <folding>
             <element signature="e#0#9#0" expanded="true" />
           </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/database/views.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="86" column="8" selection-start="2821" selection-end="2821" vertical-scroll-proportion="0.5089286">
+          <folding />
         </state>
       </provider>
     </entry>

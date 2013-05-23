@@ -70,7 +70,6 @@ def xray_age2(fits, recreate=False):
         pl.plot(ages, l_x, 'o', color='black', ms=2.)
         for i in xrange(len(ordinals)):
             pl.text(ages[i], l_x[i], '%d'%ordinals[i], fontsize=names_font)
-            print ordinals[i], psrs[i].Name
         pl.xlabel(r"$\tau \,  [ {\rm yr} ]$ ")
         pl.ylabel(r"$(L_{\rm bol} + L_{\rm NT}) / L_{\rm SD}$")
         ax = pl.axis()

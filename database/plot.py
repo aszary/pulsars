@@ -1,5 +1,6 @@
 import os
 from shutil import copyfile
+from math import log10
 os.environ['MPLCONFIGDIR'] = '/tmp'
 
 import matplotlib as mp
@@ -13,7 +14,7 @@ def xray_age(fits, recreate=False):
     full_path = MEDIA_ROOT + file_name
 
     if recreate is True:
-        lbb_lnts, ages, ordinals = xray_age_calculate(fits)
+        lbb_lnts, ages, ordinals = get_xray_age(fits)
 
         mp.rcdefaults()
         mp.rc('font', size=7)
@@ -26,7 +27,7 @@ def xray_age(fits, recreate=False):
         for i in xrange(len(ordinals)):
             pl.text(ages[i], lbb_lnts[i], '%d'%ordinals[i], fontsize=names_font)
         pl.xlabel(r"$\tau \,  [ {\rm yr} ]$ ")
-        pl.ylabel(r"$L_{\rm bol} / L_{\rm NT}$")
+        pl.ylabel(r"$L_{\rm BB} / L_{\rm PL}$")
         ax = pl.axis()
         pl.axis([ax[0], 9e8, ax[2], 3e1])
         pl.savefig(full_path + 'eps')
@@ -37,7 +38,7 @@ def xray_age(fits, recreate=False):
     copyfile(full_path+'eps', '/home/aszary/work/6_outer/images/xray_age.eps')
     return [[full_path + 'svg', file_name +'svg']]
 
-def xray_age_calculate(fits):
+def get_xray_age(fits):
     lbb_lnts = []
     ages = []
     ordinals = []
@@ -53,12 +54,11 @@ def xray_age_calculate(fits):
     return lbb_lnts, ages, ordinals
 
 def xray_age2(fits, recreate=False):
-
     file_name = 'database/plots/xray_age2.'
     full_path = MEDIA_ROOT + file_name
 
     if recreate is True:
-        l_x, ages, ordinals, psrs = xray_age_calculate2(fits)
+        l_x, ages, ordinals, psrs = get_xray_age2(fits)
 
         mp.rcdefaults()
         mp.rc('font', size=7)
@@ -68,10 +68,10 @@ def xray_age2(fits, recreate=False):
         pl.subplots_adjust(left=0.147, bottom=0.179, right=0.99, top=0.99)
         pl.loglog()
         pl.plot(ages, l_x, 'o', color='black', ms=2.)
-        for i in xrange(len(ordinals)):
-            pl.text(ages[i], l_x[i], '%d'%ordinals[i], fontsize=names_font)
+        #for i in xrange(len(ordinals)):
+        #    pl.text(ages[i], l_x[i], '%d'%ordinals[i], fontsize=names_font)
         pl.xlabel(r"$\tau \,  [ {\rm yr} ]$ ")
-        pl.ylabel(r"$(L_{\rm bol} + L_{\rm NT}) / L_{\rm SD}$")
+        pl.ylabel(r"$(L_{\rm BB} + L_{\rm PL}) / L_{\rm SD}$")
         ax = pl.axis()
         pl.axis([ax[0], 9e8, ax[2], 3e1])
         pl.savefig(full_path + 'eps')
@@ -82,7 +82,7 @@ def xray_age2(fits, recreate=False):
     #copyfile(full_path+'eps', '/home/aszary/work/6_outer/images/xray_age.eps')
     return [[full_path + 'svg', file_name +'svg']]
 
-def xray_age_calculate2(fits):
+def get_xray_age2(fits):
     l_x = []
     ages = []
     ordinals = []
@@ -97,9 +97,13 @@ def xray_age_calculate2(fits):
                 try:
                     lum += b.lum
                 except TypeError:
-                    pass
+                    print 'Warning: no BB luminosity data for %s' % \
+                           fit.psr_id.Name
         for pp in pl_co:
-            lum += pp.lum
+            try:
+                lum += pp.lum
+            except:
+                print 'Warning: no PL luminosity data for %s' % fit.psr_id.Name
         if lum != 0.:
             l_x.append(lum / fit.psr_id.Edot)
             ages.append(fit.psr_id.additionals.get(num=0).best_age)
@@ -107,9 +111,155 @@ def xray_age_calculate2(fits):
             psrs.append(fit.psr_id)
     return l_x, ages, ordinals, psrs
 
+def xray_field(fits, recreate=False):
+    file_name = 'database/plots/xray_field.'
+    full_path = MEDIA_ROOT + file_name
+
+    l_x = []
+    b_d_ = []
+    ordinals = []
+    psrs = []
+
+    if recreate is True:
+        for fit in fits:
+            bb = fit.components.filter(spec_type='BB').order_by('r')
+            pl_co = fit.components.filter(spec_type='PL')
+            lum = 0.
+            for b in bb:
+                if b.r < 5e5:
+                    try:
+                        lum += b.lum
+                    except TypeError:
+                        pass
+            for pp in pl_co:
+                lum += pp.lum
+            if lum != 0.:
+                l_x.append(lum / fit.psr_id.Edot)
+                b_d_.append(fit.psr_id.BSurf)
+                ordinals.append(fit.ordinal)
+                psrs.append(fit.psr_id)
+
+        mp.rcdefaults()
+        mp.rc('font', size=7)
+        names_font = 5
+        #pl.figure(figsize=(2.95276,2.3622)) #7.5x6
+        pl.figure(figsize=(3.14961, 1.9464567)) #8x4.944cm (golden ratio)
+        pl.subplots_adjust(left=0.147, bottom=0.179, right=0.99, top=0.99)
+        pl.loglog()
+        pl.plot(b_d_, l_x, 'o', color='black', ms=2.)
+        #for i in xrange(len(ordinals)):
+        #    pl.text(b_d_[i], l_x[i], '%d'%ordinals[i], fontsize=names_font)
+        pl.xlabel(r"$B_{\rm d} \,  [ {\rm G} ]$ ")
+        pl.ylabel(r"$(L_{\rm BB} + L_{\rm PL}) / L_{\rm SD}$")
+        ax = pl.axis()
+        #pl.axis([ax[0], 9e8, ax[2], 3e1])
+        pl.savefig(full_path + 'eps')
+        pl.savefig(full_path + 'pdf')
+        pl.savefig(full_path + 'svg')
+
+    #copyfile(full_path+'eps', '/home/aszary/work/1_x-ray/images/xray_age.eps')
+    #copyfile(full_path+'eps', '/home/aszary/work/6_outer/images/xray_age.eps')
+    return [[full_path + 'svg', file_name +'svg']]
 
 
-def radio_plots(psrs):
+def xray_pl(fits, recreate=True):
+    file_name = 'database/plots/xray_pl.'
+    full_path = MEDIA_ROOT + file_name
+
+    if recreate is True:
+        log_lsd_, log_lpl_, err_, ordinals, psrs = get_xray_pl(fits)
+
+        mp.rcdefaults()
+        mp.rc('font', size=7)
+        names_font = 5
+        #pl.figure(figsize=(2.95276,2.3622)) #7.5x6
+        pl.figure(figsize=(3.14961, 1.9464567)) #8x4.944cm (golden ratio)
+        pl.minorticks_on()
+        pl.subplots_adjust(left=0.147, bottom=0.179, right=0.975, top=0.975)
+        #pl.loglog()
+        #pl.plot(log_lsd_, log_lpl_,ls='None', marker='s', mec='black',
+        #        mfc='None', ms=3.)
+        pl.errorbar(log_lsd_, log_lpl_, yerr=err_, ls='None', marker='.',
+                    mec='black', ecolor='black', lw=0.5, capsize=0.,
+                    mfc='None', ms=3.)
+        #for i in xrange(len(ordinals)):
+        #    pl.text(b_d_[i], l_x[i], '%d'%ordinals[i], fontsize=names_font)
+        pl.xlabel(r"$\log \left (L_{\rm SD} \right )$ ")
+        pl.ylabel(r"$\log \left ( L_{\rm PL} \right )$")
+        ax = pl.axis()
+        #pl.axis([ax[0], 9e8, ax[2], 3e1])
+        pl.savefig(full_path + 'eps')
+        pl.savefig(full_path + 'pdf')
+        pl.savefig(full_path + 'svg')
+
+    #copyfile(full_path+'eps', '/home/aszary/work/1_x-ray/images/xray_age.eps')
+    #copyfile(full_path+'eps', '/home/aszary/work/6_outer/images/xray_age.eps')
+    return [[full_path + 'svg', file_name +'svg']]
+
+def get_xray_pl(fits):
+    log_lsd_ = []
+    log_lpl_ = []
+    err_ = [[], []]
+    ordinals = []
+    psrs = []
+    for fit in fits:
+        pl_co = fit.components.get(spec_type='PL')
+        lum = 0.
+        try:
+            lum += pl_co.lum
+        except:
+            print 'Warning no PL luminosity for %s' % fit.psr_id.Name
+        if (lum > 0. and pl_co.lum_plus is not None and
+                    pl_co.lum_minus is not None):
+            log_lpl_.append(log10(lum))
+            log_lsd_.append(log10(fit.psr_id.Edot))
+            ordinals.append(fit.ordinal)
+            psrs.append(fit.psr_id)
+            plus = log10(lum+pl_co.lum_plus) - log10(lum)
+            minus = log10(lum) - log10(lum-pl_co.lum_minus)
+            err_[0].append(plus)
+            err_[1].append(minus)
+        else:
+            print 'Warning no PL luminosity data for %s' %fit.psr_id.Name
+    return log_lsd_, log_lpl_,  err_, ordinals, psrs
+
+def b_parameter(comps, recreate=False):
+    res = []
+    if recreate is True:
+        b_, l_sd_, b_d_, age_, psr_ = get_b_parameters(comps)
+    else:
+        b_, l_sd_, b_d_, age_, psr_ = None, None, None, None, None
+
+    #if recreate is True:
+    res.append(plot_data(l_sd_, b_, psr_, 'b_lsd',
+               xlab=r"$L_{\rm SD}$",
+               ylab=r"$b$", recreate=recreate))
+    res.append(plot_data(b_d_, b_, psr_, 'b_bd',
+               xlab=r"$B_{\rm d}$",
+               ylab=r"$b$", recreate=recreate))
+    res.append(plot_data(age_, b_, psr_, 'b_age',
+               xlab=r"$\tau \, [{\rm yr}]}$",
+               ylab=r"$b$", recreate=recreate, loc_='upper left'))
+    return res
+
+def get_b_parameters(comps):
+    b_ = []
+    l_sd_ = []
+    b_d_ = []
+    age_ = []
+    psr_ = []
+
+    for co in comps:
+        b_.append(co.psr_id.calculations.get(num=0).b)
+        l_sd_.append(co.psr_id.Edot)
+        b_d_.append(co.psr_id.BSurf)
+        age_.append(co.psr_id.Age)
+        psr_.append(co.psr_id)
+        print co.psr_id.Name, co.psr_id.Type
+
+    return b_, l_sd_, b_d_, age_, psr_
+
+def radio_plots(psrs, recreate=False):
     res = []
 
     # get data
@@ -136,6 +286,7 @@ def radio_plots(psrs):
     l2000_lsd_age_ = []
     l2000_lsd_psr_ = []
     l_lsd_ = []
+    l_sd2_ = []
     l_lsd_age_ = []
     l_lsd_field_ = []
     l_lsd_psr_ = []
@@ -167,6 +318,7 @@ def radio_plots(psrs):
                 l_lsd_age_.append(p.Age)
                 l1400_lsd_.append(l1400 / p.Edot)
                 l_lsd_field_.append(p.BSurf)
+                l_sd2_.append(p.Edot)
                 l_lsd_psr_.append(p)
         if p.S2000 != 0.:
             l2000 = p.S2000 / 1e3  * (p.Dist * 3.08567758e21) ** 2. * 1e-23
@@ -177,9 +329,6 @@ def radio_plots(psrs):
         b_d_.append(p.BSurf)
         age_.append(p.Age)
         psr_.append(p)
-
-    #recreate = True
-    recreate = False
 
     res.append(plot_data(s400_age_, s400_, s400_psr_, 's400_age',
                xlab=r"$\tau \,  [ {\rm yr} ]$",
@@ -204,7 +353,10 @@ def radio_plots(psrs):
                xlab=r"$\tau \,  [ {\rm yr} ]$",
                ylab=r"$L_{\rm radio} / L_{\rm SD}$", recreate=recreate ))
     res.append(plot_data(l_lsd_field_, l_lsd_, l_lsd_psr_, 'l_lsd_field',
-               xlab=r"$B_d \,  [ {\rm G} ]$",
+               xlab=r"$B_{\rm d} \,  [ {\rm G} ]$",
+               ylab=r"$L_{\rm radio} / L_{\rm SD}$", recreate=recreate))
+    res.append(plot_data(l_sd2_, l_lsd_, l_lsd_psr_, 'l_lsd_sd',
+               xlab=r"$L_{\rm SD}$",
                ylab=r"$L_{\rm radio} / L_{\rm SD}$", recreate=recreate))
 
     res.append(plot_data(s2000_age_, s2000_, s2000_psr_, 's2000_age',
@@ -215,27 +367,7 @@ def radio_plots(psrs):
                ylab=r"$L_{2000}$", recreate=recreate ))
     res.append(plot_data(age_, b_d_, psr_, 'bd_age',
                xlab=r"$\tau \,  [ {\rm yr} ]$",
-               ylab=r"$B_d$", recreate=recreate ))
-
-
-
-    '''
-    for p in psrs:
-        s400s.append(p.S400)
-        # in ergs
-        l1400 = p.S1400 / 1e3  * (p.Dist * 3.08567758e21) ** 2. * 1e-23
-        l400s.append(l400)
-        ages.append(p.Age)
-        if p.Edot != 0.:
-            l400_lsd_.append(l400 / p.Edot)
-            ages_lsd.append(p.Age)
-        if p.Edot != 0. and p.S1400 != 0.:
-            l_lsd_.append(7.4e27 * p.Dist ** 2. * p.S1400 / p.Edot)
-            l1400_lsd_.append(l1400 / p.Edot)
-            ages_lsd2.append(p.Age)
-        if p.S1400 !=0:
-            s1400s.append(p.S1400)
-    '''
+               ylab=r"$B_{\rm d}$", recreate=recreate ))
 
     #full_path = MEDIA_ROOT + file_name
     #copyfile(full_path+'eps', '/home/aszary/work/1_x-ray/images/s400_age.eps')
@@ -243,25 +375,41 @@ def radio_plots(psrs):
     return res
 
 def plot_data(x_, y_, psrs, name, xlab=r"$\tau \,  [ {\rm yr} ]$",
-         ylab=r"$L_{1400} / L_{\rm SD}$", recreate=False):
+         ylab=r"$L_{1400} / L_{\rm SD}$", recreate=False, loc_='upper right'):
 
     file_name = 'database/plots/%s.'%name
     full_path = MEDIA_ROOT + file_name
 
     if recreate:
+        ot, he, he2 = None, None, None
         mp.rcdefaults()
         mp.rc('font', size=7)
+        mp.rc('legend', fontsize=5)
 
         pl.figure(figsize=(3.14961, 1.9464567)) #8x4.944cm (golden ratio)
         pl.subplots_adjust(left=0.16, bottom=0.18, right=0.96, top=0.95)
         pl.loglog()
         for i in xrange(len(x_)):
             if psrs[i].Binary !='*':
-                pl.plot(x_[i], y_[i], '^', mfc='blue', mec='blue', ms=1.5)
+                ot, = pl.plot(x_[i], y_[i], '^', mfc='blue', mec='blue', ms=1.5)
             else:
                 pl.plot(x_[i], y_[i], 'o', mfc='black', ms=0.7)
             if psrs[i].Type.startswith('HE'):
-                pl.plot(x_[i], y_[i], 'D', mfc='red', mec='red', ms=1.5)
+                he, = pl.plot(x_[i], y_[i], 'D', mfc='red', mec='red', ms=1.5)
+            elif psrs[i].Type.startswith('NRAD'):
+                he2, = pl.plot(x_[i], y_[i], 'D', mfc='green', mec='green', ms=1.5)
+        leg_, lab_= [], []
+        if ot is not None:
+            leg_.append(ot)
+            lab_.append('Binary')
+        if he is not None:
+            leg_.append(he)
+            lab_.append('with pulsed HE radiation')
+        if he2 is not None:
+            leg_.append(he2)
+            lab_.append('HE (no radio)')
+
+        pl.legend(leg_, lab_, loc=loc_)
         pl.xlabel(xlab)
         pl.ylabel(ylab)
         ax = pl.axis()
@@ -271,6 +419,3 @@ def plot_data(x_, y_, psrs, name, xlab=r"$\tau \,  [ {\rm yr} ]$",
         pl.savefig(full_path + 'pdf')
         pl.savefig(full_path + 'svg')
     return [ full_path + 'svg', file_name + 'svg']
-
-
-

@@ -335,7 +335,8 @@ class Pulsars:
         a1.article = 'http://adsabs.harvard.edu/abs/2004ApJ...616..452Z'
         a1.cite = '\cite{2004_Zavlin}'
         a1.info = ('page 7, PL+BB (good for eff. vs. age)  A_{\perp} '
-                   '(R is in fact R_{\perp})')
+                   '(R is in fact R_{\perp}) PL luminosity from Becker 2009'
+                   ' (review) - very small errors in original paper!!')
         a1.dist = 0.262
         f1 = self.fit_get_add(a1, 0)
         f1.spectrum = 'BB + PL'
@@ -356,10 +357,11 @@ class Pulsars:
         c2.pl = 1.31
         c2.pl_plus = 0.14
         c2.pl_minus = 0.14
-        # no inf conversion?
-        c2.lum = 9.7e29
-        c2.lum_plus = 0.1e29
-        c2.lum_minus = 0.1e29
+        #c2.lum = 9.7e29
+        #c2.lum_plus = 0.1e29
+        #c2.lum_minus = 0.1e29
+        c2.lum, c2.lum_plus, c2.lum_minus = \
+            self.lnonth_powers([[29.80, 0.22, 0.36], [29.61, 0.19, 0.33]])
         a2 = self.article_get_add(p, 1)
         a2.article = 'http://adsabs.harvard.edu/abs/2007astro.ph..2426Z'
         a2.cite = '\cite{2007_Zavlin}'
@@ -547,7 +549,8 @@ class Pulsars:
                    'f=0.897, Different paralax distance!! 0.33 +-0.01 or '
                    '0.361+-0.01 (newer paper used), l_bol  =  L_bol / (2 '
                    'f gr^2) used, l_bol = L_bol / 4 (sphere to spot '
-                   'correction) l_bol = L_bol /gr^4??  A_{\perp}')
+                   'correction) l_bol = L_bol /gr^4??  A_{\perp} '
+                   'PL luminosity from Becker 2009 (review) (0.1-10keV)')
         a1.dist = 0.361
         f1 = self.fit_get_add(a1, 0)
         f1.spectrum = 'BB + PL'
@@ -566,9 +569,14 @@ class Pulsars:
         c2.pl = 1.73
         c2.pl_plus = 0.46
         c2.pl_minus = 0.66
-        c2.lum = 1.7e30
-        #c2.lum_plus =
-        #c2.lum_minus =
+        #c2.lum = 1.7e30
+        #c2.lum_plus =0.15e30
+        #c2.lum_minus =0.22e30
+        c2.lum, c2.lum_plus, c2.lum_minus = \
+            self.lnonth_powers([[31.12, 0.2, 0.33], [30.07, 0.18, 0.33]])
+        a2 = self.article_get_add(p, 1)
+        a2.article = 'http://adsabs.harvard.edu/abs/2006ApJ...645.1421B'
+        a2.cite = '\cite{2006_Becker}'
         ad = self.additional_get_add(p)
         ad.dist_dm_cl = 0.335
         ad.dist_dm_cl_plus = 0.388 - 0.335
@@ -587,7 +595,7 @@ class Pulsars:
         su.p3_plus = 0.8
         su.p3_minus = 0.8
         su.article = ''
-        self.save_records([ge, ca, ad, su, a1, f1, c1, c2], p)
+        self.save_records([ge, ca, ad, su, a1, a2, f1, c1, c2], p)
         self.calculate(p)
 
         #     J0633+1746   ####################################################
@@ -768,7 +776,8 @@ class Pulsars:
         a1.article = 'http://adsabs.harvard.edu/abs/2005ApJ...623.1051D'
         a1.cite = '\cite{2005_Deluca}'
         a1.info = ('page 25, no inf -> surface conversion, two component '
-                   'bb fit, L_bol for spot... A_{\perp}')
+                   'bb fit, L_bol for spot... A_{\perp}'
+                   'PL lum from Becker 2009 (review) 0.1-10keV')
         a1.dist = 0.288
         f1 = self.fit_get_add(a1, 0)
         f1.spectrum = 'BB + BB + PL'
@@ -796,10 +805,9 @@ class Pulsars:
         c3.pl = 2.1
         c3.pl_plus = 0.3
         c3.pl_minus = 0.3
-        c3.lum = 1.8e30
-        # TODO add errors
-        #c3.lum_plus =
-        #c3.lum_minus =
+        # 1.8e30
+        c3.lum, c3.lum_plus, c3.lum_minus = \
+            self.lnonth_powers([[30.38, 0.35, 0.54], [30.01, 0.26, 0.47]])
         f2 = self.fit_get_add(a1, 1)
         f2.spectrum = 'AT'
         c4 = self.component_get_add(f2, 0)
@@ -815,9 +823,12 @@ class Pulsars:
         a4 = self.article_get_add(p, 3)
         a4.article = 'http://adsabs.harvard.edu/abs/2002nsps.conf..273P'
         a4.cite = '\cite{2002_Pavlov}'
+        a5 = self.article_get_add(p, 4)
+        a5.article = 'http://adsabs.harvard.edu/abs/2002nsps.conf...64B'
+        a5.cite = '\cite{2002_Becker}'
         ad = self.additional_get_add(p)
         ad.dist_dm_cl = 0.669
-        self.save_records([ad, a1, a2, a3, a4, f1, f2, c1, c2, c3, c4], p)
+        self.save_records([ad, a1, a2, a3, a4, a5, f1, f2, c1, c2, c3, c4], p)
         self.calculate(p)
 
         #   B0833-45       ####################################################
@@ -827,7 +838,8 @@ class Pulsars:
         a1.article = 'http://adsabs.harvard.edu/abs/2007astro.ph..2426Z'
         a1.cite = '\cite{2007_Zavlin_b}'
         a1.info = ('page 16 , inf -> surface conversion, Vela, assumed'
-                   ' A_{\perp}, last paper (p. 16)')
+                   ' A_{\perp}, last paper (p. 16)'
+                    'PL luminosities from Becker 2009 (review) 0.1-10 keV')
         a1.dist = 0.210
         f1 = self.fit_get_add(a1, 0)
         f1.spectrum = 'BB + PL'
@@ -846,7 +858,9 @@ class Pulsars:
         c2.pl = 2.7
         c2.pl_plus = 0.4
         c2.pl_minus = 0.4
-        c2.lum = 4.2e32
+        #c2.lum = 4.2e32
+        c2.lum, c2.lum_plus, c2.lum_minus = \
+            self.lnonth_powers([[32.81, 0.25, 0.44], [31.79, 0.37, 0.67]])
         # TODO add nonthermal lum errs.
         #c2.lum_plus =
         #c2.lum_minus =
@@ -867,7 +881,8 @@ class Pulsars:
         a4.cite = '\cite{2007_Manzali}'
         a4.info = ('page 1,20, (L_bol) no inf -> surface conversion, new '
                    'paper for Vela (Chandra observations), another good fit'
-                   ' in paper, A_{\perp}')
+                   ' in paper, A_{\perp} '
+                   'PL luminosities from Becker 2009 (review) 0.1-10 keV')
         a4.dist = 0.287
         f3 = self.fit_get_add(a4, 0)
         f3.spectrum = 'BB + BB + PL'
@@ -895,7 +910,9 @@ class Pulsars:
         c6.pl = 2.2
         c6.pl_plus = 0.4
         c6.pl_minus = 0.3
-        c6.lum = 5.74e32
+        #c6.lum = 5.74e32
+        c6.lum, c6.lum_plus, c6.lum_minus = \
+            self.lnonth_powers([[32.81, 0.25, 0.44], [31.79, 0.37, 0.67]])
         ad = self.additional_get_add(p)
         ad.dist_dm_cl = 0.236
         ad.dist_pi = 0.287
@@ -910,7 +927,8 @@ class Pulsars:
         a1.cite = '\cite{2005_Deluca}'
         a1.info = ('page 25, no inf -> surface conversion, two component'
                    ' bb fit, no L_bol, diffrent values in second paper?!'
-                   ' ... A_{\perp}')
+                   ' ... A_{\perp} PL luminositeies from Becker 2009 (review)'
+                   ' in 0.1-10keV')
         a1.dist = 0.75
         f1 = self.fit_get_add(a1, 0)
         f1.spectrum = 'BB + BB + PL'
@@ -938,19 +956,21 @@ class Pulsars:
         c3.pl = 1.7
         c3.pl_plus = 0.1
         c3.pl_minus = 0.1
-        c3.lum = 8.1e30
-        # TODD complete
-        #c3.lum_plus =
-        #c3.lum_minus =
+        #c3.lum = 8.1e30
+        c3.lum, c3.lum_plus, c3.lum_minus = \
+            self.lnonth_powers([[30.70, 0.22, 0.35], [30.72, 0.58, 0.33]])
         a2 = self.article_get_add(p, 1)
         a2.article = 'http://adsabs.harvard.edu/abs/2002nsps.conf..273P'
         a2.cite = '\cite{2002_Pavlov}'
         a3 = self.article_get_add(p, 2)
         a3.article = 'http://adsabs.harvard.edu/abs/2007astro.ph..2426Z'
         a3.cite = '\cite{2007_Zavlin}'
+        a4 = self.article_get_add(p, 3)
+        a4.article = 'http://adsabs.harvard.edu/abs/2002nsps.conf...64B'
+        a4.cite = '\cite{2002_Becker}'
         ad = self.additional_get_add(p)
         ad.dist_dm_cl = 0.726
-        self.save_records([ad, a1, a2, a3, f1, c1, c2, c3], p)
+        self.save_records([ad, a1, a2, a3, a4, f1, c1, c2, c3], p)
         self.calculate(p)
 
         #   J1119-6127     ####################################################
@@ -1027,7 +1047,8 @@ class Pulsars:
         a1 = self.article_get_add(p, 0)
         a1.article = 'http://adsabs.harvard.edu/abs/2007ApJ...665L.143Z'
         a1.cite = '\cite{2007_Zavlin}'
-        a1.info = ('page 3, no inf -> surface conversion, A_{\perp}')
+        a1.info = ('page 3, no inf -> surface conversion, A_{\perp}'
+                   'PL luminosities from Becker 2009 (review) in 0.1-10keV')
         a1.dist = 2.5
         f1 = self.fit_get_add(a1, 0)
         f1.spectrum = 'BB + PL'
@@ -1046,10 +1067,9 @@ class Pulsars:
         c2.pl = 1.3
         c2.pl_plus = 0.2
         c2.pl_minus = 0.2
-        c2.lum = 1.4e32
-        # TODO add errors
-        #c2.lum_plus =
-        #c2.lum_minus =
+        #c2.lum = 1.4e32
+        c2.lum, c2.lum_plus, c2.lum_minus = \
+            self.lnonth_powers([[31.66, 0.22, 0.45], [32.03, 0.22, 0.45]])
         f2 = self.fit_get_add(a1, 1)
         f2.spectrum = 'AT'
         c3 = self.component_get_add(f2, 0)
@@ -1149,7 +1169,7 @@ class Pulsars:
         a1.cite = '\cite{2008_Pavlov}'
         a1.info = ('page 13, no inf -> surface conversion, very bad '
                   'photon statistics, R_BB fixed in fits - larger R_BB '
-                  'fit in paper, A_{\perp}')
+                  'fit in paper, A_{\perp} PL luminosities from Becker 2009')
         a1.dist = 4
         f1 = self.fit_get_add(a1, 0)
         f1.spectrum = 'BB + PL'
@@ -1169,10 +1189,9 @@ class Pulsars:
         c2.pl = 1.7
         c2.pl_plus = 0.7
         c2.pl_minus = 0.7
-        c2.lum = 0.6e32
-        # TODO add errors
-        #c2.lum_plus =
-        #c2.lum_minus =
+        #c2.lum = 0.6e32
+        c2.lum, c2.lum_plus, c2.lum_minus = \
+            self.lnonth_powers([[31.8, 0.52, 0.73], [31.55, 0.38, 0.62]])
         ad = self.additional_get_add(p)
         ad.dist_dm_cl = 3.9
         self.save_records([ad, a1, f1, c1, c2], p)
@@ -1265,7 +1284,8 @@ class Pulsars:
         a1.info = ('pag 4,14, inf -> surface conversion done, no pulsation,'
                    ' different values in second paper ? (, R_bb 1.66e5 from'
                    ' text different fit?) A_{\perp}? no data (R_bb) for '
-                   'BB+PL (BB params from text), spectrum dominated by BB')
+                   'BB+PL (BB params from text), spectrum dominated by BB'
+                   'PL luminosity overestimated?')
         a1.dist = 3.1
         f1 = self.fit_get_add(a1, 0)
         f1.spectrum = 'BB + PL'
@@ -1284,10 +1304,9 @@ class Pulsars:
         c2.pl = 2.2
         c2.pl_plus = 3.0
         c2.pl_minus = 1.4
-        c2.lum = 3.1e-14 * 4. * pi * (3.1e3 * 3.0857e18) ** 2.
-        # TODO add errors
-        #c2.lum_plus =
-        #c2.lum_minus =
+        c2.lum = 3.1e-14 * 4. * pi * (a1.dist * 1e3 * 3.0857e18) ** 2.
+        c2.lum_plus = 1.3e-14 * 4. * pi * (a1.dist * 1e3 * 3.0857e18) ** 2.
+        c2.lum_minus = 1.2e-14 * 4. * pi * (a1.dist * 1e3 * 3.0857e18) ** 2.
         f2 = self.fit_get_add(a1, 1)
         f2.spectrum = 'AT'
         c3 = self.component_get_add(f2, 0)
@@ -1310,7 +1329,8 @@ class Pulsars:
         a1.cite = '\cite{2004_Slane}'
         a1.info = ('page 8 (in text), different value in table (page 9) -'
                    ' R_bb set to star radius there, PL from table, '
-                   'redshifted or unredshifted?')
+                   'redshifted or unredshifted? PL luminositiy from Becker '
+                   '2009 (review) in 0.1-10keV')
         a1.dist = 3.2
         f1 = self.fit_get_add(a1, 0)
         f1.spectrum = 'BB + PL'
@@ -1330,9 +1350,9 @@ class Pulsars:
         c2.pl = 1.78
         c2.pl_plus = 0.02
         c2.pl_minus = 0.04
-        c2.lum = 1.02e-12 * 4. * pi * (a1.dist * 1e3 * 3.0857e18) ** 2.
-        #c2.lum_plus =
-        #c2.lum_minus =
+        #c2.lum = 1.02e-12 * 4. * pi * (a1.dist * 1e3 * 3.0857e18) ** 2.
+        c2.lum, c2.lum_plus, c2.lum_minus = \
+            self.lnonth_powers([[32.64, 0.22, 0.45], [32.68, 0.22, 0.45]])
         f2 = self.fit_get_add(a1, 1)
         f2.spectrum = 'AT'
         c3 = self.component_get_add(f2, 0)
@@ -1507,7 +1527,8 @@ class Pulsars:
         a1 = self.article_get_add(p, 0)
         a1.article = 'http://adsabs.harvard.edu/abs/2009ApJ...690..891K'
         a1.cite = '\cite{2009_Kargaltsev}'
-        a1.info = ('page (889, table)')
+        a1.info = ('page (899, table) underestimated errors in Karg paper for'
+                   ' PL? PL luminosity from Becker 2009 (review)')
         a1.dist = 6.5
         f1 = self.fit_get_add(a1, 0)
         f1.spectrum = 'PL'
@@ -1517,9 +1538,11 @@ class Pulsars:
         c1.pl = 1.14
         c1.pl_plus = 0.06
         c1.pl_minus = 0.06
-        c1.lum = 17.92e33
-        c1.lum_plus = 0.07e33
-        c1.lum_minus = 0.07e33
+        #c1.lum = 17.92e33
+        #c1.lum_plus = 0.07e33
+        #c1.lum_minus = 0.07e33
+        c1.lum, c1.lum_plus, c1.lum_minus = \
+            self.lnonth_powers([[33.85, 0.19, 0.35], [34.23, 0.18, 0.31]])
         a2 = self.article_get_add(p, 1)
         a2.article = 'http://adsabs.harvard.edu/abs/2002nsps.conf...64B'
         a2.cite = '\cite{2002_Becker}'
@@ -1621,7 +1644,7 @@ class Pulsars:
         self.save_records([ad, a1, a2, f1, c1], p)
         self.calculate(p)
 
-        #     J1811-1925     ####################################################
+        #     J1811-1925   ####################################################
         p = Pulsar.objects.get(Name='J1811-1925')
         p.comment = 'G11.2-0.3'
         a1 = self.article_get_add(p, 0)
@@ -1728,7 +1751,8 @@ class Pulsars:
         a1 = self.article_get_add(p, 0)
         a1.article = 'http://adsabs.harvard.edu/abs/2007ApJ...660.1413K'
         a1.cite = '\cite{2007_Kargaltsev}'
-        a1.info = ('page 1, no R_BB (strong interstellar absorption)')
+        a1.info = ('page 1, no R_BB (strong interstellar absorption) PL '
+                   'luminosity from Becker 2009 (review) in 0.1-10keV')
         a1.dist = 4.
         f1 = self.fit_get_add(a1, 0)
         f1.spectrum = 'BB + PL'
@@ -1748,10 +1772,9 @@ class Pulsars:
         c2.pl = 1.4
         c2.pl_plus = 0.6
         c2.pl_minus = 0.6
-        c2.lum = 4e31
-        # TODO add errors
-        #c2.lum_plus =
-        #c2.lum_minus =
+        #c2.lum = 4e31
+        c2.lum, c2.lum_plus, c2.lum_minus = \
+            self.lnonth_powers([[32.35, 0.49, 0.8], [32.64, 0.26, 0.53]])
         self.save_records([a1, f1, c1, c2], p)
         self.calculate(p)
 
@@ -2176,41 +2199,61 @@ class Pulsars:
         a1 = self.article_get_add(p, 0)
         a1.article = 'http://arxiv.org/abs/1305.0998'
         a1.cite = '\cite{2013_Lin}'
-        a1.info = ('BB + BB (sec BB is incorrect?), BB + PL')
-        a1.dist = p.Dist
+        a1.info = ('page 6, BB+PL, BB + BB (sec BB is incorrect?), BB + PL')
+        a1.dist = 1.5
         f1 = self.fit_get_add(a1, 0)
-        f1.spectrum = 'BB + BB?'
+        f1.spectrum = 'BB + PL'
         f1.ordinal = 99
         c1 = self.component_get_add(f1, 0)
         c1.spec_type = 'BB'
-        c1.r = 223e2
-        c1.r_plus = 320e2
-        c1.r_minus = 106e2
-        c1.t = self.ev_to_k(0.25e3)
-        c1.t_plus = self.ev_to_k(0.05e3)
-        c1.t_minus = self.ev_to_k(0.05e3)
+        c1.r = 251e2
+        c1.r_plus = 537e2
+        c1.r_minus = 132e2
+        c1.t = self.ev_to_k(0.24e3)
+        c1.t_plus = self.ev_to_k(0.06e3)
+        c1.t_minus = self.ev_to_k(0.06e3)
         c1.lum = self.lbol_radius(c1.t, c1.r)
         c2 = self.component_get_add(f1, 1)
-        c2.spec_type = 'BB'
-        c2.r = 3.6e2
-        c2.r_plus = 6.4e2
-        c2.r_minus = 2.5e2
-        c2.t = self.ev_to_k(1.4e3)
-        c2.t_plus = self.ev_to_k(1.8e3)
-        c2.t_minus = self.ev_to_k(0.6e3)
-        c2.lum = self.lbol_radius(c2.t, c2.r)
+        c2.spec_type = 'PL'
+        c2.pl = 1.2
+        c2.pl_plus = 1.7
+        c2.pl_minus = 1.2
+        c2.lum = 0.5e-13 * 4. * pi * (a1.dist * 1e3 * 3.0857e18) ** 2.
+        # TODO no luminosities?
+        #c2.lum_plus =
+        #c2.lum_minus =
         f2 = self.fit_get_add(a1, 1)
-        f2.spectrum = 'PL'
+        f2.spectrum = 'BB + BB?'
         c3 = self.component_get_add(f2, 0)
-        c3.spec_type = 'PL'
-        c3.pl = 1.2
-        c3.pl_plus = 1.7
-        c3.pl_minus = 1.2
+        c3.spec_type = 'BB'
+        c3.r = 223e2
+        c3.r_plus = 320e2
+        c3.r_minus = 106e2
+        c3.t = self.ev_to_k(0.25e3)
+        c3.t_plus = self.ev_to_k(0.05e3)
+        c3.t_minus = self.ev_to_k(0.05e3)
+        c3.lum = self.lbol_radius(c3.t, c3.r)
+        c4 = self.component_get_add(f2, 1)
+        c4.spec_type = 'BB'
+        c4.r = 3.6e2
+        c4.r_plus = 6.4e2
+        c4.r_minus = 2.5e2
+        c4.t = self.ev_to_k(1.4e3)
+        c4.t_plus = self.ev_to_k(1.8e3)
+        c4.t_minus = self.ev_to_k(0.6e3)
+        c4.lum = self.lbol_radius(c4.t, c4.r)
+        f3 = self.fit_get_add(a1, 2)
+        f3.spectrum = 'PL'
+        c5 = self.component_get_add(f3, 0)
+        c5.spec_type = 'PL'
+        c5.pl = 1.2
+        c5.pl_plus = 1.7
+        c5.pl_minus = 1.2
         # TODO add nonthermal luminosities
-        #c3.lum =
-        #c3.lum_plus =
-        #c3.lum_minus =
-        self.save_records([a1, f1, f2, c1, c2, c3], p)
+        #c5.lum =
+        #c5.lum_plus =
+        #c5.lum_minus =
+        self.save_records([a1, f1, f2, f3, c1, c2, c3, c4, c5], p)
         self.calculate(p)
 
     def article_get_add(self, p,  num):
@@ -2389,6 +2432,18 @@ class Pulsars:
         l_nth_plus = l_nth_max - l_nth
         l_nth_minus = l_nth - l_nth_min
         return l_nth, l_nth_plus, l_nth_minus
+
+    '''
+    def lnonth_powers_sum(self, p1_, p2_, p1_errs, p2_errs):
+        for p in pow_:
+            l_nth += 10. ** p[0]
+            l_nth_max += 10 ** (p[0]+p[1])
+            l_nth_min += 10 ** (p[0]-p[2])
+        l_nth_plus = l_nth_max - l_nth
+        l_nth_minus = l_nth - l_nth_min
+        return l_nth, l_nth_plus, l_nth_minus
+    '''
+
 
     def radius_from_inf(self, r_inf, f=None):
         if f is  not None:

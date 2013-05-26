@@ -6,15 +6,17 @@ os.environ['MPLCONFIGDIR'] = '/tmp'
 import matplotlib as mp
 mp.use('Agg')
 import matplotlib.pyplot as pl
+import numpy as np
 
 from pulsars.settings import MEDIA_ROOT
+from calcs.interpolate import least_sq1D, least_sq2D, least_sq
 
-def xray_age(fits, recreate=False):
+def bb_pl_age(fits, recreate=False):
     file_name = 'database/plots/xray_age.'
     full_path = MEDIA_ROOT + file_name
 
     if recreate is True:
-        lbb_lnts, ages, ordinals = get_xray_age(fits)
+        lbb_lnts, ages, ordinals = get_bb_pl_age(fits)
 
         mp.rcdefaults()
         mp.rc('font', size=7)
@@ -38,7 +40,7 @@ def xray_age(fits, recreate=False):
     copyfile(full_path+'eps', '/home/aszary/work/6_outer/images/xray_age.eps')
     return [[full_path + 'svg', file_name +'svg']]
 
-def get_xray_age(fits):
+def get_bb_pl_age(fits):
     lbb_lnts = []
     ages = []
     ordinals = []
@@ -53,12 +55,12 @@ def get_xray_age(fits):
             print 'No lum for %s?' % fit.psr_id.Name
     return lbb_lnts, ages, ordinals
 
-def xray_age2(fits, recreate=False):
+def xi_age(fits, recreate=False):
     file_name = 'database/plots/xray_age2.'
     full_path = MEDIA_ROOT + file_name
 
     if recreate is True:
-        l_x, ages, ordinals, psrs = get_xray_age2(fits)
+        l_x, ages, ordinals, psrs = get_xi_age(fits)
 
         mp.rcdefaults()
         mp.rc('font', size=7)
@@ -82,7 +84,7 @@ def xray_age2(fits, recreate=False):
     #copyfile(full_path+'eps', '/home/aszary/work/6_outer/images/xray_age.eps')
     return [[full_path + 'svg', file_name +'svg']]
 
-def get_xray_age2(fits):
+def get_xi_age(fits):
     l_x = []
     ages = []
     ordinals = []
@@ -111,8 +113,8 @@ def get_xray_age2(fits):
             psrs.append(fit.psr_id)
     return l_x, ages, ordinals, psrs
 
-def xray_field(fits, recreate=False):
-    file_name = 'database/plots/xray_field.'
+def xi_field(fits, recreate=False):
+    file_name = 'database/plots/xi_field.'
     full_path = MEDIA_ROOT + file_name
 
     l_x = []
@@ -162,15 +164,29 @@ def xray_field(fits, recreate=False):
     return [[full_path + 'svg', file_name +'svg']]
 
 
-def xray_pl(fits, recreate=True):
-    file_name = 'database/plots/xray_pl.'
+def pl_sd(fits, recreate=False):
+    file_name = 'database/plots/pl_sd.'
     full_path = MEDIA_ROOT + file_name
 
     if recreate is True:
-        log_lsd_, log_lpl_, err_, ordinals, psrs = get_xray_pl(fits)
+        log_lsd_, log_lpl_, err_, ordinals, psrs, log_lsd_left_, \
+            log_lpl_left_,  err_left_, log_lsd_right_, log_lpl_right_,  \
+            err_right_ = get_pl_sd(fits)
+
+        fun = lambda v , x: v[0] * x + v[1]
+        #x_, y_, v = least_sq(log_lsd_, log_lpl_, fun, [1, 1.])
+        #x2_, y2_, v2 = least_sq1D(log_lsd_, log_lpl_, fun,
+        #                          np.array(err_[0])+np.array(err_[1]), [1, 1.])
+        x3_, y3_, v3 = least_sq2D(log_lsd_, log_lpl_, fun, err_, [1, 1.])
+        x4_, y4_, v4 = least_sq2D(log_lsd_left_, log_lpl_left_, fun,
+                                  err_left_, [1, 1.])
+        x5_, y5_, v5 = least_sq2D(log_lsd_right_, log_lpl_right_, fun,
+                                  err_right_, [1, 1.])
 
         mp.rcdefaults()
         mp.rc('font', size=7)
+        mp.rc('legend', fontsize=5)
+        #mp.rc('axes', linewidth=0.5)
         names_font = 5
         #pl.figure(figsize=(2.95276,2.3622)) #7.5x6
         pl.figure(figsize=(3.14961, 1.9464567)) #8x4.944cm (golden ratio)
@@ -179,6 +195,14 @@ def xray_pl(fits, recreate=True):
         #pl.loglog()
         #pl.plot(log_lsd_, log_lpl_,ls='None', marker='s', mec='black',
         #        mfc='None', ms=3.)
+        pl.plot(x3_, y3_, ls='-', c='red', lw=0.5,
+                label=r'$\propto L_{\rm SD}^{%.2f}$'%v3[0])
+        l, = pl.plot(x4_, y4_, ls='--', c='green', lw=0.5,
+                label=r'$\propto L_{\rm SD}^{%.2f}$'%v4[0])
+        l.set_dashes([2., 2.])
+        l, = pl.plot(x5_, y5_, ls='--', c='blue', lw=0.5,
+                label=r'$\propto L_{\rm SD}^{%.2f}$'%v5[0])
+        l.set_dashes([0.5, 0.5])
         pl.errorbar(log_lsd_, log_lpl_, yerr=err_, ls='None', marker='.',
                     mec='black', ecolor='black', lw=0.5, capsize=0.,
                     mfc='None', ms=3.)
@@ -187,19 +211,27 @@ def xray_pl(fits, recreate=True):
         pl.xlabel(r"$\log \left (L_{\rm SD} \right )$ ")
         pl.ylabel(r"$\log \left ( L_{\rm PL} \right )$")
         ax = pl.axis()
+        pl.legend(loc='upper left')
         #pl.axis([ax[0], 9e8, ax[2], 3e1])
         pl.savefig(full_path + 'eps')
         pl.savefig(full_path + 'pdf')
         pl.savefig(full_path + 'svg')
 
-    #copyfile(full_path+'eps', '/home/aszary/work/1_x-ray/images/xray_age.eps')
+    copyfile(full_path+'eps', '/home/aszary/work/1_x-ray/images/pl_sd.eps')
     #copyfile(full_path+'eps', '/home/aszary/work/6_outer/images/xray_age.eps')
     return [[full_path + 'svg', file_name +'svg']]
 
-def get_xray_pl(fits):
+def get_pl_sd(fits, lr=35.):
     log_lsd_ = []
     log_lpl_ = []
     err_ = [[], []]
+    log_lsd_left_ = []
+    log_lpl_left_ = []
+    err_left_ = [[], []]
+    log_lsd_right_ = []
+    log_lpl_right_ = []
+    err_right_ = [[], []]
+
     ordinals = []
     psrs = []
     for fit in fits:
@@ -219,9 +251,21 @@ def get_xray_pl(fits):
             minus = log10(lum) - log10(lum-pl_co.lum_minus)
             err_[0].append(plus)
             err_[1].append(minus)
+            if log_lsd_[-1] <= lr:
+                log_lsd_left_.append(log_lsd_[-1])
+                log_lpl_left_.append(log_lpl_[-1])
+                err_left_[0].append(err_[0][-1])
+                err_left_[1].append(err_[1][-1])
+            else:
+                log_lsd_right_.append(log_lsd_[-1])
+                log_lpl_right_.append(log_lpl_[-1])
+                err_right_[0].append(err_[0][-1])
+                err_right_[1].append(err_[1][-1])
         else:
             print 'Warning no PL luminosity data for %s' %fit.psr_id.Name
-    return log_lsd_, log_lpl_,  err_, ordinals, psrs
+    return (log_lsd_, log_lpl_,  err_, ordinals, psrs,
+            log_lsd_left_, log_lpl_left_,  err_left_,
+            log_lsd_right_, log_lpl_right_,  err_right_)
 
 def b_parameter(comps, recreate=False):
     res = []

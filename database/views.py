@@ -89,38 +89,38 @@ def table_pl(request):
     res = latex.table_pl(psrs)
     return HttpResponse(res, mimetype="text/plain")
 
-def xray_age(request):
+def bb_pl_age(request):
     fits = XrayFit.objects.filter(ordinal__gt=0).\
         filter(components__spec_type='PL').\
         filter(components__spec_type='BB').\
         filter(psr_id__P0__gt=0.01).distinct()
 
-    list_ = plot.xray_age(fits)
+    list_ = plot.bb_pl_age(fits)
     template = loader.get_template('database/plots/image.xhtml')
     c = Context({'list_':list_, })
     return HttpResponse(template.render(c))
 
-def xray_age2(request):
+def xi_age(request):
     fits = XrayFit.objects.filter(ordinal__gt=0).\
         filter(psr_id__P0__gt=0.01).distinct()
-    list_ = plot.xray_age2(fits)
+    list_ = plot.xi_age(fits)
     template = loader.get_template('database/plots/image.xhtml')
     c = Context({'list_':list_, })
     return HttpResponse(template.render(c))
 
-def xray_field(request):
+def xi_field(request):
     fits = XrayFit.objects.filter(ordinal__gt=0). \
         filter(psr_id__P0__gt=0.01).distinct()
-    list_ = plot.xray_field(fits)
+    list_ = plot.xi_field(fits)
     template = loader.get_template('database/plots/image.xhtml')
     c = Context({'list_':list_, })
     return HttpResponse(template.render(c))
 
-def xray_pl(request):
+def pl_sd(request):
     fits = XrayFit.objects.filter(ordinal__gt=0). \
         filter(components__spec_type='PL').\
         filter(psr_id__P0__gt=0.01).distinct()
-    list_ = plot.xray_pl(fits)
+    list_ = plot.pl_sd(fits)
     template = loader.get_template('database/plots/image.xhtml')
     c = Context({'list_':list_, })
     return HttpResponse(template.render(c))

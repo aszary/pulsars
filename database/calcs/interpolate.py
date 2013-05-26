@@ -40,7 +40,7 @@ def least_sq1D(x, y, fun, err, v0, size=200):
 
 def least_sq2D(x, y, fun, err, v0, size=200):
     """
-        err is 2D array (len=2) - plus error [0], minus error [1]
+        err is 2D array (len=2) - minus error [0], plus error [1]
     """
     x_0 = min(x)
     x_1 = max(x)
@@ -49,7 +49,7 @@ def least_sq2D(x, y, fun, err, v0, size=200):
         diff = fun(v, x) - y
         # err plus or minus?
         for i in xrange(len(diff)):
-            if diff[i] > 0:
+            if diff[i] < 0:
                 diff[i] /= err[0][i]
             else:
                 diff[i] /= err[1][i]

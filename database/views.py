@@ -89,13 +89,13 @@ def table_pl(request):
     res = latex.table_pl(psrs)
     return HttpResponse(res, mimetype="text/plain")
 
-def bb_pl_age(request):
+def bb_pl(request):
     fits = XrayFit.objects.filter(ordinal__gt=0).\
         filter(components__spec_type='PL').\
         filter(components__spec_type='BB').\
         filter(psr_id__P0__gt=0.01).distinct()
 
-    list_ = plot.bb_pl_age(fits)
+    list_ = plot.bb_pl(fits)
     template = loader.get_template('database/plots/image.xhtml')
     c = Context({'list_':list_, })
     return HttpResponse(template.render(c))
@@ -143,3 +143,13 @@ def bb_parameters(request):
     c = Context({'list_':list_, })
     return HttpResponse(template.render(c))
 
+def t6_b14(request):
+    comps = XrayComponent.objects.filter(spec_type='BB').\
+        filter(xrayfit__ordinal__gt=0).\
+        filter(psr_id__calculations__b__gt=1). \
+        filter(psr_id__P0__gt=0.01).\
+        distinct()
+    list_ = plot.t6_b14(comps)
+    template = loader.get_template('database/plots/image.xhtml')
+    c = Context({'list_':list_, })
+    return HttpResponse(template.render(c))

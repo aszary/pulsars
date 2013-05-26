@@ -10,14 +10,18 @@ import numpy as np
 
 from pulsars.settings import MEDIA_ROOT
 from calcs.interpolate import least_sq1D, least_sq2D, least_sq
+from calcs.functions import get_t6
 
-def bb_pl_age(fits, recreate=False):
-    file_name = 'database/plots/xray_age.'
+def bb_pl(fits, recreate=True):
+    file_name = 'database/plots/bb_pl_age.'
     full_path = MEDIA_ROOT + file_name
+    file_name2 = 'database/plots/bb_pl_field.'
+    full_path2 = MEDIA_ROOT + file_name2
 
     if recreate is True:
-        lbb_lnts, ages, ordinals = get_bb_pl_age(fits)
+        lbb_lnts, ages, bds, ordinals = get_bb_pl(fits)
 
+        # vs age plot
         mp.rcdefaults()
         mp.rc('font', size=7)
         names_font = 5
@@ -36,13 +40,32 @@ def bb_pl_age(fits, recreate=False):
         pl.savefig(full_path + 'pdf')
         pl.savefig(full_path + 'svg')
 
-    copyfile(full_path+'eps', '/home/aszary/work/1_x-ray/images/xray_age.eps')
-    copyfile(full_path+'eps', '/home/aszary/work/6_outer/images/xray_age.eps')
-    return [[full_path + 'svg', file_name +'svg']]
+        # vs B_d plot
+        mp.rcdefaults()
+        mp.rc('font', size=7)
+        names_font = 5
+        #pl.figure(figsize=(2.95276,2.3622)) #7.5x6
+        pl.figure(figsize=(3.14961, 1.9464567)) #8x4.944cm (golden ratio)
+        pl.subplots_adjust(left=0.147, bottom=0.179, right=0.97, top=0.97)
+        pl.loglog()
+        pl.plot(bds, lbb_lnts, 'o', color='black', ms=2.)
+        for i in xrange(len(ordinals)):
+            pl.text(bds[i], lbb_lnts[i], '%d'%ordinals[i], fontsize=names_font)
+        pl.xlabel(r"$B_{\rm d} \,  [ {\rm G} ]$ ")
+        pl.ylabel(r"$L_{\rm BB} / L_{\rm PL}$")
+        pl.savefig(full_path2 + 'eps')
+        pl.savefig(full_path2 + 'pdf')
+        pl.savefig(full_path2 + 'svg')
 
-def get_bb_pl_age(fits):
+    copyfile(full_path+'eps', '/home/aszary/work/1_x-ray/images/bb_pl_age.eps')
+    copyfile(full_path2+'eps', '/home/aszary/work/1_x-ray/images/bb_pl_field.eps')
+    return [[full_path + 'svg', file_name +'svg'],
+            [full_path2+ 'svg', file_name2 +'svg']]
+
+def get_bb_pl(fits):
     lbb_lnts = []
     ages = []
+    bds = []
     ordinals = []
     for fit in fits:
         bb = fit.components.filter(spec_type='BB').order_by('r')
@@ -50,10 +73,11 @@ def get_bb_pl_age(fits):
         try:
             lbb_lnts.append(bb[0].lum / pl[0].lum)
             ages.append(fit.psr_id.additionals.get(num=0).best_age)
+            bds.append(fit.psr_id.BSurf)
             ordinals.append(fit.ordinal)
         except TypeError:
             print 'No lum for %s?' % fit.psr_id.Name
-    return lbb_lnts, ages, ordinals
+    return lbb_lnts, ages, bds, ordinals
 
 def xi_age(fits, recreate=False):
     file_name = 'database/plots/xray_age2.'
@@ -249,8 +273,8 @@ def get_pl_sd(fits, lr=35.):
             psrs.append(fit.psr_id)
             plus = log10(lum+pl_co.lum_plus) - log10(lum)
             minus = log10(lum) - log10(lum-pl_co.lum_minus)
-            err_[0].append(plus)
-            err_[1].append(minus)
+            err_[0].append(minus)
+            err_[1].append(plus)
             if log_lsd_[-1] <= lr:
                 log_lsd_left_.append(log_lsd_[-1])
                 log_lpl_left_.append(log_lpl_[-1])
@@ -302,6 +326,72 @@ def get_b_parameters(comps):
         print co.psr_id.Name, co.psr_id.Type
 
     return b_, l_sd_, b_d_, age_, psr_
+
+def t6_b14(comps, recreate=True):
+    file_name = 'database/plots/t6_b14.'
+    full_path = MEDIA_ROOT + file_name
+
+    if recreate is True:
+        t_6_, t6_err_, b_14_, b14_err_, psr_  = get_t6_b14(comps)
+
+        b14_teor_ = np.linspace(min(b_14_), max(b_14_))
+        print b14_teor_
+        t6_teor_ = get_t6(b14_teor_)
+        t6_teor2_ = t6_teor_ * 1.2
+        t6_teor3_ = t6_teor_ * .8
+
+        mp.rcdefaults()
+        mp.rc('font', size=7)
+        names_font = 5
+        #pl.figure(figsize=(2.95276,2.3622)) #7.5x6
+        pl.figure(figsize=(3.14961, 1.9464567)) #8x4.944cm (golden ratio)
+        pl.subplots_adjust(left=0.147, bottom=0.179, right=0.99, top=0.99)
+        pl.semilogx()
+        pl.plot(b14_teor_, t6_teor_, color='black')
+        pl.plot(b14_teor_, t6_teor2_, color='black')
+        pl.plot(b14_teor_, t6_teor3_, color='black')
+        pl.plot(b_14_, t_6_, 'o', color='black', ms=2.)
+        '''
+        for i in xrange(len(b_14_)):
+            pl.errorbar(b_14_[i], t_6_[i],
+                        xerr=[[b14_err_[1][i]], [b14_err_[0][i]]],
+                        yerr=[[t6_err_[1][i]], [t6_err_[0][i]]])
+            print [[b14_err_[0][i]], [b14_err_[1][i]]], [[t6_err_[0][i]], [t6_err_[1][i]]]
+        '''
+        pl.errorbar(b_14_, t_6_, xerr=b14_err_, yerr=t6_err_, ls='None',
+                    marker='.',
+                    mec='black', ecolor='black', lw=0.5, #capsize=0.,
+                    mfc='None', ms=3.)
+        #for i in xrange(len(ordinals)):
+        #    pl.text(ages[i], l_x[i], '%d'%ordinals[i], fontsize=names_font)
+        pl.xlabel(r"$B_{14}$ ")
+        pl.ylabel(r"$T_6$")
+        ax = pl.axis()
+        #pl.axis([ax[0], 9e8, ax[2], 3e1])
+        pl.savefig(full_path + 'eps')
+        pl.savefig(full_path + 'pdf')
+        pl.savefig(full_path + 'svg')
+
+    return [[full_path + 'svg', file_name +'svg']]
+
+def get_t6_b14(comps):
+    t_6_ = []
+    t6_err_ = [[], []]
+    b_14_ = []
+    b14_err_ = [[], []]
+    psr_ = []
+
+    for co in comps:
+        calcs = co.psr_id.calculations.get(num=0)
+        b_14_.append(calcs.b_14)
+        b14_err_[0].append(calcs.b_14_minus)
+        b14_err_[1].append(calcs.b_14_plus)
+        t_6_.append(co.t / 1e6)
+        t6_err_[0].append(co.t_minus / 1e6)
+        t6_err_[1].append(co.t_plus / 1e6)
+        psr_.append(co.psr_id)
+
+    return t_6_, t6_err_, b_14_, b14_err_, psr_
 
 def radio_plots(psrs, recreate=False):
     res = []

@@ -14,10 +14,11 @@ urlpatterns = patterns('',
     url(r'^latex/table_psrs', views.table_psrs, name='table_psrs'),
     url(r'^latex/table_pl', views.table_pl, name='table_pl'),
     url(r'^plots/xi_age', views.xi_age, name='xi_age'),
-    url(r'^plots/bb_pl_age', views.bb_pl_age, name='bb_pl_age'),
+    url(r'^plots/bb_pl', views.bb_pl, name='bb_pl'),
     url(r'^plots/xi_field', views.xi_field, name='xi_field'),
     url(r'^plots/pl_sd', views.pl_sd, name='pl_sd'),
     url(r'^plots/bb_parameters', views.bb_parameters, name='bb_parameters'),
     url(r'^plots/radio', views.radio, name='radio'),
+    url(r'^plots/t6_b14', views.t6_b14, name='t6_b14'),
 )
 

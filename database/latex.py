@@ -313,6 +313,18 @@ def table_pl(pulsars):
              '/home/aszary/work/1_x-ray/includes/table_pl.tex')
     return res
 
+def custom(pulsars):
+    res = ''
+    for p in pulsars:
+        #res += '%s \n' % p.Name
+        res += '%s,%s\n' % (p.RaJ, p.DecJ)
+
+    f = open(MEDIA_ROOT + 'database/latex/chandra.csv', 'w')
+    for line in res:
+        f.write(line)
+    f.close()
+    return res
+
 def print_citealiases(psrs):
     # defcitealias
     citalias = []

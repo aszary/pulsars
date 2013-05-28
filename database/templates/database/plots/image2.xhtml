@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html
+        PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+    <title>Image</title>
+    {% load staticfiles %}
+    <style type="text/css">
+        img.styled {border-style:solid; border-width:1px; border-color:black;}
+</style>
+</head>
+<body>
+
+{% for path, file in list_ %}
+Absolute path: {{ path }}
+<br />
+<a href="/media/{{ file }}"><img class="styled" src="/media/{{ file }}" alt='xray_age image' height="550px" /></a>
+    <br />
+{% endfor %}
+
+
+</body>
+</html>

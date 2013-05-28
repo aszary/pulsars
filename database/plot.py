@@ -1,18 +1,21 @@
 import os
 from shutil import copyfile
 from math import log10
+from datetime import datetime
 os.environ['MPLCONFIGDIR'] = '/tmp'
 
 import matplotlib as mp
 mp.use('Agg')
 import matplotlib.pyplot as pl
 import numpy as np
+from django.core.exceptions import ObjectDoesNotExist
 
+from models import XrayComponent
 from pulsars.settings import MEDIA_ROOT
 from calcs.interpolate import least_sq1D, least_sq2D, least_sq
 from calcs.functions import get_t6
 
-def bb_pl(fits, recreate=True):
+def bb_pl(fits, recreate=False):
     file_name = 'database/plots/bb_pl_age.'
     full_path = MEDIA_ROOT + file_name
     file_name2 = 'database/plots/bb_pl_field.'
@@ -333,45 +336,68 @@ def t6_b14(comps, recreate=True):
 
     if recreate is True:
         t_6_, t6_err_, b_14_, b14_err_, psr_  = get_t6_b14(comps)
-
-        b14_teor_ = np.linspace(min(b_14_), max(b_14_))
-        print b14_teor_
+        # theoretical prediction
+        b14_teor_ = np.logspace(log10(min(b_14_)), log10(5. * max(b_14_)), num=50)
         t6_teor_ = get_t6(b14_teor_)
-        t6_teor2_ = t6_teor_ * 1.2
-        t6_teor3_ = t6_teor_ * .8
+        t6_teor2_ = t6_teor_ * 1.3
+        t6_teor3_ = t6_teor_ * .7
+
+        # plot options
+        excludes = ['J2043+2740']
+        colors = {'J0633+1746':'black', 'B0355+54':'blue', 'B0628-28':'black',
+                'B0834+06':'magenta',  'B0943+10':'green',  'B0950+08':'cyan',
+                'B1133+16':'blue',  'B1719-37':'red',  'B1929+10':'red',
+                'B2224+65':'black',  'J0108-1431':'red',  'J0633+1746':'brown',
+                'B1451-68':'brown', 'J2021+4026':'red'}
+        txt_pos = {'J0633+1746':[0.11, 1.49], 'B0355+54':[0.3,2.86], 'B0628-28':[0.3,3.4],
+                'B0834+06':[0.29, 2.05],  'B0943+10':[6., 2.9],  'B0950+08':[0.08,2.4],
+                'B1133+16':[6., 3.4],  'B1719-37':[0.01,3.6],  'B1929+10':[0.27, 4.65],
+                'B2224+65':[0.8, 5.9],  'J0108-1431':[0.015, 1.4],
+                'B1451-68':[1.6, 4.2], 'J2021+4026':[0.013, 2.6]}
 
         mp.rcdefaults()
         mp.rc('font', size=7)
+        mp.rc('legend', fontsize=7)
         names_font = 5
         #pl.figure(figsize=(2.95276,2.3622)) #7.5x6
-        pl.figure(figsize=(3.14961, 1.9464567)) #8x4.944cm (golden ratio)
-        pl.subplots_adjust(left=0.147, bottom=0.179, right=0.99, top=0.99)
+        #pl.figure(figsize=(3.14961, 1.9464567)) #8x4.944cm (golden ratio)
+        pl.figure(figsize=(3.14961, 3.14961)) #8x8cm (golden ratio)
+        pl.subplots_adjust(left=0.1, bottom=0.12, right=0.97, top=0.98)
+        pl.minorticks_on()
         pl.semilogx()
-        pl.plot(b14_teor_, t6_teor_, color='black')
-        pl.plot(b14_teor_, t6_teor2_, color='black')
-        pl.plot(b14_teor_, t6_teor3_, color='black')
-        pl.plot(b_14_, t_6_, 'o', color='black', ms=2.)
-        '''
+        l, = pl.plot(b14_teor_, t6_teor_, color='black', ls='--', lw=0.5,
+                label='$T_6=1.1 (B_{14}^{1.1} + 0.3)$')
+        l.set_dashes([3., 3.])
+        #pl.plot(b14_teor_, t6_teor2_, color='black', ls='')
+        #pl.plot(b14_teor_, t6_teor3_, color='black', ls='')
+        pl.fill_between(b14_teor_, t6_teor2_, t6_teor3_, edgecolor='None',
+                        facecolor='#e6e6e6', alpha=1.0, zorder=0)
         for i in xrange(len(b_14_)):
-            pl.errorbar(b_14_[i], t_6_[i],
-                        xerr=[[b14_err_[1][i]], [b14_err_[0][i]]],
-                        yerr=[[t6_err_[1][i]], [t6_err_[0][i]]])
-            print [[b14_err_[0][i]], [b14_err_[1][i]]], [[t6_err_[0][i]], [t6_err_[1][i]]]
-        '''
-        pl.errorbar(b_14_, t_6_, xerr=b14_err_, yerr=t6_err_, ls='None',
-                    marker='.',
-                    mec='black', ecolor='black', lw=0.5, #capsize=0.,
-                    mfc='None', ms=3.)
-        #for i in xrange(len(ordinals)):
-        #    pl.text(ages[i], l_x[i], '%d'%ordinals[i], fontsize=names_font)
+            na = psr_[i].Name
+            if na not in excludes:
+                pl.errorbar(b_14_[i], t_6_[i], lw=0.5, ms=2., marker='o',
+                    mec=colors[na], mfc=colors[na], color=colors[na],
+                    xerr=[[b14_err_[0][i]], [b14_err_[1][i]]],
+                    yerr=[[t6_err_[0][i]], [t6_err_[1][i]]])
+                print psr_[i].Name
+                try:
+                    xt = txt_pos[na][0]
+                    yt = txt_pos[na][1]
+                except KeyError:
+                    xt = b_14_[i]
+                    yt = t_6_[i]
+                pl.text(xt, yt, '%s'%psr_[i].Name,
+                        fontsize=names_font, color=colors[na])
         pl.xlabel(r"$B_{14}$ ")
         pl.ylabel(r"$T_6$")
+        pl.legend(loc='upper left')
         ax = pl.axis()
-        #pl.axis([ax[0], 9e8, ax[2], 3e1])
+        pl.axis([4e-3, 2e2, 1., 7.1])
         pl.savefig(full_path + 'eps')
         pl.savefig(full_path + 'pdf')
         pl.savefig(full_path + 'svg')
 
+    copyfile(full_path+'eps', '/home/aszary/work/1_x-ray/images/t6_b14.eps')
     return [[full_path + 'svg', file_name +'svg']]
 
 def get_t6_b14(comps):
@@ -383,13 +409,14 @@ def get_t6_b14(comps):
 
     for co in comps:
         calcs = co.psr_id.calculations.get(num=0)
-        b_14_.append(calcs.b_14)
-        b14_err_[0].append(calcs.b_14_minus)
-        b14_err_[1].append(calcs.b_14_plus)
-        t_6_.append(co.t / 1e6)
-        t6_err_[0].append(co.t_minus / 1e6)
-        t6_err_[1].append(co.t_plus / 1e6)
-        psr_.append(co.psr_id)
+        if co.r < calcs.r_dp:
+            b_14_.append(calcs.b_14)
+            b14_err_[0].append(calcs.b_14_minus)
+            b14_err_[1].append(calcs.b_14_plus)
+            t_6_.append(co.t / 1e6)
+            t6_err_[0].append(co.t_minus / 1e6)
+            t6_err_[1].append(co.t_plus / 1e6)
+            psr_.append(co.psr_id)
 
     return t_6_, t6_err_, b_14_, b14_err_, psr_
 
@@ -508,6 +535,116 @@ def radio_plots(psrs, recreate=False):
     #copyfile(full_path+'eps', '/home/aszary/work/6_outer/images/s400_age.eps')
     return res
 
+def custom(pulsars, copy_=False):
+    x_ = []
+    y_ = []
+    psr_ = []
+
+    # axis labels (for plot)
+    x_lab = r'' # $ \tau [{\rm yr}] $   $ L_{\rm SD} $
+    y_lab = r'' # $ b $'
+
+    # get data
+    for p in pulsars:
+        co_bb, co_pl, calc, ad = get_custom(p)
+        try:
+            #x = float(p.BSurf)
+            #x = float(ad.best_age)
+            x = float(p.Age)
+            #y = co_bb[0].lum
+            #y = calc.b#co_pl[0].lum / p.Edot
+            # L_{XXX MHz}
+            #y = p.S1400 / 1e3  * (p.Dist * 3.08567758e21) ** 2. * 1e-23 / p.Edot
+            # L_radio
+            y = 7.4e27 * p.Dist ** 2. * p.S1400 / p.Edot
+        except (ValueError, ZeroDivisionError, IndexError, TypeError,
+                UnboundLocalError, AttributeError):
+            x = None
+            y = None
+            print 'Warning ValueError for %s' % p.Name
+
+        if x > 0. and y > 0.:# and float(p.P0) < 0.01:
+            x_.append(x)
+            y_.append(y)
+            psr_.append(p)
+
+    file_name = 'database/plots/custom.'
+    full_path = MEDIA_ROOT + file_name
+
+    ot, he, he2, axp = None, None, None, None
+    mp.rcdefaults()
+    mp.rc('font', size=12)
+    mp.rc('legend', fontsize=10)
+
+    #pl.figure(figsize=(3.14961, 3.14961)) #8x8cm
+    pl.figure(figsize=(5.90551, 5.90551)) #15x15cm
+    pl.subplots_adjust(left=0.13, bottom=0.1, right=0.96, top=0.96)
+    pl.minorticks_on()
+    #pl.semilogx()
+    pl.loglog()
+    for i in xrange(len(x_)):
+        if psr_[i].Binary !='*':
+            ot, = pl.plot(x_[i], y_[i], '^', mfc='blue', mec='blue', ms=3., zorder=50)
+        elif psr_[i].Type.startswith('HE'):
+            he, = pl.plot(x_[i], y_[i], 's', mfc='magenta', mec='magenta', ms=3., zorder=40)
+        elif psr_[i].Type.find('AXP') != -1:
+            axp, = pl.plot(x_[i], y_[i], 's', mfc='green', mec='green', ms=3., zorder=30)
+        elif psr_[i].Type.startswith('NRAD'):
+            he2, = pl.plot(x_[i], y_[i], 'D', mfc='yellow', mec='yellow', ms=3., zorder=20)
+        else:
+            pl.plot(x_[i], y_[i], 'o', mfc='red', mec='red', ms=1.5, zorder=1)
+        #pl.text(x_[i], y_[i], '%s'%psr_[i].Name, fontsize=8)
+
+    leg_, lab_= [], []
+    if ot is not None:
+        leg_.append(ot)
+        lab_.append('Binary')
+    if he is not None:
+        leg_.append(he)
+        lab_.append('with pulsed HE radiation')
+    if he2 is not None:
+        leg_.append(he2)
+        lab_.append('HE (no radio)')
+    if axp is not None:
+        leg_.append(axp)
+        lab_.append('AXP')
+
+    pl.legend(leg_, lab_, loc='upper right')
+    pl.xlabel(x_lab)
+    pl.ylabel(y_lab)
+    ax = pl.axis()
+    #pl.axis([5e10, 5e13, ax[2], ax[3]])
+    pl.savefig(full_path + 'eps')
+    pl.savefig(full_path + 'pdf')
+    pl.savefig(full_path + 'svg')
+    d = datetime.now()
+    if copy_ is True:
+        copyfile(full_path+'pdf', MEDIA_ROOT+'database/plots/custom/%d-%d-%dT'
+            '%d:%d.pdf' % (d.year, d.month, d.day, d.hour, d.minute))
+        copyfile(full_path+'svg', MEDIA_ROOT+'database/plots/custom/%d-%d-%dT'
+            '%d:%d.svg' % (d.year, d.month, d.day, d.hour, d.minute))
+    return [ [full_path + 'svg', file_name + 'svg']]
+
+def get_custom(p):
+        co_bb = XrayComponent.objects.filter(psr_id=p).\
+            filter(xrayfit__ordinal__gt=0).filter(spec_type='BB').order_by('r')
+        co_pl = XrayComponent.objects.filter(psr_id=p).\
+            filter(xrayfit__ordinal__gt=0).filter(spec_type='PL')
+        try:
+            calc = p.calculations.get(num=0)
+        except ObjectDoesNotExist:
+            calc = None
+            print 'Warning no calculations for %s' % p.Name
+        try:
+            ad = p.additionals.get(num=0)
+        except ObjectDoesNotExist:
+            ad = None
+            print 'Warning no additionals for %s' % p.Name
+
+        return co_bb, co_pl, calc, ad
+
+
+
 def plot_data(x_, y_, psrs, name, xlab=r"$\tau \,  [ {\rm yr} ]$",
          ylab=r"$L_{1400} / L_{\rm SD}$", recreate=False, loc_='upper right'):
 
@@ -515,7 +652,7 @@ def plot_data(x_, y_, psrs, name, xlab=r"$\tau \,  [ {\rm yr} ]$",
     full_path = MEDIA_ROOT + file_name
 
     if recreate:
-        ot, he, he2 = None, None, None
+        ot, he, he2, axp = None, None, None, None
         mp.rcdefaults()
         mp.rc('font', size=7)
         mp.rc('legend', fontsize=5)
@@ -525,13 +662,15 @@ def plot_data(x_, y_, psrs, name, xlab=r"$\tau \,  [ {\rm yr} ]$",
         pl.loglog()
         for i in xrange(len(x_)):
             if psrs[i].Binary !='*':
-                ot, = pl.plot(x_[i], y_[i], '^', mfc='blue', mec='blue', ms=1.5)
-            else:
-                pl.plot(x_[i], y_[i], 'o', mfc='black', ms=0.7)
-            if psrs[i].Type.startswith('HE'):
-                he, = pl.plot(x_[i], y_[i], 'D', mfc='red', mec='red', ms=1.5)
+                ot, = pl.plot(x_[i], y_[i], '^', mfc='blue', mec='blue', ms=1.5, zorder=50)
+            elif psrs[i].Type.startswith('HE'):
+                he, = pl.plot(x_[i], y_[i], 's', mfc='magenta', mec='magenta', ms=1.5, zorder=40)
+            elif psrs[i].Type.find('AXP') != -1:
+                axp, = pl.plot(x_[i], y_[i], 's', mfc='green', mec='green', ms=1.5, zorder=30)
             elif psrs[i].Type.startswith('NRAD'):
-                he2, = pl.plot(x_[i], y_[i], 'D', mfc='green', mec='green', ms=1.5)
+                he2, = pl.plot(x_[i], y_[i], 'D', mfc='yellow', mec='yellow', ms=1.5, zorder=20)
+            else:
+                pl.plot(x_[i], y_[i], 'o', mfc='red', mec='red', ms=0.6, zorder=1)
         leg_, lab_= [], []
         if ot is not None:
             leg_.append(ot)
@@ -542,6 +681,9 @@ def plot_data(x_, y_, psrs, name, xlab=r"$\tau \,  [ {\rm yr} ]$",
         if he2 is not None:
             leg_.append(he2)
             lab_.append('HE (no radio)')
+        if axp is not None:
+            leg_.append(axp)
+            lab_.append('AXP')
 
         pl.legend(leg_, lab_, loc=loc_)
         pl.xlabel(xlab)

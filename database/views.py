@@ -153,3 +153,29 @@ def t6_b14(request):
     template = loader.get_template('database/plots/image.xhtml')
     c = Context({'list_':list_, })
     return HttpResponse(template.render(c))
+
+def custom(request):
+    psrs = Pulsar.objects.all()
+    list_ = plot.custom(psrs)
+    template = loader.get_template('database/plots/image2.xhtml')
+    c = Context({'list_':list_, })
+    return HttpResponse(template.render(c))
+
+def custom_data(request):
+    psrs = Pulsar.objects.all()
+    res = latex.custom(psrs)
+    return HttpResponse(res)
+
+def checks(request):
+    list_ = []
+    list_.append([r'database/plots/custom/2013-5-27T5:29.svg', 'http://www.atnf.csiro.au/people/pulsar/psrcat/proc_form.php?Name=Name&Type=Type&startUserDefined=true&c1=c1&c1_val=S400+%2F+1e3++*+%28Dist+*+3.08567758e21%29+**+2.+*+1e-23+%2F+Edot&c2_val=&c3_val=&c4_val=&sort_attr=jname&sort_order=asc&condition=&pulsar_names=&ephemeris=short&coords_unit=raj%2Fdecj&radius=&coords_1=&coords_2=&style=Long+with+last+digit+error&no_value=*&fsize=3&x_axis=Edot&x_scale=log&y_axis=C1&y_scale=log&state=query&plot_bottom.x=57&plot_bottom.y=16'])
+    list_.append([r'database/plots/custom/2013-5-27T5:30.svg', 'http://www.atnf.csiro.au/people/pulsar/psrcat/proc_form.php?Name=Name&Type=Type&startUserDefined=true&c1=c1&c1_val=S1400+%2F+1e3++*+%28Dist+*+3.08567758e21%29+**+2.+*+1e-23+%2F+Edot&c2_val=&c3_val=&c4_val=&sort_attr=jname&sort_order=asc&condition=&pulsar_names=&ephemeris=short&coords_unit=raj%2Fdecj&radius=&coords_1=&coords_2=&style=Long+with+last+digit+error&no_value=*&fsize=3&x_axis=Edot&x_scale=log&y_axis=C1&y_scale=log&state=query&plot_bottom.x=46&plot_bottom.y=21'])
+    list_.append([r'database/plots/custom/2013-5-27T5:31.svg', 'http://www.atnf.csiro.au/people/pulsar/psrcat/proc_form.php?Name=Name&Type=Type&startUserDefined=true&c1=c1&c1_val=S2000+%2F+1e3++*+%28Dist+*+3.08567758e21%29+**+2.+*+1e-23+%2F+Edot&c2_val=&c3_val=&c4_val=&sort_attr=jname&sort_order=asc&condition=&pulsar_names=&ephemeris=short&coords_unit=raj%2Fdecj&radius=&coords_1=&coords_2=&style=Long+with+last+digit+error&no_value=*&fsize=3&x_axis=Edot&x_scale=log&y_axis=C1&y_scale=log&state=query&plot_bottom.x=72&plot_bottom.y=32'])
+    list_.append([r'database/plots/custom/2013-5-27T5:26.svg', 'http://www.atnf.csiro.au/people/pulsar/psrcat/proc_form.php?Name=Name&Type=Type&startUserDefined=true&c1=c1&c1_val=7.4e27+*+Dist+**+2.+*+S1400+%2F+Edot&c2_val=&c3_val=&c4_val=&sort_attr=jname&sort_order=asc&condition=&pulsar_names=&ephemeris=short&coords_unit=raj%2Fdecj&radius=&coords_1=&coords_2=&style=Long+with+last+digit+error&no_value=*&fsize=3&x_axis=Edot&x_scale=log&y_axis=C1&y_scale=log&state=query&plot_bottom.x=40&plot_bottom.y=35'])
+    template = loader.get_template('database/plots/checks.xhtml')
+    c = Context({'list_':list_, })
+    return HttpResponse(template.render(c))
+
+
+
+

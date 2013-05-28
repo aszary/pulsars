@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html
+        PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+    <title>Checks</title>
+    {% load staticfiles %}
+    <style type="text/css">
+        img.styled {border-style:solid; border-width:1px; border-color:black;}
+</style>
+</head>
+<body>
+
+{% for path, link in list_ %}
+File path: {{ path }}
+    <br />
+<a href="{{ link }}" target="_blank"> ATNF link</a>
+<br />
+<a href="/media/{{ path }}"><img class="styled" src="/media/{{ path }}" alt='xray_age image' height="550px" /></a>
+    <br />
+{% endfor %}
+
+</body>
+</html>

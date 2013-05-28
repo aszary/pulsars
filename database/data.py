@@ -69,7 +69,7 @@ class Pulsars:
         a2.dist = 0.184
         f2 = self.fit_get_add(a2, num=0)
         f2.spectrum = 'BB'
-        c3 = self.component_get_add(f1, 0)
+        c3 = self.component_get_add(f2, 0)
         c3.spec_type = 'BB'
         c3.r = self.radius_from_area(53e4) * (184./130.)
         c3.r_plus = self.radius_from_area(32e4) * (184./130.)
@@ -80,7 +80,7 @@ class Pulsars:
         c3.lum = self.lbol_radius(c1.t, c1.r)
         f3 = self.fit_get_add(a2, num=1)
         f3.spectrum = 'PL'
-        c4 = self.component_get_add(f2, num=0)
+        c4 = self.component_get_add(f3, num=0)
         c4.spec_type = 'PL'
         c4.pl = 2.2
         c4.pl_plus = 0.31

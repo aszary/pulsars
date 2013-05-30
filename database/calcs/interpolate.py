@@ -12,7 +12,7 @@ def least_sq(x, y, fun, v0, size=200):
     errfunc = lambda v, x, y: (fun(v, x) - y)
     v, success = leastsq(errfunc, v0, args=(np.array(x), np.array(y)),
                          maxfev=10000)
-    print sum(pow(errfunc(v, np.array(x), np.array(y)), 2.))
+    #print sum(pow(errfunc(v, np.array(x), np.array(y)), 2.))
     t = '''chi2 = 0.
     for n in range(len(x)):
             residual = (y[n] - fun(v, x[n]))

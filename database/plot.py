@@ -82,8 +82,8 @@ def get_bb_pl(fits):
             print 'No lum for %s?' % fit.psr_id.Name
     return lbb_lnts, ages, bds, ordinals
 
-def xi_age(fits, recreate=False):
-    file_name = 'database/plots/xray_age2.'
+def xi_age(fits, recreate=True):
+    file_name = 'database/plots/xi_age.'
     full_path = MEDIA_ROOT + file_name
 
     if recreate is True:
@@ -541,29 +541,32 @@ def custom(pulsars, copy_=False):
     psr_ = []
 
     # axis labels (for plot)
-    x_lab = r'' # $ \tau [{\rm yr}] $   $ L_{\rm SD} $
-    y_lab = r'' # $ b $'
+    x_lab = r'$ \log (P^3) $' # $ \tau [{\rm yr}] $   $ L_{\rm SD} $
+    y_lab = r'$\log (\xi) $' # $ b $'
 
     # get data
     for p in pulsars:
         co_bb, co_pl, calc, ad = get_custom(p)
         try:
             #x = float(p.BSurf)
+            x = log10(float(p.P0) ** (-3.))
             #x = float(ad.best_age)
-            x = float(p.Age)
+            #x = float(p.P0)
             #y = co_bb[0].lum
             #y = calc.b#co_pl[0].lum / p.Edot
             # L_{XXX MHz}
-            #y = p.S1400 / 1e3  * (p.Dist * 3.08567758e21) ** 2. * 1e-23 / p.Edot
+            #y = log10(p.S400 / 1e3  * (p.Dist * 3.08567758e21) ** 2. * 1e-23 / p.Edot)
             # L_radio
-            y = 7.4e27 * p.Dist ** 2. * p.S1400 / p.Edot
+            y =  log10(7.4e27 * p.Dist ** 2. * p.S1400 / p.Edot)
+            print y#, log10(y)
         except (ValueError, ZeroDivisionError, IndexError, TypeError,
                 UnboundLocalError, AttributeError):
             x = None
             y = None
             print 'Warning ValueError for %s' % p.Name
 
-        if x > 0. and y > 0.:# and float(p.P0) < 0.01:
+        #if x > 0. and y > 0.:# and float(p.P0) < 0.01:
+        if x > 0. and y is not None:
             x_.append(x)
             y_.append(y)
             psr_.append(p)
@@ -573,26 +576,29 @@ def custom(pulsars, copy_=False):
 
     ot, he, he2, axp = None, None, None, None
     mp.rcdefaults()
-    mp.rc('font', size=12)
-    mp.rc('legend', fontsize=10)
+    mp.rc('font', size=9)
+    mp.rc('legend', fontsize=7)
+    #mp.rc('font', size=12)
+    #mp.rc('legend', fontsize=10)
 
-    #pl.figure(figsize=(3.14961, 3.14961)) #8x8cm
-    pl.figure(figsize=(5.90551, 5.90551)) #15x15cm
-    pl.subplots_adjust(left=0.13, bottom=0.1, right=0.96, top=0.96)
+    pl.figure(figsize=(3.14961, 3.14961)) #8x8cm
+    #pl.figure(figsize=(5.90551, 5.90551)) #15x15cm
+    pl.subplots_adjust(left=0.17, bottom=0.12, right=0.96, top=0.96)
     pl.minorticks_on()
+    #pl.semilogy()
     #pl.semilogx()
-    pl.loglog()
+    #pl.loglog()
     for i in xrange(len(x_)):
         if psr_[i].Binary !='*':
-            ot, = pl.plot(x_[i], y_[i], '^', mfc='blue', mec='blue', ms=3., zorder=50)
+            ot, = pl.plot(x_[i], y_[i], '^', mfc='blue', mec='blue', ms=1.5, zorder=50)
         elif psr_[i].Type.startswith('HE'):
-            he, = pl.plot(x_[i], y_[i], 's', mfc='magenta', mec='magenta', ms=3., zorder=40)
+            he, = pl.plot(x_[i], y_[i], 's', mfc='magenta', mec='magenta', ms=1.5, zorder=40)
         elif psr_[i].Type.find('AXP') != -1:
-            axp, = pl.plot(x_[i], y_[i], 's', mfc='green', mec='green', ms=3., zorder=30)
+            axp, = pl.plot(x_[i], y_[i], 's', mfc='green', mec='green', ms=1.5, zorder=30)
         elif psr_[i].Type.startswith('NRAD'):
-            he2, = pl.plot(x_[i], y_[i], 'D', mfc='yellow', mec='yellow', ms=3., zorder=20)
+            he2, = pl.plot(x_[i], y_[i], 'D', mfc='yellow', mec='yellow', ms=1.5, zorder=20)
         else:
-            pl.plot(x_[i], y_[i], 'o', mfc='red', mec='red', ms=1.5, zorder=1)
+            pl.plot(x_[i], y_[i], 'o', mfc='red', mec='red', ms=1.0, zorder=1)
         #pl.text(x_[i], y_[i], '%s'%psr_[i].Name, fontsize=8)
 
     leg_, lab_= [], []
@@ -645,6 +651,100 @@ def get_custom(p):
 
 
 
+
+def xi_sd_radio(pulsars):
+    x_ = []
+    y_ = []
+    psr_ = []
+    xb_ = []
+    yb_ = []
+    psrb_ = []
+
+    # axis labels (for plot)
+    x_lab = r'$ \log (\dot{E}) \, [{\rm erg / s}] $' # $ \tau [{\rm yr}] $   $ L_{\rm SD} $
+    y_lab = r'$\log (\xi_{1400}) $' # $ b $'
+
+    # get data
+    for p in pulsars:
+        co_bb, co_pl, calc, ad = get_custom(p)
+        try:
+            x = log10(float(p.Edot))
+            # L_{XXX MHz}
+            y = log10(p.S1400 / 1e3  * (p.Dist * 3.08567758e21) ** 2. * 1e-23 / p.Edot)
+            # L_radio
+            #y =  log10(7.4e27 * p.Dist ** 2. * p.S1400 / p.Edot)
+            print y#, log10(y)
+        except (ValueError, ZeroDivisionError, IndexError, TypeError,
+                UnboundLocalError, AttributeError):
+            x = None
+            y = None
+            print 'Warning ValueError for %s' % p.Name
+        if x > 0. and y is not None:
+            x_.append(x)
+            y_.append(y)
+            psr_.append(p)
+            if p.Binary != '*':
+                xb_.append(x)
+                yb_.append(y)
+                psrb_.append(p)
+
+    fun = lambda v , x: v[0] * x + v[1]
+    x2_, y2_, v2 = least_sq(x_, y_, fun, [1, 1.])
+    x3_, y3_, v3 = least_sq(xb_, yb_, fun, [1, 1.])
+
+    file_name = 'database/plots/radio/xi_sd.'
+    full_path = MEDIA_ROOT + file_name
+
+    ot, he, he2, axp = None, None, None, None
+    mp.rcdefaults()
+    mp.rc('font', size=9)
+    mp.rc('legend', fontsize=6)
+
+    pl.figure(figsize=(3.14961, 3.14961)) #8x8cm
+    #pl.figure(figsize=(5.90551, 5.90551)) #15x15cm
+    pl.subplots_adjust(left=0.17, bottom=0.12, right=0.96, top=0.96)
+    pl.minorticks_on()
+    for i in xrange(len(x_)):
+        if psr_[i].Binary !='*':
+            ot, = pl.plot(x_[i], y_[i], '^', mfc='blue', mec='blue', ms=1.5, zorder=50)
+        elif psr_[i].Type.startswith('HE'):
+            he, = pl.plot(x_[i], y_[i], 's', mfc='magenta', mec='magenta', ms=1.5, zorder=40)
+        elif psr_[i].Type.find('AXP') != -1:
+            axp, = pl.plot(x_[i], y_[i], 's', mfc='yellow', mec='yellow', ms=1.5, zorder=30)
+        else:
+            no, = pl.plot(x_[i], y_[i], 'o', mfc='red', mec='red', ms=0.7, zorder=1)
+        #pl.text(x_[i], y_[i], '%s'%psr_[i].Name, fontsize=8)
+    li, = pl.plot(x2_, y2_, ls='--', c='black', lw=1.50, zorder=9999)
+    li.set_dashes([3, 3])
+    li2, = pl.plot(x3_, y3_, ls='--', c='green', lw=1.50, zorder=9999)
+    li2.set_dashes([1.5, 1.5])
+    l0 = pl.legend([li, li2],
+        [r'$\xi \propto \dot{E}^{%.2f}$ (all pulsars)'%v2[0],
+         r'$\xi \propto \dot{E}^{%.2f}$ (Binary)'%v3[0]], loc='lower left')
+    leg_, lab_= [], []
+    if ot is not None:
+        leg_.append(ot)
+        lab_.append('Binary')
+    if he is not None:
+        leg_.append(he)
+        lab_.append('with pulsed HE radiation')
+    if axp is not None:
+        leg_.append(axp)
+        lab_.append('AXP')
+    leg_.append(no)
+    lab_.append('Other')
+    l2 = pl.legend(leg_, lab_, loc='upper right')
+    pl.gca().add_artist(l0)
+    pl.xlabel(x_lab)
+    pl.ylabel(y_lab)
+    ax = pl.axis()
+    #pl.axis([28.01, 39.99, -11.01, 0.99])
+    pl.savefig(full_path + 'eps')
+    pl.savefig(full_path + 'pdf')
+    pl.savefig(full_path + 'svg')
+    copyfile(full_path+'eps', '/home/aszary/work/0_radio_efficiency/f72.eps')
+    return [ [full_path + 'svg', file_name + 'svg']]
+
 def plot_data(x_, y_, psrs, name, xlab=r"$\tau \,  [ {\rm yr} ]$",
          ylab=r"$L_{1400} / L_{\rm SD}$", recreate=False, loc_='upper right'):
 
@@ -671,6 +771,7 @@ def plot_data(x_, y_, psrs, name, xlab=r"$\tau \,  [ {\rm yr} ]$",
                 he2, = pl.plot(x_[i], y_[i], 'D', mfc='yellow', mec='yellow', ms=1.5, zorder=20)
             else:
                 pl.plot(x_[i], y_[i], 'o', mfc='red', mec='red', ms=0.6, zorder=1)
+            #pl.text(x_[i], y_[i], '%s'%psrs[i].Name, fontsize=3)
         leg_, lab_= [], []
         if ot is not None:
             leg_.append(ot)
@@ -684,7 +785,6 @@ def plot_data(x_, y_, psrs, name, xlab=r"$\tau \,  [ {\rm yr} ]$",
         if axp is not None:
             leg_.append(axp)
             lab_.append('AXP')
-
         pl.legend(leg_, lab_, loc=loc_)
         pl.xlabel(xlab)
         pl.ylabel(ylab)

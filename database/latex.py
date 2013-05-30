@@ -315,14 +315,22 @@ def table_pl(pulsars):
 
 def custom(pulsars):
     res = ''
-    for p in pulsars:
+    pulsars = pulsars.order_by('-DecJ_err')
+    for i,p in enumerate(pulsars):
+        res += r'%s   %s    %s<br />' % (p.Name, p.RaJ_err, p.DecJ_err)
+
+    '''
+    num = 0
+    for i,p in enumerate(pulsars):
         #res += '%s \n' % p.Name
         res += '%s,%s\n' % (p.RaJ, p.DecJ)
-
+        if i%500 == 0 and i > 0:
+            num += 1
     f = open(MEDIA_ROOT + 'database/latex/chandra.csv', 'w')
     for line in res:
         f.write(line)
     f.close()
+    '''
     return res
 
 def print_citealiases(psrs):

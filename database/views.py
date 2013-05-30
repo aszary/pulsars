@@ -176,6 +176,10 @@ def checks(request):
     c = Context({'list_':list_, })
     return HttpResponse(template.render(c))
 
-
-
+def xi_sd_radio(request):
+    psrs = Pulsar.objects.all()
+    list_ = plot.xi_sd_radio(psrs)
+    template = loader.get_template('database/plots/image2.xhtml')
+    c = Context({'list_':list_, })
+    return HttpResponse(template.render(c))
 

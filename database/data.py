@@ -2256,6 +2256,79 @@ class Pulsars:
         self.save_records([a1, f1, f2, f3, c1, c2, c3, c4, c5], p)
         self.calculate(p)
 
+        #    J0007+7303    ####################################################
+        p = Pulsar.objects.get(Name='J0007+7303')
+        p.comment = 'CTA 1'
+        a1 = self.article_get_add(p, 0)
+        a1.article = 'http://adsabs.harvard.edu/abs/2010ApJ...725L...1L'
+        a1.cite = '\cite{2010_Lin}'
+        a1.info = ('page 4,')
+        a1.dist = 1.4
+        f1 = self.fit_get_add(a1, 0)
+        f1.spectrum = 'BB + PL'
+        f1.ordinal = 99
+        c1 = self.component_get_add(f1, 0)
+        c1.spec_type = 'BB'
+        c1.r = 1.39e5
+        c1.r_plus = 0.68e5
+        c1.r_minus = 0.43e5
+        c1.t = self.ev_to_k(0.104e3)
+        c1.t_plus = self.ev_to_k(0.013e3)
+        c1.t_minus = self.ev_to_k(0.013e3)
+        c1.lum = self.lbol_radius(c1.t, c1.r)
+        print c1.lum, 3.3e-14 * 4. * pi * (a1.dist * 1e3 * 3.0857e18) ** 2.
+        c2 = self.component_get_add(f1, 1)
+        c2.spec_type = 'PL'
+        c2.pl = 1.52
+        c2.pl_plus = 0.1
+        c2.pl_minus = 0.09
+        #c2.lum = 1.6e-13 * 4. * pi * (a1.dist * 1e3 * 3.0857e18) ** 2.
+        # TODO add luminosity errors
+        #c2.lum_plus =
+        #c2.lum_minus =
+        a2 = self.article_get_add(p, 1)
+        a2.article = 'http://adsabs.harvard.edu/abs/2010ApJ...725L...6C'
+        a2.cite = '\cite{2010_Caraveo}'
+        a2.info = 'page 19'
+        a3 = self.article_get_add(p, 2)
+        a3.article = 'http://adsabs.harvard.edu/abs/2007ApJ...668.1154H'
+        a3.cite = '\cite{2007_Halpern}'
+        self.save_records([a1, a2, a3, f1, c1, c2], p)
+        self.calculate(p)
+
+        '''
+        #        ####################################################
+        p = Pulsar.objects.get(Name='')
+        a1 = self.article_get_add(p, 0)
+        a1.article = ''
+        a1.cite = '\cite{}'
+        a1.info = ('')
+        a1.dist =
+        f1 = self.fit_get_add(a1, 0)
+        f1.spectrum = 'BB + PL'
+        f1.ordinal = 99
+        c1 = self.component_get_add(f1, 0)
+        c1.spec_type = 'BB'
+        c1.r =
+        c1.r_plus =
+        c1.r_minus =
+        c1.t = self.ev_to_k()
+        c1.t_plus = self.ev_to_k()
+        c1.t_minus = self.ev_to_k()
+        c1.lum = self.lbol_radius(c1.t, c1.r)
+        c2 = self.component_get_add(f1, 1)
+        c2.spec_type = 'PL'
+        c2.pl =
+        c2.pl_plus =
+        c2.pl_minus =
+        c2.lum =
+        c2.lum_plus =
+        c2.lum_minus =
+        self.save_records([a1, f1, c1, c2], p)
+        self.calculate(p)
+        '''
+
+
     def article_get_add(self, p,  num):
         try:
             a = p.xray_articles.get(num=num)

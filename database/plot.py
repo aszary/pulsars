@@ -1028,6 +1028,88 @@ def flux_sd_radio(pulsars):
     #copyfile(full_path+'eps', '/home/aszary/work/0_radio_efficiency/f72.eps')
     return [ [full_path + 'svg', file_name + 'svg']]
 
+def malov_radio(pulsars, recreate=False):
+    file_name = 'database/plots/radio/l_sd_malov.'
+    full_path = MEDIA_ROOT + file_name
+
+    if recreate is True:
+        x_ = []
+        y_ = []
+        psr_ = []
+
+        # axis labels (for plot)
+        x_lab = r'$ \log (\dot{E}) \, [{\rm erg \, s^{-1}}] $' # $ \tau [{\rm yr}] $   $ L_{\rm SD} $
+        y_lab = r'$\log (L_{\rm Malov} / \dot{E}) $' # $ b $'
+
+        # get data
+        for p in pulsars:
+            try:
+                x = log10(float(p.Edot))
+                # L_{XXX MHz}
+                y = log10(p.lum_malov / p.Edot)
+                # L_radio
+            except (ValueError, ZeroDivisionError, IndexError, TypeError,
+                    UnboundLocalError, AttributeError):
+                x = None
+                y = None
+                print 'Warning ValueError for %s' % p.Name
+            if x > 0. and y is not None:
+                x_.append(x)
+                y_.append(y)
+                psr_.append(p)
+
+        fun = lambda v , x: v[0] * x + v[1]
+        x2_, y2_, v2 = least_sq(x_, y_, fun, [1, 1.])
+
+
+        ot, he, he2, axp = None, None, None, None
+        mp.rcdefaults()
+        mp.rc('font', size=9)
+        mp.rc('legend', fontsize=5)
+
+        pl.figure(figsize=(3.14961, 3.14961)) #8x8cm
+        #pl.figure(figsize=(5.90551, 5.90551)) #15x15cm
+        pl.subplots_adjust(left=0.17, bottom=0.12, right=0.96, top=0.96)
+        pl.minorticks_on()
+        for i in xrange(len(x_)):
+            if psr_[i].Binary !='*':
+                ot, = pl.plot(x_[i], y_[i], '^', mfc='blue', mec='blue', ms=1.5, zorder=50)
+            elif psr_[i].Type.startswith('HE'):
+                he, = pl.plot(x_[i], y_[i], 's', mfc='magenta', mec='magenta', ms=1.5, zorder=40)
+            elif psr_[i].Type.find('AXP') != -1:
+                axp, = pl.plot(x_[i], y_[i], 's', mfc='yellow', mec='yellow', ms=1.5, zorder=30)
+            else:
+                no, = pl.plot(x_[i], y_[i], 'o', mfc='red', mec='red', ms=0.7, zorder=1)
+            #pl.text(x_[i], y_[i], '%s'%psr_[i].Name, fontsize=8)
+        li, = pl.plot(x2_, y2_, ls='--', c='black', lw=1.50, zorder=9999)
+        li.set_dashes([3, 3])
+        l0 = pl.legend([li],
+            [r'$\xi_{\rm Malov} \propto \dot{E}^{%.2f}$'%v2[0]], loc='lower left')
+        leg_, lab_= [], []
+        if ot is not None:
+            leg_.append(ot)
+            lab_.append('Binary')
+        if he is not None:
+            leg_.append(he)
+            lab_.append('with pulsed HE radiation')
+        if axp is not None:
+            leg_.append(axp)
+            lab_.append('AXP')
+        leg_.append(no)
+        lab_.append('Other')
+        l2 = pl.legend(leg_, lab_, loc='upper right')
+        pl.gca().add_artist(l0)
+        pl.xlabel(x_lab)
+        pl.ylabel(y_lab)
+        ax = pl.axis()
+        #pl.axis([28.01, 39.99, -11.01, 0.99])
+        pl.savefig(full_path + 'eps')
+        pl.savefig(full_path + 'pdf')
+        pl.savefig(full_path + 'svg')
+        #copyfile(full_path+'eps', '/home/aszary/work/0_radio_efficiency/f72.eps')
+
+    return [ [full_path + 'svg', file_name + 'svg']]
+
 def plot_data(x_, y_, psrs, name, xlab=r"$\tau \,  [ {\rm yr} ]$",
          ylab=r"$L_{1400} / L_{\rm SD}$", recreate=False, loc_='upper right'):
 

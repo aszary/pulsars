@@ -65,8 +65,6 @@ def sync_malov(request):
                         ' database/views.py)..')
 
 
-
-
 def table_bb(request):
     # for citealiases
     #all_psrs = Pulsar.objects.all()
@@ -211,6 +209,13 @@ def ll_sd_radio(request):
 def flux_sd_radio(request):
     psrs = Pulsar.objects.all()
     list_ = plot.flux_sd_radio(psrs)
+    template = loader.get_template('database/plots/image2.xhtml')
+    c = Context({'list_':list_, })
+    return HttpResponse(template.render(c))
+
+def malov_radio(request):
+    psrs = Pulsar.objects.all()
+    list_ = plot.malov_radio(psrs)
     template = loader.get_template('database/plots/image2.xhtml')
     c = Context({'list_':list_, })
     return HttpResponse(template.render(c))

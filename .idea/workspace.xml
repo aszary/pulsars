@@ -2,46 +2,15 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="791c5b0b-ef7c-48c3-878a-0bb95fb1bec9" name="Default" comment="">
-      <change type="DELETED" beforePath="$PROJECT_DIR$/database/migrations/0002_auto__add_field_pulsar_jname.py" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/database/migrations/0003_auto__del_field_pulsar_jname__del_field_pulsar_name__add_field_pulsar_.py" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/database/migrations/0004_auto__del_field_pulsar_RAJD__del_field_pulsar_Ecc_err__add_field_pulsa.py" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/database/migrations/0005_auto__add_field_pulsar_simbad_link.py" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/database/migrations/0006_auto__add_calculations__add_geometry__add_xrayfit__add_xraycomponent__.py" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/database/migrations/0007_auto__del_field_xrayfit_importance__add_field_xrayfit_num__add_field_x.py" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/database/migrations/0008_auto__chg_field_calculations_psr_id__chg_field_geometry_psr_id__del_fi.py" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/database/migrations/0009_auto__chg_field_xraycomponent_r.py" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/database/migrations/0010_auto__chg_field_calculations_a__chg_field_calculations_b__chg_field_ca.py" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/database/migrations/0011_auto__del_calculations__del_subpulses__add_calculation__add_subpulse__.py" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/database/migrations/0012_auto__add_field_calculation_num__add_field_geometry_num__add_field_add.py" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/database/migrations/0013_auto.py" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/database/migrations/0014_auto__add_field_xrayfit_psr_id__add_field_xraycomponent_psr_id.py" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/database/migrations/0015_auto__add_field_pulsar_lum_malov.py" afterPath="" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/pulsars.db" afterPath="$PROJECT_DIR$/pulsars.db" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/database/migrations/0001_initial.py" afterPath="$PROJECT_DIR$/database/migrations/0001_initial.py" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/database/admin.py" afterPath="$PROJECT_DIR$/database/admin.py" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/database/templates/database/all.xhtml" afterPath="$PROJECT_DIR$/database/templates/database/all.xhtml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/database/atnf.py" afterPath="$PROJECT_DIR$/database/atnf.py" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/database/templates/database/atnf.xhtml" afterPath="$PROJECT_DIR$/database/templates/database/atnf.xhtml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/database/data.py" afterPath="$PROJECT_DIR$/database/data.py" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/templates/pulsars/hello.xhtml" afterPath="$PROJECT_DIR$/templates/pulsars/hello.xhtml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/database/calcs/hot_spots.py" afterPath="$PROJECT_DIR$/database/calcs/hot_spots.py" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/database/calcs/interpolate.py" afterPath="$PROJECT_DIR$/database/calcs/interpolate.py" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/database/latex.py" afterPath="$PROJECT_DIR$/database/latex.py" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/database/models.py" afterPath="$PROJECT_DIR$/database/models.py" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/database/plot.py" afterPath="$PROJECT_DIR$/database/plot.py" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/database/templates/database/pulsar.xhtml" afterPath="$PROJECT_DIR$/database/templates/database/pulsar.xhtml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/database/urls.py" afterPath="$PROJECT_DIR$/database/urls.py" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/pulsars/urls.py" afterPath="$PROJECT_DIR$/pulsars/urls.py" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/database/views.py" afterPath="$PROJECT_DIR$/database/views.py" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/database/templates/database/x-rays.xhtml" afterPath="$PROJECT_DIR$/database/templates/database/x-rays.xhtml" />
     </list>
     <ignored path="pulsars.iws" />
     <ignored path=".idea/workspace.xml" />
-    <file path="/Dummy.txt" changelist="791c5b0b-ef7c-48c3-878a-0bb95fb1bec9" time="1370166485532" ignored="false" />
+    <file path="/Dummy.txt" changelist="791c5b0b-ef7c-48c3-878a-0bb95fb1bec9" time="1370189083874" ignored="false" />
     <file path="/models.py" changelist="791c5b0b-ef7c-48c3-878a-0bb95fb1bec9" time="1370171268934" ignored="false" />
     <file path="/atnf.py" changelist="791c5b0b-ef7c-48c3-878a-0bb95fb1bec9" time="1370172343477" ignored="false" />
-    <file path="/urls.py" changelist="791c5b0b-ef7c-48c3-878a-0bb95fb1bec9" time="1370186110608" ignored="false" />
+    <file path="/urls.py" changelist="791c5b0b-ef7c-48c3-878a-0bb95fb1bec9" time="1370189177978" ignored="false" />
     <file path="/admin.py" changelist="791c5b0b-ef7c-48c3-878a-0bb95fb1bec9" time="1368603242415" ignored="false" />
     <file path="/views.py" changelist="791c5b0b-ef7c-48c3-878a-0bb95fb1bec9" time="1370186120332" ignored="false" />
     <file path="/settings.py" changelist="791c5b0b-ef7c-48c3-878a-0bb95fb1bec9" time="1369192254044" ignored="false" />
@@ -117,16 +86,16 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="urls.py" pinned="false" current="false" current-in-tab="false">
+      <file leaf-file-name="urls.py" pinned="false" current="true" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/pulsars/urls.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="0.0">
+            <state line="15" column="24" selection-start="522" selection-end="522" vertical-scroll-proportion="0.28301886">
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="views.py" pinned="false" current="true" current-in-tab="true">
+      <file leaf-file-name="views.py" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/pulsars/views.py">
           <provider selected="true" editor-type-id="text-editor">
             <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="0.0">
@@ -161,7 +130,6 @@
         <option value="$PROJECT_DIR$/database/data.py" />
         <option value="$PROJECT_DIR$/database/templates/database/x-rays.xhtml" />
         <option value="$PROJECT_DIR$/templates/pulsars/hello.xhtml" />
-        <option value="$PROJECT_DIR$/pulsars/urls.py" />
         <option value="$PROJECT_DIR$/database/latex.py" />
         <option value="$PROJECT_DIR$/database/urls.py" />
         <option value="$PROJECT_DIR$/database/views.py" />
@@ -169,6 +137,7 @@
         <option value="$PROJECT_DIR$/database/calcs/hot_spots.py" />
         <option value="$PROJECT_DIR$/database/admin.py" />
         <option value="$PROJECT_DIR$/database/plot.py" />
+        <option value="$PROJECT_DIR$/pulsars/urls.py" />
       </list>
     </option>
   </component>
@@ -369,16 +338,16 @@
     <property name="FileHistory.git4idea.history.GitHistoryProvider_flatOrder0" value="0" />
     <property name="last_opened_file_path" value="$USER_HOME$/Programs/work" />
     <property name="FileHistory.git4idea.history.GitHistoryProvider_flatWidth2" value="99" />
-    <property name="DefaultHtmlFileTemplate" value="Xhtml" />
-    <property name="FileHistory.git4idea.history.GitHistoryProvider_flatWidth3" value="1009" />
     <property name="FileHistory.git4idea.history.GitHistoryProvider_treeWidth3" value="1009" />
+    <property name="FileHistory.git4idea.history.GitHistoryProvider_flatWidth3" value="1009" />
+    <property name="DefaultHtmlFileTemplate" value="Xhtml" />
     <property name="FileHistory.git4idea.history.GitHistoryProvider_treeWidth2" value="99" />
     <property name="FileHistory.git4idea.history.GitHistoryProvider_treeWidth1" value="94" />
-    <property name="FileHistory.git4idea.history.GitHistoryProvider_flatOrder2" value="2" />
     <property name="WebServerToolWindowFactoryState" value="false" />
+    <property name="FileHistory.git4idea.history.GitHistoryProvider_flatOrder2" value="2" />
     <property name="FileHistory.git4idea.history.GitHistoryProvider_flatOrder3" value="3" />
-    <property name="options.searchVisible" value="true" />
     <property name="options.splitter.details.proportions" value="0.2" />
+    <property name="options.searchVisible" value="true" />
   </component>
   <component name="PyConsoleOptionsProvider">
     <option name="myPythonConsoleState">
@@ -415,29 +384,6 @@
       <option name="PARAMETERS" value="" />
       <method />
     </configuration>
-    <configuration default="true" type="tests" factoryName="Unittests">
-      <option name="INTERPRETER_OPTIONS" value="" />
-      <option name="PARENT_ENVS" value="true" />
-      <envs />
-      <option name="SDK_HOME" value="" />
-      <option name="WORKING_DIRECTORY" value="" />
-      <option name="IS_MODULE_SDK" value="false" />
-      <option name="ADD_CONTENT_ROOTS" value="true" />
-      <option name="ADD_SOURCE_ROOTS" value="true" />
-      <module name="pulsars" />
-      <EXTENSION ID="PythonCoverageRunConfigurationExtension" enabled="false" sample_coverage="true" runner="coverage.py" />
-      <option name="SCRIPT_NAME" value="" />
-      <option name="CLASS_NAME" value="" />
-      <option name="METHOD_NAME" value="" />
-      <option name="FOLDER_NAME" value="" />
-      <option name="TEST_TYPE" value="TEST_SCRIPT" />
-      <option name="PATTERN" value="" />
-      <option name="USE_PATTERN" value="false" />
-      <option name="PUREUNITTEST" value="true" />
-      <option name="PARAMS" value="" />
-      <option name="USE_PARAM" value="false" />
-      <method />
-    </configuration>
     <configuration default="true" type="Python.DjangoServer" factoryName="Django server">
       <option name="INTERPRETER_OPTIONS" value="" />
       <option name="PARENT_ENVS" value="true" />
@@ -459,6 +405,29 @@
       <option name="runNoReload" value="false" />
       <option name="useCustomRunCommand" value="false" />
       <option name="customRunCommand" value="" />
+      <method />
+    </configuration>
+    <configuration default="true" type="tests" factoryName="Unittests">
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <envs />
+      <option name="SDK_HOME" value="" />
+      <option name="WORKING_DIRECTORY" value="" />
+      <option name="IS_MODULE_SDK" value="false" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <module name="pulsars" />
+      <EXTENSION ID="PythonCoverageRunConfigurationExtension" enabled="false" sample_coverage="true" runner="coverage.py" />
+      <option name="SCRIPT_NAME" value="" />
+      <option name="CLASS_NAME" value="" />
+      <option name="METHOD_NAME" value="" />
+      <option name="FOLDER_NAME" value="" />
+      <option name="TEST_TYPE" value="TEST_SCRIPT" />
+      <option name="PATTERN" value="" />
+      <option name="USE_PATTERN" value="false" />
+      <option name="PUREUNITTEST" value="true" />
+      <option name="PARAMS" value="" />
+      <option name="USE_PARAM" value="false" />
       <method />
     </configuration>
     <configuration default="true" type="tests" factoryName="Doctests">
@@ -578,23 +547,23 @@
   </component>
   <component name="ToolWindowManager">
     <frame x="-2" y="43" width="1370" height="729" extended-state="6" />
-    <editor active="false" />
+    <editor active="true" />
     <layout>
       <window_info id="Changes" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.328125" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.328125" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
-      <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.328125" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Database" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32954547" sideWeight="0.68267584" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.26969698" sideWeight="0.68267584" order="1" side_tool="false" content_ui="tabs" />
-      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.2969697" sideWeight="0.68267584" order="0" side_tool="false" content_ui="combo" />
+      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.30151516" sideWeight="0.68267584" order="0" side_tool="false" content_ui="combo" />
       <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.4" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.35075757" sideWeight="0.2161235" order="2" side_tool="true" content_ui="tabs" />
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="true" content_ui="tabs" />
-      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.3173242" sideWeight="0.9984532" order="2" side_tool="false" content_ui="tabs" />
+      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.3173242" sideWeight="0.9984532" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.328125" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Documentation" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="FLOATING" visible="false" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" x="98" y="143" width="1170" height="529" />
       <window_info id="Cvs" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
       <window_info id="Message" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="Ant Build" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
+      <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.328125" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Commander" active="false" anchor="right" auto_hide="false" internal_type="SLIDING" type="SLIDING" visible="false" weight="0.4" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="Hierarchy" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="2" side_tool="false" content_ui="combo" />
@@ -665,90 +634,65 @@
   <component name="editorHistoryManager">
     <entry file="file://$PROJECT_DIR$/database/calcs/functions.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="0.0">
-          <folding />
-        </state>
+        <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="0.0" />
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/database/calcs/const/cgs.h">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="0.0">
-          <folding />
-        </state>
+        <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="0.0" />
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/database/calcs/const/const.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="1" column="0" selection-start="23" selection-end="23" vertical-scroll-proportion="0.0">
-          <folding />
-        </state>
+        <state line="1" column="0" selection-start="23" selection-end="23" vertical-scroll-proportion="0.0" />
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/database/views.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="0" column="24" selection-start="24" selection-end="24" vertical-scroll-proportion="0.0">
-          <folding>
-            <element signature="e#26#62#0" expanded="true" />
-          </folding>
-        </state>
+        <state line="0" column="24" selection-start="24" selection-end="24" vertical-scroll-proportion="0.0" />
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/database/atnf.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="-8.982808">
-          <folding>
-            <element signature="e#23#50#0" expanded="true" />
-          </folding>
-        </state>
+        <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="-8.982808" />
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/database/latex.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="229" column="18" selection-start="11711" selection-end="11711" vertical-scroll-proportion="0.054441262">
-          <folding>
-            <element signature="e#0#26#0" expanded="true" />
-          </folding>
-        </state>
+        <state line="229" column="18" selection-start="11711" selection-end="11711" vertical-scroll-proportion="0.054441262" />
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/database/plot.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="524" column="34" selection-start="20462" selection-end="20462" vertical-scroll-proportion="0.8975741">
-          <folding>
-            <element signature="e#0#9#0" expanded="true" />
-          </folding>
-        </state>
+        <state line="524" column="34" selection-start="20462" selection-end="20462" vertical-scroll-proportion="0.8975741" />
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/database/tests.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="-0.12668464">
-          <folding />
-        </state>
+        <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="-0.12668464" />
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/database/urls.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="14" column="26" selection-start="588" selection-end="588" vertical-scroll-proportion="-0.03234501">
-          <folding />
-        </state>
+        <state line="14" column="26" selection-start="588" selection-end="588" vertical-scroll-proportion="-0.03234501" />
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/database/data.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="1327" column="20" selection-start="54241" selection-end="54241" vertical-scroll-proportion="-3.328841">
-          <folding />
-        </state>
+        <state line="1327" column="20" selection-start="54241" selection-end="54241" vertical-scroll-proportion="-3.328841" />
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/database/models.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="245" column="94" selection-start="22585" selection-end="22585" vertical-scroll-proportion="0.3342318">
-          <folding />
-        </state>
+        <state line="245" column="94" selection-start="22585" selection-end="22585" vertical-scroll-proportion="0.3342318" />
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/database/old_data_pulsars.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="0.0" />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/pulsars/views.py">
       <provider selected="true" editor-type-id="text-editor">
         <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="0.0">
           <folding />
@@ -771,14 +715,7 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/pulsars/urls.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="0.0">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/pulsars/views.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="0.0">
+        <state line="15" column="24" selection-start="522" selection-end="522" vertical-scroll-proportion="0.28301886">
           <folding />
         </state>
       </provider>

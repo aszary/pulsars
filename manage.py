@@ -1,4 +1,4 @@
-#!/usr/bin/env python
+#!/home/aszary/django/bin/python
 import os
 import sys
 

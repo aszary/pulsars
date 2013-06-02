@@ -228,3 +228,21 @@ def to_int(str_):
         return int(str_)
     except ValueError:
         return 0
+
+
+def parse_malov():
+    f = open(MEDIA_ROOT+'database/malov_2007.tsv', 'r')
+    lines = f.readlines()
+    for line in lines:
+        if not line.startswith('#'):
+            res = line.split(';')
+            name = res[3].strip()
+            lum_pow = float(res[4])
+            try:
+                pulsar = Pulsar.objects.get(Name=name)
+            except ObjectDoesNotExist:
+                pulsar = Pulsar.objects.get(JName=name)
+            pulsar.lum_malov = 10 ** lum_pow
+            print pulsar
+            pulsar.save()
+    f.close()

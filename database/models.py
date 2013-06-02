@@ -452,12 +452,12 @@ class Pulsar(models.Model):
                                    verbose_name='Simbad database link')
     comment = models.TextField(default="", verbose_name='Short comment  e.g. '
                                'popular pulsar name: Crab')
+    lum_malov = models.FloatField(default=0., verbose_name='radio luminosity '
+                                  'from Malov 2007 in erg/s')
 
     xray_articles = models.ManyToManyField(XrayArticle)
     geometries = models.ManyToManyField(Geometry)
     subpulses = models.ManyToManyField(Subpulse)
     additionals = models.ManyToManyField(Additional)
     calculations = models.ManyToManyField(Calculation)
-
-
 

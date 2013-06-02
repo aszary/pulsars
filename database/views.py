@@ -5,7 +5,7 @@ from django.core.exceptions import ObjectDoesNotExist
 
 from models import Pulsar, XrayArticle, XrayFit, XrayComponent, Geometry, \
     Subpulse, Additional, Calculation
-from atnf import get_page, parse_page
+from atnf import get_page, parse_page, parse_malov
 import latex
 import plot
 
@@ -53,8 +53,19 @@ def get_atnf(request):
 
 
 def sync_atnf(request):
-    parse_page()
-    return HttpResponse('ATNF data sync successfully..')
+    #parse_page()
+    #return HttpResponse('ATNF data sync successfully..')
+    return HttpResponse('ATNF sync disabled (check sync_atnf in'
+                        ' database/views.py)..')
+
+def sync_malov(request):
+    #parse_malov()
+    #return HttpResponse('Malov 2007 data sync successfully..')
+    return HttpResponse('Malov 2007 data sync disabled (check sync_malov in'
+                        ' database/views.py)..')
+
+
+
 
 def table_bb(request):
     # for citealiases
@@ -183,3 +194,23 @@ def xi_sd_radio(request):
     c = Context({'list_':list_, })
     return HttpResponse(template.render(c))
 
+def l_sd_radio(request):
+    psrs = Pulsar.objects.all()
+    list_ = plot.l_sd_radio(psrs)
+    template = loader.get_template('database/plots/image2.xhtml')
+    c = Context({'list_':list_, })
+    return HttpResponse(template.render(c))
+
+def ll_sd_radio(request):
+    psrs = Pulsar.objects.all()
+    list_ = plot.ll_sd_radio(psrs)
+    template = loader.get_template('database/plots/image2.xhtml')
+    c = Context({'list_':list_, })
+    return HttpResponse(template.render(c))
+
+def flux_sd_radio(request):
+    psrs = Pulsar.objects.all()
+    list_ = plot.flux_sd_radio(psrs)
+    template = loader.get_template('database/plots/image2.xhtml')
+    c = Context({'list_':list_, })
+    return HttpResponse(template.render(c))

@@ -7,8 +7,7 @@ admin.autodiscover()
 import settings
 
 urlpatterns = patterns('',
-    url(r'^media/(?P<path>.*)$', 'django.views.static.serve', {
-            'document_root': settings.MEDIA_ROOT,}),
+    url(r'^media/(?P<path>.*)$', 'django.views.static.serve', {'document_root': settings.MEDIA_ROOT,}),
     # Examples:
     url(r'^$', 'pulsars.views.home', name='home'),
     url(r'^database/', include('database.urls')),
@@ -22,6 +21,5 @@ urlpatterns = patterns('',
 
 if settings.DEBUG:
     urlpatterns += patterns('',
-        url(r'^media/(?P<path>.*)$', 'django.views.static.serve', {
-            'document_root': settings.MEDIA_ROOT,}),
+        url(r'^media/(?P<path>.*)$', 'django.views.static.serve', {'document_root': settings.MEDIA_ROOT,}),
     )

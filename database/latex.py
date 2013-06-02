@@ -8,44 +8,14 @@ def table_bb(pulsars):
 
     start_table =r"""
 \begin{table*}
-    \caption[Observed spectral properties of X-ray detected rotation-powered
-    pulsars with blackbody spectrum component]{Observed spectral properties of
-    X-ray detected rotation-powered
-    pulsars with blackbody spectrum component. The individual columns are
-    as follows: (1) Pulsar name, (2) Spectral components required to fit the
-    observed
-    spectra, PL: power law, BB: blackbody, (3) Radius of the spot obtained
-    from the blackbody fit $R_{\rm bb}$, (4) Surface temperature $T_s$,
-    (5) Surface magnetic field strength $B_s$,
-    (6) $b = A_{\rm dp} / A_{\rm bb} = B_s / B_d$, $A_{\rm dp}$ - conventional
-    polar
-    cap area, $A_{\rm bb}$ - actual polar cap area, (7) Bolometric luminosity
-    of blackbody component $L_{\rm BB}$, (8) Bolometric efficiency
-    $\xi_{_{\rm BB}}$,
-    (9) Maximum nonthermal luminosity $L_{\rm NT}^{^{\rm max}}$,
-    (10) Maximum nonthermal X-ray efficiency $\xi_{_{\rm NT}}^{^{\rm max}}$,
-    (11) Best estimate of pulsar age or spin down age,
-    (12) References, (13) Number of the pulsar.
-    Nonthermal luminosity and efficiency were calculated in the $0.1 -10 \,
-    {\rm keV}$ band.
-    The maximum value was calculated with the assumption that the X-ray
-    nonthermal radiation is isotropic.
-    Pulsars are sorted by $b$ parameter (6).
-        \label{tab:x-ray_thermal}
-    }
+    \caption[Observed spectral properties of X-ray detected rotation-powered pulsars with blackbody spectrum component]{Observed spectral properties of X-ray detected rotation-powered pulsars with blackbody spectrum component. The individual columns are as follows: (1) Pulsar name, (2) Spectral components required to fit the observed spectra, PL: power law, BB: blackbody, (3) Radius of the spot obtained from the blackbody fit $R_{\rm bb}$, (4) Surface temperature $T_s$, (5) Surface magnetic field strength $B_s$, (6) $b = A_{\rm dp} / A_{\rm bb} = B_s / B_d$, $A_{\rm dp}$ - conventional polar cap area, $A_{\rm bb}$ - actual polar cap area, (7) Bolometric luminosity of blackbody component $L_{\rm BB}$, (8) Bolometric efficiency $\xi_{_{\rm BB}}$, (9) Maximum nonthermal luminosity $L_{\rm NT}^{^{\rm max}}$, (10) Maximum nonthermal X-ray efficiency $\xi_{_{\rm NT}}^{^{\rm max}}$, (11) Best estimate of pulsar age or spin down age, (12) References, (13) Number of the pulsar. Nonthermal luminosity and efficiency were calculated in the $0.1 -10 \, {\rm keV}$ band. The maximum value was calculated with the assumption that the X-ray nonthermal radiation is isotropic. Pulsars are sorted by $b$ parameter (6). \label{tab:x-ray_thermal} }
     \begin{center}
     \begin{tabular}{|l|c|c|c|c|c|c|c|c|c|c|c|}
         \multicolumn{12}{c}{} \\
         \hline
         & & & & & & & & & & & \\
-        Name   &   Spectrum   &   $R_{\rm bb}$   &   $T_s$   &   $B_s$   &
-            $b$   &   $\log L_{\rm BB}$   &   $\log \xi_{_{\rm BB}}$   &
-            $\log L_{\rm X}$   &   $\log \xi_{_{\rm NT}}^{^{\rm max}}$   &
-            Ref.   &   No.   \\
-        &   &   &   {\scriptsize $\left ( 10^{6}{\rm K} \right )$}   &
-            {\scriptsize $\left (10^{14}{\rm G} \right )$}   &   &
-            {\scriptsize $\left ( {\rm erg \, s^{-1}} \right )$}   &    &
-            {\scriptsize $\left ( {\rm erg \, s^{-1}} \right )$}   &    &  & \\
+        Name   &   Spectrum   &   $R_{\rm bb}$   &   $T_s$   &   $B_s$   &  $b$   &   $\log L_{\rm BB}$   &   $\log \xi_{_{\rm BB}}$   &  $\log L_{\rm X}$   &   $\log \xi_{_{\rm NT}}^{^{\rm max}}$   &   Ref.   &   No.   \\
+        &   &   &   {\scriptsize $\left ( 10^{6}{\rm K} \right )$}   & {\scriptsize $\left (10^{14}{\rm G} \right )$}   &   &  {\scriptsize $\left ( {\rm erg \, s^{-1}} \right )$}   &    &  {\scriptsize $\left ( {\rm erg \, s^{-1}} \right )$}   &    &  & \\
         \hline
         \hline
 """
@@ -63,17 +33,15 @@ def table_bb(pulsars):
     num, i = 0, 0
 
     for p in pulsars:
-        psr_name = p.Name.replace('-', '--')
+        psr_name = p.name.replace('-', '--')
         ca = p.calculations.get(num=0)
         if ca.b > 1.:
             psr_name = '{\color{red}' + psr_name + '}'
-        print p.Name
+        print p.name
         #  surface magnetic field strength
         try:
             if ca.b > 1.:
-                b14_s = '$%s^{+%s}_{-%s}$'%(float_str(ca.b_14, digit=3),
-                    float_str(ca.b_14_plus, digit=3),
-                    float_str(ca.b_14_minus, digit=3))
+                b14_s = '$%s^{+%s}_{-%s}$'%(float_str(ca.b_14, digit=3), float_str(ca.b_14_plus, digit=3), float_str(ca.b_14_minus, digit=3))
             else:
                 b14_s = '--'
         except TypeError:
@@ -83,10 +51,8 @@ def table_bb(pulsars):
         cite = get_cite(articles)
         # fits
         fits = XrayFit.objects.filter(ordinal__gt=0, xrayarticle__in=articles)
-        bb_comps = XrayComponent.objects.filter(spec_type='BB',
-                                                xrayfit__in=fits).order_by('r')
-        pl_comps = XrayComponent.objects.filter(spec_type='PL',
-                                                  xrayfit__in=fits)
+        bb_comps = XrayComponent.objects.filter(spec_type='BB', xrayfit__in=fits).order_by('r')
+        pl_comps = XrayComponent.objects.filter(spec_type='PL', xrayfit__in=fits)
         #articles_ord = p.xray_articles.filter(fits__ordinal__gt=0).distinct()
         #articles_ord.filter.
         try:
@@ -108,16 +74,10 @@ def table_bb(pulsars):
             fit = fits.get(components=bb_co)
             if i == 0:
                 # create record here
-                record = ('%s   &   {\scriptsize %s}    &    %s   &    %s   &'
-                    '  %s   &   $%s$   &    %s   &   %s   &   %s   &   %s   & '
-                    ' %s  &  %d  \\\\\n'%(psr_name, fit.spectrum, rad,
-                    temp, b14_s, float_str(ca.b, digit=4), log_lth, log_xith,
-                    log_lnth, log_xinth, cite, fits[0].ordinal))
+                record = ('%s   &   {\scriptsize %s}    &    %s   &    %s   &  %s   &   $%s$   &    %s   &   %s   &   %s   &   %s   &  %s  &  %d  \\\\\n'%(psr_name, fit.spectrum, rad, temp, b14_s, float_str(ca.b, digit=4), log_lth, log_xith, log_lnth, log_xinth, cite, fits[0].ordinal))
                 record = replace_e(record)
             else:
-                record = ('------   &   {\scriptsize %s}   &    %s   &    %s '
-                    '  &   &   &   %s   &   %s   &    &   &   &  \\\\\n' %
-                    (fit.spectrum, rad, temp, log_lth, log_xith))
+                record = ('------   &   {\scriptsize %s}   &    %s   &    %s   &   &   &   %s   &   %s   &    &   &   &  \\\\\n' % (fit.spectrum, rad, temp, log_lth, log_xith))
                 record = replace_e(record)
                 pass
             body = body + record
@@ -128,29 +88,19 @@ def table_bb(pulsars):
     for line in res:
         f.write(line)
     f.close()
-    copyfile(MEDIA_ROOT + 'database/latex/table_bb.tex',
-             '/home/aszary/work/1_x-ray/includes/table_bb.tex')
+    try:
+        copyfile(MEDIA_ROOT + 'database/latex/table_bb.tex', '/home/aszary/work/1_x-ray/includes/table_bb.tex')
+    except IOError:
+        print 'Warning: table_bb.tex copy error'
     return res
+
 
 def table_psrs(pulsars):
 
     start_float =r"""
 \begin{table*}
-    \caption[Parameters of rotation powered normal pulsars with detected
-     X-ray radiation]{
-        Parameters of rotation powered normal pulsars with detected
-        X-ray radiation. The individual columns are as follows: (1)
-        Pulsar name, (2) Barycentric period $P$ of the pulsar,
-        (3) Time derivative of barycentric period $\dot{P}$, (4)
-        Canonical value of the dipolar magnetic field $B_{d}$ at poles,
-        (5) Spin down energy loss rate $L_{\rm SD}$ (spin-down luminosity),
-        (6) Dispersion measure $DM$, (7) Best estimate of pulsar
-        distance $D$ (used in all calculations), (8) Best estimate of
-        pulsar age or spin down age $\tau=P/\left(2\dot{P}\right)$,
-        (9) Pulsar number (used in figures). Parameters of radio pulsar
-        have been taken from the ATNF catalog.
-        \label{tab:pulsars}
-    }
+    \caption[Parameters of rotation powered normal pulsars with detected X-ray radiation]{Parameters of rotation powered normal pulsars with detected X-ray radiation. The individual columns are as follows: (1) Pulsar name, (2) Barycentric period $P$ of the pulsar, (3) Time derivative of barycentric period $\dot{P}$, (4) Canonical value of the dipolar magnetic field $B_{d}$ at poles, (5) Spin down energy loss rate $L_{\rm SD}$ (spin-down luminosity), (6) Dispersion measure $DM$, (7) Best estimate of pulsar
+        distance $D$ (used in all calculations), (8) Best estimate of pulsar age or spin down age $\tau=P/\left(2\dot{P}\right)$, (9) Pulsar number (used in figures). Parameters of radio pulsar have been taken from the ATNF catalog.\label{tab:pulsars}}
     \begin{center}
     \begin{tabular}{|l|c|c|c|c|c|c|c|c|}
         \multicolumn{9}{c}{} \\
@@ -181,17 +131,13 @@ def table_psrs(pulsars):
         fit = fits[0]
 
         # new record
-        psr_name = p.Name.replace('-', '--')
+        psr_name = p.name.replace('-', '--')
         if calc.b > 1.:
             psr_name = '{\color{red}' + psr_name + '}'
         record = r"""
-        %s  &   $%.3f$  &  %s  &  %s  &   $%.2f$  &  %s  &  %s  &  %s &  %d  \\"""\
-                %(psr_name, p.P0, float_str(p.P1*1e15),
-                  float_str(calc.bsurf2/1e12), log10(p.Edot),
-                  float_str(p.DM, digit=3), float_str(p.Dist, digit=3),
-                  age, fit.ordinal)
+        %s  &   $%.3f$  &  %s  &  %s  &   $%.2f$  &  %s  &  %s  &  %s &  %d  \\""" % (psr_name, p.p0, float_str(p.p1*1e15), float_str(calc.bsurf2/1e12), log10(p.edot), float_str(p.dm, digit=3), float_str(p.dist, digit=3), age, fit.ordinal)
         record = replace_e(record)
-        if i%10 ==0:
+        if i % 10 == 0:
             record = r'''
         & & & & & & & & \\
             ''' + record
@@ -203,50 +149,24 @@ def table_psrs(pulsars):
     for line in res:
         f.write(line)
     f.close()
-    copyfile(MEDIA_ROOT + 'database/latex/table_psrs.tex',
-             '/home/aszary/work/1_x-ray/includes/table_psrs.tex')
+    try:
+        copyfile(MEDIA_ROOT + 'database/latex/table_psrs.tex', '/home/aszary/work/1_x-ray/includes/table_psrs.tex')
+    except IOError:
+        print 'Warning: table_psrs.tex copy error'
     return res
 
 
 def table_pl(pulsars):
     start_table =r"""
 \begin{table*}
-    \caption[Observed spectral properties of rotation-powered
-    pulsars with X-ray spectrum showing the nonthermal component]{Observed
-    spectral properties of rotation-powered
-    pulsars with X-ray spectrum showing the nonthermal (power-law) component.
-    The individual columns are
-    as follows: (1) Pulsar name, (2) Additional information, (3) Spectral
-    components
-    required to fit the observed spectra, PL: power law, BB: blackbody,
-    (4) Pulse phase average photon index, (5) Maximum nonthermal
-    luminosity $L_{\rm NT}$, (6) Maximum nonthermal X-ray efficiency
-    $\xi_{_{\rm NT}}^{^{\rm max}}$,
-    (7) Minimum nonthermal X-ray efficiency $\xi_{_{\rm NT}}^{^{\rm min}}$,
-    (8) Total thermal luminosity $L_{\rm BB}$, (9) Thermal efficiency
-    $\xi_{_{\rm BB}}$,
-    (10) References, (11) Number of the pulsar.
-    Both nonthermal luminosity and efficiencies were calculated in the
-    $0.1 -10 \, {\rm keV}$ band.
-    The maximum value was calculated with the assumption that the X-ray
-    radiation is isotropic
-    while the minimum value was calculated assuming strong angular anisotropy
-    of the radiation
-    ($\xi_{_{\rm NT}}^{^{\rm min}} \approx 1/4\pi \cdot \xi_{_{\rm NT}}^{^{\rm max}} $).
-     Pulsars are sorted by nonthermal X-ray luminosity (5).
-        \label{tab:x-ray_nonthermal}
-    }
+    \caption[Observed spectral properties of rotation-powered pulsars with X-ray spectrum showing the nonthermal component]{Observed spectral properties of rotation-powered pulsars with X-ray spectrum showing the nonthermal (power-law) component. The individual columns are as follows: (1) Pulsar name, (2) Additional information, (3) Spectral components required to fit the observed spectra, PL: power law, BB: blackbody, (4) Pulse phase average photon index, (5) Maximum nonthermal luminosity $L_{\rm NT}$, (6) Maximum nonthermal X-ray efficiency $\xi_{_{\rm NT}}^{^{\rm max}}$, (7) Minimum nonthermal X-ray efficiency $\xi_{_{\rm NT}}^{^{\rm min}}$, (8) Total thermal luminosity $L_{\rm BB}$, (9) Thermal efficiency $\xi_{_{\rm BB}}$, (10) References, (11) Number of the pulsar. Both nonthermal luminosity and efficiencies were calculated in the $0.1 -10 \, {\rm keV}$ band. The maximum value was calculated with the assumption that the X-ray radiation is isotropic while the minimum value was calculated assuming strong angular anisotropy of the radiation ($\xi_{_{\rm NT}}^{^{\rm min}} \approx 1/4\pi \cdot \xi_{_{\rm NT}}^{^{\rm max}} $). Pulsars are sorted by nonthermal X-ray luminosity (5). \label{tab:x-ray_nonthermal}}
     \begin{center}
     \begin{tabular}{|l|c|c|c|c|c|c|c|c||}
         %\multicolumn{9}{c}{} \\
         \hline
         & & & & & & & & \\
-        Name    &   Comment   &   Spectrum   &   Photon-Index   &
-            $\log L_{\rm NT}$   &  $\log \xi_{_{\rm NT}}^{^{\rm max}}$  &
-            $\log \xi_{_{\rm NT}}^{^{\rm min}}$  &
-             Ref.   &   No.  \\
-        & & & &   {\scriptsize $\left ( {\rm erg \, s^{-1}} \right )$}   & &
-            &   {\scriptsize $\left ( {\rm erg \, s^{-1}} \right )$}   & \\
+        Name    &   Comment   &   Spectrum   &   Photon-Index   &   $\log L_{\rm NT}$   &  $\log \xi_{_{\rm NT}}^{^{\rm max}}$  &   $\log \xi_{_{\rm NT}}^{^{\rm min}}$  &  Ref.   &   No.  \\
+        & & & &   {\scriptsize $\left ( {\rm erg \, s^{-1}} \right )$}   &   &   &   {\scriptsize $\left ( {\rm erg \, s^{-1}} \right )$}   & \\
         \hline
         \hline
 """
@@ -262,11 +182,11 @@ def table_pl(pulsars):
     num = 0
     body = ' '
     for p in pulsars:
-        psr_name = p.Name.replace('-', '--')
+        psr_name = p.name.replace('-', '--')
         ca = p.calculations.get(num=0)
         if ca.b > 1.:
             psr_name = '{\color{red}' + psr_name + '}'
-        print p.Name
+        print p.name
         # citation field (all articles)
         articles = p.xray_articles.all()
         cite = get_cite(articles)
@@ -296,11 +216,7 @@ def table_pl(pulsars):
             #    pl_co.lum, pl_co.lum,
             #    cite, fit.ordinal)
             l1, xi1, xi2 = get_lum(pl_co, ca)
-            record = ("%s   &   %s   &   %s   &   %s   & "
-                "  %s   &  %s   &   %s   &   %s   & "
-                "  %d  \\\\ \n" %
-                (psr_name, p.comment, fit.spectrum,  pl_str, l1,
-                xi1, xi2, cite, fit.ordinal))
+            record = "%s   &   %s   &   %s   &   %s   &   %s   &  %s   &   %s   &   %s   &   %d  \\\\ \n" % (psr_name, p.comment, fit.spectrum,  pl_str, l1, xi1, xi2, cite, fit.ordinal)
             record = replace_e(record)
             body = body + record
     res = start_table + body + end_table
@@ -309,21 +225,23 @@ def table_pl(pulsars):
     for line in res:
         f.write(line)
     f.close()
-    copyfile(MEDIA_ROOT + 'database/latex/table_pl.tex',
-             '/home/aszary/work/1_x-ray/includes/table_pl.tex')
+    try:
+        copyfile(MEDIA_ROOT + 'database/latex/table_pl.tex', '/home/aszary/work/1_x-ray/includes/table_pl.tex')
+    except IOError:
+        print 'Warning: table_pl.tex copy error'
     return res
 
 def custom(pulsars):
     res = ''
-    pulsars = pulsars.order_by('-DecJ_err')
+    pulsars = pulsars.order_by('-decj_err')
     for i,p in enumerate(pulsars):
-        res += r'%s   %s    %s<br />' % (p.Name, p.RaJ_err, p.DecJ_err)
+        res += r'%s   %s    %s<br />' % (p.name, p.raj_err, p.decj_err)
 
     '''
     num = 0
     for i,p in enumerate(pulsars):
-        #res += '%s \n' % p.Name
-        res += '%s,%s\n' % (p.RaJ, p.DecJ)
+        #res += '%s \n' % p.name
+        res += '%s,%s\n' % (p.raj, p.decj)
         if i%500 == 0 and i > 0:
             num += 1
     f = open(MEDIA_ROOT + 'database/latex/chandra.csv', 'w')

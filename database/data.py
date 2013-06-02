@@ -8,8 +8,7 @@ path[0] = "/".join(os.path.abspath(__file__).split("/")[:-2])
 os.environ.setdefault("DJANGO_SETTINGS_MODULE", "pulsars.settings")
 from django.core.exceptions import ObjectDoesNotExist
 #import pulsars.settings
-from database.models import Pulsar, XrayArticle, Additional, XrayFit, \
-    XrayComponent, Geometry, Subpulse, Calculation
+from database.models import Pulsar, XrayArticle, Additional, XrayFit, XrayComponent, Geometry, Subpulse, Calculation
 from database.calcs.const.const import CGS as c
 from database.calcs.hot_spots import HotSpots
 
@@ -24,14 +23,11 @@ class Pulsars:
     def add_pulsars(self):
 
         #    J0108-1431    ####################################################
-        p = Pulsar.objects.get(Name='J0108-1431')
+        p = Pulsar.objects.get(name='J0108-1431')
         a1 = self.article_get_add(p, num=0)
         a1.articile = 'http://adsabs.harvard.edu/abs/2012ApJ...761..117P'
         a1.cite = '\cite{2012_Posselt}'
-        a1.info = ('page 4, 5(lum) BB + PL (51 counts) no inf -> surface '
-                      'conversion, '
-                      'second BB fit taken (0.73 c. d.), A_{\perp} here '
-                      '[last update: 2013-05-15]')
+        a1.info = ('page 4, 5(lum) BB + PL (51 counts) no inf -> surface conversion, second BB fit taken (0.73 c. d.), A_{\perp} here [last update: 2013-05-15]')
         a1.dist = 0.210
         a1.save()
         f1 = self.fit_get_add(a1, 0)
@@ -64,8 +60,7 @@ class Pulsars:
         a2 = self.article_get_add(p, num=1)
         a2.article = 'http://adsabs.harvard.edu/abs/2009ApJ...691..458P'
         a2.cite = '\cite{2009_Pavlov}'
-        a2.info = ('page 4, BB, PL (not enought counts for BB+PL) '
-                 'recalculated for distance 0.184')
+        a2.info = ('page 4, BB, PL (not enought counts for BB+PL) recalculated for distance 0.184')
         a2.dist = 0.184
         f2 = self.fit_get_add(a2, num=0)
         f2.spectrum = 'BB'
@@ -91,7 +86,7 @@ class Pulsars:
         self.calculate(p)
 
         #     B0628-28     ####################################################
-        p = Pulsar.objects.get(Name='B0628-28')
+        p = Pulsar.objects.get(name='B0628-28')
         ge = self.geometry_get_add(p, 0)
         ge.alpha = 70.
         ge.beta = -12.
@@ -102,8 +97,7 @@ class Pulsars:
         a1 = self.article_get_add(p, 0)
         a1.article = 'http://adsabs.harvard.edu/abs/2005ApJ...630L..57'
         a1.cite = '\cite{2005_Tepedelenl}'
-        a1.info = ('page 5, no inf -> surface conversion, looks like '
-                   'A_{\perp}, P3 not mesured')
+        a1.info = ('page 5, no inf -> surface conversion, looks like A_{\perp}, P3 not mesured')
         a1.dist = 1.45
         f1 = self.fit_get_add(a1, 0)
         f1.spectrum = 'BB + PL'
@@ -147,7 +141,7 @@ class Pulsars:
         self.calculate(p)
 
         #    B0834+06      ####################################################
-        p = Pulsar.objects.get(Name='B0834+06')
+        p = Pulsar.objects.get(name='B0834+06')
         ge = self.geometry_get_add(p)
         ge.alpha = 60.7
         ge.beta = 4.5
@@ -159,10 +153,7 @@ class Pulsars:
         a1 = self.article_get_add(p, 0)
         a1.article = 'http://adsabs.harvard.edu/abs/2008ApJ...686..497G'
         a1.cite = '\cite{2008_Gil}'
-        a1.info = ('page 6, no inf -> surface conversion, r_bb calculated '
-                 'from L \eq 4 A \sigma T^4, 1 sigma errors taken, '
-                 'BB(2/3)+PL(1/3) BB+PL fits not included in database '
-                 '(poor statistics..., no l_nonth), A_{\perp}')
+        a1.info = ('page 6, no inf -> surface conversion, r_bb calculated from L \eq 4 A \sigma T^4, 1 sigma errors taken, BB(2/3)+PL(1/3) BB+PL fits not included in database (poor statistics..., no l_nonth), A_{\perp}')
         a1.dist = 0.643
         f1 = self.fit_get_add(a1, 0)
         f1.spectrum = 'BB + PL'
@@ -192,9 +183,7 @@ class Pulsars:
         ad.dist_dm_cl = 0.643
         ad.dist_dm_cl_plus = 0.723 - 0.643
         ad.dist_dm_cl_minus = 0.643 - 0.567
-        ad.articles = ('http://adsabs.harvard.edu/abs/2006A%26A...445..243W;'
-                      'http://adsabs.harvard.edu/abs/1997MNRAS.288..631K;'
-                      'http://adsabs.harvard.edu/abs/1988MNRAS.234..477L')
+        ad.articles = ('http://adsabs.harvard.edu/abs/2006A%26A...445..243W;http://adsabs.harvard.edu/abs/1997MNRAS.288..631K;http://adsabs.harvard.edu/abs/1988MNRAS.234..477L')
         su = self.subpulse_get_add(p)
         su.info = 'other values for p2 and p3 in paper 40deg, 21 P0'
         su.p2 = 20.
@@ -208,7 +197,7 @@ class Pulsars:
         self.calculate(p)
 
         #   B0943+10       ####################################################
-        p = Pulsar.objects.get(Name='B0943+10')
+        p = Pulsar.objects.get(name='B0943+10')
         ge = self.geometry_get_add(p)
         ge.alpha = 11.58
         ge.beta = -4.29
@@ -221,10 +210,7 @@ class Pulsars:
         a1.num = 0
         a1.article = 'http://adsabs.harvard.edu/abs/2005ApJ...624L.109Z'
         a1.cite = '\cite{2005_Zhang}'
-        a1.info = ('page 2, no inf -> surface conversion, cos(theta)=0.97,'
-                   ' (dist=630  was used), A and T errors from graph '
-                   '(T_max 0.36keV T_min 0.175keV A_max 5.8e3 A_min 2.9e2),'
-                   ' in paper L_bol for cap (A used as A_{\perp}?)')
+        a1.info = ('page 2, no inf -> surface conversion, cos(theta)=0.97, (dist=630  was used), A and T errors from graph (T_max 0.36keV T_min 0.175keV A_max 5.8e3 A_min 2.9e2) in paper L_bol for cap (A used as A_{\perp}?)')
         a1.dist = 0.63
         f1 = self.fit_get_add(a1, 0)
         f1.spectrum = 'BB'
@@ -259,13 +245,11 @@ class Pulsars:
         ad.dist_dm_cl = 0.631
         ad.dist_dm_cl_plus = 0.744 - 0.631
         ad.dist_dm_cl_minus = 0.631 - 0.527
-        ad.articles = 'http://adsabs.harvard.edu/abs/2001MNRAS.326.1249A;' \
-                      'http://adsabs.harvard.edu/abs/2001MNRAS.322..438D'
+        ad.articles = 'http://adsabs.harvard.edu/abs/2001MNRAS.326.1249A;http://adsabs.harvard.edu/abs/2001MNRAS.322..438D'
         a3 = self.article_get_add(p, 2)
         a3.article = 'http://adsabs.harvard.edu/abs/2013Sci...339..436H'
         a3.cite = '\cite{2013_Hermsen}'
-        a3.info = ('two modes -> data from presentation check article!'
-                     '(radio quiescent mode)')
+        a3.info = ('two modes -> data from presentation check article!(radio quiescent mode)')
         a3.dist = 0.63
         # TODO get values from paper
         f3 = self.fit_get_add(a3, 0)
@@ -322,7 +306,7 @@ class Pulsars:
         self.calculate(p)
 
         #     B0950+08     ####################################################
-        p = Pulsar.objects.get(Name='B0950+08')
+        p = Pulsar.objects.get(name='B0950+08')
         ge = self.geometry_get_add(p)
         ge.alpha = 105.4
         ge.beta = 22.1
@@ -334,9 +318,7 @@ class Pulsars:
         a1 = self.article_get_add(p, 0)
         a1.article = 'http://adsabs.harvard.edu/abs/2004ApJ...616..452Z'
         a1.cite = '\cite{2004_Zavlin}'
-        a1.info = ('page 7, PL+BB (good for eff. vs. age)  A_{\perp} '
-                   '(R is in fact R_{\perp}) PL luminosity from Becker 2009'
-                   ' (review) - very small errors in original paper!!')
+        a1.info = ('page 7, PL+BB (good for eff. vs. age)  A_{\perp} (R is in fact R_{\perp}) PL luminosity from Becker 2009 (review) - very small errors in original paper!!')
         a1.dist = 0.262
         f1 = self.fit_get_add(a1, 0)
         f1.spectrum = 'BB + PL'
@@ -375,9 +357,7 @@ class Pulsars:
         ad.dist_pi = 0.262
         ad.dist_pi_plus = 0.267 - 0.262
         ad.dist_pi_minus = 0.262 - 0.257
-        ad.articles = ('http://adsabs.harvard.edu/abs/2007A%26A...469..607W;'
-                       'http://adsabs.harvard.edu/abs/1997MNRAS.288..631K;'
-                       'http://adsabs.harvard.edu/abs/1980A%26A....86....7W')
+        ad.articles = ('http://adsabs.harvard.edu/abs/2007A%26A...469..607W;http://adsabs.harvard.edu/abs/1997MNRAS.288..631K;http://adsabs.harvard.edu/abs/1980A%26A....86....7W')
         su = self.subpulse_get_add(p)
         su.p2 = -500. # ??
         su.p2_plus = 100.
@@ -390,7 +370,7 @@ class Pulsars:
         self.calculate(p)
 
         #    B1133+16      ####################################################
-        p = Pulsar.objects.get(Name='B1133+16')
+        p = Pulsar.objects.get(name='B1133+16')
         ge = self.geometry_get_add(p)
         ge.alpha = 52.5
         ge.beta = 4.5
@@ -403,9 +383,7 @@ class Pulsars:
         a1.num = 0
         a1.article = 'http://adsabs.harvard.edu/abs/2006ApJ...636..406K'
         a1.cite = '\cite{2006_Kargaltsev}'
-        a1.info = ('page 2/3, PL, BB, no inf -> surface conversion, '
-                   'cos(th.) = 0.47, T is taken from graph (in paper '
-                   'T = 2.8MK), PL and BB separate fits, A_{\perp}')
+        a1.info = ('page 2/3, PL, BB, no inf -> surface conversion, cos(th.) = 0.47, T is taken from graph (in paper T = 2.8MK), PL and BB separate fits, A_{\perp}')
         a1.dist = 0.357
         f1 = self.fit_get_add(a1, 0)
         f1.spectrum = 'BB'
@@ -438,9 +416,7 @@ class Pulsars:
         ad.dist_pi = 0.357
         ad.dist_pi_plus = 0.370 - 0.350
         ad.dist_pi_minus = 0.350 - 0.330
-        ad.articles = ('http://adsabs.harvard.edu/abs/1997MNRAS.288..631K;'
-                       'http://adsabs.harvard.edu/abs/2006A%26A...445..243W;'
-                       'http://adsabs.harvard.edu/abs/1988MNRAS.234..477L')
+        ad.articles = ('http://adsabs.harvard.edu/abs/1997MNRAS.288..631K;http://adsabs.harvard.edu/abs/2006A%26A...445..243W;http://adsabs.harvard.edu/abs/1988MNRAS.234..477L')
         su = self.subpulse_get_add(p)
         su.p2 = 130
         su.p2_plus = 55
@@ -453,15 +429,12 @@ class Pulsars:
         self.calculate(p)
 
         #    B1257+12      ####################################################
-        p = Pulsar.objects.get(Name='B1257+12')
+        p = Pulsar.objects.get(name='B1257+12')
         p.comment = 'sol'
         a1 = self.article_get_add(p, 0)
         a1.article = 'http://adsabs.harvard.edu/abs/2007ApJ...664.1072P'
         a1.cite = '\cite{2007_Pavlov}'
-        a1.info = ('page 2, 8, PL, BB? recalculated from 500pc to 447pc '
-                   '(l_bol is different), high errors for pi distance '
-                   '(assumed 0.4),a lot of milisecond pulsar data in paper '
-                   'l_bol = L_bol /gr^4?? A_{\perp}')
+        a1.info = ('page 2, 8, PL, BB? recalculated from 500pc to 447pc (l_bol is different), high errors for pi distance (assumed 0.4),a lot of milisecond pulsar data in paper l_bol = L_bol /gr^4?? A_{\perp}')
         a1.dist = 0.447
         f1 = self.fit_get_add(a1, 0)
         f1.spectrum = 'BB'
@@ -497,7 +470,7 @@ class Pulsars:
         self.calculate(p)
 
         #     J1740-5340A  ####################################################
-        p = Pulsar.objects.get(Name='J1740-5340A')
+        p = Pulsar.objects.get(name='J1740-5340A')
         p.comment = 'NGC 6397'
         a1 = self.article_get_add(p, 0)
         a1.article = 'http://adsabs.harvard.edu/abs/2010ApJ...709..241B'
@@ -533,7 +506,7 @@ class Pulsars:
         self.calculate(p)
 
         #   B1929+10       ####################################################
-        p = Pulsar.objects.get(Name='B1929+10')
+        p = Pulsar.objects.get(name='B1929+10')
         ge = self.geometry_get_add(p)
         ge.alpha = 35.97
         ge.beta = 25.55
@@ -545,12 +518,7 @@ class Pulsars:
         a1 = self.article_get_add(p, 0)
         a1.article = 'http://adsabs.harvard.edu/abs/2008ApJ...685.1129M'
         a1.cite = '\cite{2008_Misanovic}'
-        a1.info = ('page 33,42, PL+BB, inf -> surface conversion done, '
-                   'f=0.897, Different paralax distance!! 0.33 +-0.01 or '
-                   '0.361+-0.01 (newer paper used), l_bol  =  L_bol / (2 '
-                   'f gr^2) used, l_bol = L_bol / 4 (sphere to spot '
-                   'correction) l_bol = L_bol /gr^4??  A_{\perp} '
-                   'PL luminosity from Becker 2009 (review) (0.1-10keV)')
+        a1.info = ('page 33,42, PL+BB, inf -> surface conversion done, f=0.897, Different paralax distance!! 0.33 +-0.01 or 0.361+-0.01 (newer paper used), l_bol  =  L_bol / (2 f gr^2) used, l_bol = L_bol / 4 (sphere to spot correction) l_bol = L_bol /gr^4??  A_{\perp} PL luminosity from Becker 2009 (review) (0.1-10keV)')
         a1.dist = 0.361
         f1 = self.fit_get_add(a1, 0)
         f1.spectrum = 'BB + PL'
@@ -584,9 +552,7 @@ class Pulsars:
         ad.dist_pi = 0.361
         ad.dist_pi_plus = 0.340 - 0.330
         ad.dist_pi_minus = 0.330 - 0.320
-        ad.articles = ('http://adsabs.harvard.edu/abs/2006A%26A...445..243W;'
-                       'http://adsabs.harvard.edu/abs/1997MNRAS.288..631K;'
-                       'http://adsabs.harvard.edu/abs/2001ApJ...553..341E')
+        ad.articles = ('http://adsabs.harvard.edu/abs/2006A%26A...445..243W;http://adsabs.harvard.edu/abs/1997MNRAS.288..631K;http://adsabs.harvard.edu/abs/2001ApJ...553..341E')
         su = self.subpulse_get_add(p)
         su.p2 = 90
         su.p2_plus = 140
@@ -599,15 +565,12 @@ class Pulsars:
         self.calculate(p)
 
         #     J0633+1746   ####################################################
-        p = Pulsar.objects.get(Name='J0633+1746')
+        p = Pulsar.objects.get(name='J0633+1746')
         p.comment = 'Geminga'
         a1 = self.article_get_add(p, 0)
         a1.article = 'http://adsabs.harvard.edu/abs/2005ApJ...633.1114J'
         a1.cite = '\cite{2005_Jackson}'
-        a1.info = ('page 26, PL+BB, no inf -> surface conversion,  Geminga '
-                   'pulsar, NO L_bol, dist_bb etc.!!, L_bol calculated for '
-                   'spot (only hot spot component was used), L_bol_sphere2 '
-                   'is very high!')
+        a1.info = ('page 26, PL+BB, no inf -> surface conversion,  Geminga pulsar, NO L_bol, dist_bb etc.!!, L_bol calculated for spot (only hot spot component was used), L_bol_sphere2 is very high!')
         a1.dist = 0.157
         f1 = self.fit_get_add(a1, 0)
         f1.spectrum = 'BB + BB + PL'
@@ -641,12 +604,7 @@ class Pulsars:
         a2.num = 1
         a2.article = 'http://adsabs.harvard.edu/abs/2005ApJ...625..307K'
         a2.cite = '\cite{2005_Kargaltsev}'
-        a2.info = ('page 8, PL+BB, no inf -> surface conversion, Geminga,'
-                  ' two component bb fit, R, R+ and R- recalculated for '
-                  'distance (0.157, 0.2 not used)! R_bb (best dist), check'
-                  ' PSR_J0633+1746 for newer paper, L_bol calculated for '
-                  'spot (only hot spot component was used), L_bol_sphere '
-                  'is very high!')
+        a2.info = ('page 8, PL+BB, no inf -> surface conversion, Geminga, two component bb fit, R, R+ and R- recalculated for distance (0.157, 0.2 not used)! R_bb (best dist), check PSR_J0633+1746 for newer paper, L_bol calculated for spot (only hot spot component was used), L_bol_sphere is very high!')
         a2.dist = 0.157
         f2 = self.fit_get_add(a2, 0)
         f2.spectrum = 'BB + BB + PL'
@@ -683,20 +641,17 @@ class Pulsars:
         ad.dist_pi = 0.157
         ad.dist_pi_plus = 0.059
         ad.dist_pi_minus = 0.034
-        ad.articles = ('http://adsabs.harvard.edu/abs/2007astro.ph..2426Z;'
-                       'http://adsabs.harvard.edu/abs/2005ApJ...623.1051D')
+        ad.articles = ('http://adsabs.harvard.edu/abs/2007astro.ph..2426Z;http://adsabs.harvard.edu/abs/2005ApJ...623.1051D')
         self.save_records([ad, a1, a2, f1, f2, c1, c2, c3, c4, c5, c6], p)
         self.calculate(p)
 
         #    J0821-4300      ##################################################
-        p = Pulsar.objects.get(Name='J0821-4300')
+        p = Pulsar.objects.get(name='J0821-4300')
         a1 = self.article_get_add(p, 0)
         a1.num = 0
         a1.article = 'http://adsabs.harvard.edu/abs/2010ApJ...724.1316G'
         a1.cite = '\cite{2010_Gotthelf}'
-        a1.info = ('page 6, no inf -> surface conversion, 10 km radius '
-                  'taken R = 10*sin(beta), READ WHIOLE PAPER!!!   '
-                  'A_{\perp}')
+        a1.info = ('page 6, no inf -> surface conversion, 10 km radius taken R = 10*sin(beta), READ WHIOLE PAPER!!!  A_{\perp}')
         a1.dist = 2.2
         f1 = self.fit_get_add(a1, 0)
         f1.spectrum = 'BB + BB'
@@ -725,15 +680,12 @@ class Pulsars:
         self.calculate(p)
 
         #    J0538+2817    ####################################################
-        p = Pulsar.objects.get(Name='J0538+2817')
+        p = Pulsar.objects.get(name='J0538+2817')
         p.comment = 'SNR S147'
         a1 = self.article_get_add(p, 0)
         a1.article = 'http://adsabs.harvard.edu/abs/2003ApJ...591..380M'
         a1.cite = '\cite{2003_Mcgowan}'
-        a1.info = ('age 22 (second fit for best N_H), inf -> surface '
-                   'conversion done, no PL, no equation for L_bol (R_bb)'
-                   ' paralax distance taken from the newest paper, no '
-                   'equation -> assumed A_{\perp}')
+        a1.info = ('age 22 (second fit for best N_H), inf -> surface conversion done, no PL, no equation for L_bol (R_bb) paralax distance taken from the newest paper, no equation -> assumed A_{\perp}')
         a1.dist = 1.2
         f1 = self.fit_get_add(a1, 0)
         f1.spectrum = 'BB'
@@ -771,13 +723,11 @@ class Pulsars:
         self.calculate(p)
 
         #    B0656+14      ####################################################
-        p = Pulsar.objects.get(Name='B0656+14')
+        p = Pulsar.objects.get(name='B0656+14')
         a1 = self.article_get_add(p, 0)
         a1.article = 'http://adsabs.harvard.edu/abs/2005ApJ...623.1051D'
         a1.cite = '\cite{2005_Deluca}'
-        a1.info = ('page 25, no inf -> surface conversion, two component '
-                   'bb fit, L_bol for spot... A_{\perp}'
-                   'PL lum from Becker 2009 (review) 0.1-10keV')
+        a1.info = ('page 25, no inf -> surface conversion, two component bb fit, L_bol for spot... A_{\perp} PL lum from Becker 2009 (review) 0.1-10keV')
         a1.dist = 0.288
         f1 = self.fit_get_add(a1, 0)
         f1.spectrum = 'BB + BB + PL'
@@ -832,14 +782,12 @@ class Pulsars:
         self.calculate(p)
 
         #   B0833-45       ####################################################
-        p = Pulsar.objects.get(Name='B0833-45')
+        p = Pulsar.objects.get(name='B0833-45')
         p.comment = 'Vela'
         a1 = self.article_get_add(p, 0)
         a1.article = 'http://adsabs.harvard.edu/abs/2007astro.ph..2426Z'
         a1.cite = '\cite{2007_Zavlin_b}'
-        a1.info = ('page 16 , inf -> surface conversion, Vela, assumed'
-                   ' A_{\perp}, last paper (p. 16)'
-                    'PL luminosities from Becker 2009 (review) 0.1-10 keV')
+        a1.info = ('page 16 , inf -> surface conversion, Vela, assumed A_{\perp}, last paper (p. 16) PL luminosities from Becker 2009 (review) 0.1-10 keV')
         a1.dist = 0.210
         f1 = self.fit_get_add(a1, 0)
         f1.spectrum = 'BB + PL'
@@ -879,10 +827,7 @@ class Pulsars:
         a4 = self.article_get_add(p, 3)
         a4.article = 'http://adsabs.harvard.edu/abs/2007ApJ...669..570M'
         a4.cite = '\cite{2007_Manzali}'
-        a4.info = ('page 1,20, (L_bol) no inf -> surface conversion, new '
-                   'paper for Vela (Chandra observations), another good fit'
-                   ' in paper, A_{\perp} '
-                   'PL luminosities from Becker 2009 (review) 0.1-10 keV')
+        a4.info = ('page 1,20, (L_bol) no inf -> surface conversion, new paper for Vela (Chandra observations), another good fit in paper, A_{\perp} PL luminosities from Becker 2009 (review) 0.1-10 keV')
         a4.dist = 0.287
         f3 = self.fit_get_add(a4, 0)
         f3.spectrum = 'BB + BB + PL'
@@ -921,14 +866,11 @@ class Pulsars:
         self.calculate(p)
 
         #    B1055-52      ####################################################
-        p = Pulsar.objects.get(Name='B1055-52')
+        p = Pulsar.objects.get(name='B1055-52')
         a1 = self.article_get_add(p, 0)
         a1.article = 'http://adsabs.harvard.edu/abs/2005ApJ...623.1051D'
         a1.cite = '\cite{2005_Deluca}'
-        a1.info = ('page 25, no inf -> surface conversion, two component'
-                   ' bb fit, no L_bol, diffrent values in second paper?!'
-                   ' ... A_{\perp} PL luminositeies from Becker 2009 (review)'
-                   ' in 0.1-10keV')
+        a1.info = ('page 25, no inf -> surface conversion, two component bb fit, no L_bol, diffrent values in second paper?! ... A_{\perp} PL luminositeies from Becker 2009 (review) in 0.1-10keV')
         a1.dist = 0.75
         f1 = self.fit_get_add(a1, 0)
         f1.spectrum = 'BB + BB + PL'
@@ -974,14 +916,12 @@ class Pulsars:
         self.calculate(p)
 
         #   J1119-6127     ####################################################
-        p = Pulsar.objects.get(Name='J1119-6127')
+        p = Pulsar.objects.get(name='J1119-6127')
         p.comment = 'G292.2-0.5'
         a1 = self.article_get_add(p, 0)
         a1.article = 'http://adsabs.harvard.edu/abs/2007Ap%26SS.308...89G'
         a1.cite = '\cite{2007_Gonzalez}'
-        a1.info = ('page 3, no inf -> surface conversion, component is '
-                   'pulsing; fixed size in atmospheric fit (1.6kpc '
-                   'distance)')
+        a1.info = ('page 3, no inf -> surface conversion, component is pulsing; fixed size in atmospheric fit (1.6kpc distance)')
         a1.dist = 8.4
         f1 = self.fit_get_add(a1, 0)
         f1.spectrum = 'BB + PL'
@@ -1016,14 +956,12 @@ class Pulsars:
         self.calculate(p)
 
         #    J1210-5226    ####################################################
-        p = Pulsar.objects.get(Name='J1210-5226')
+        p = Pulsar.objects.get(name='J1210-5226')
         p.comment = 'G296.5+10.0'
         a1 = self.article_get_add(p, 0)
         a1.article = 'http://adsabs.harvard.edu/abs/2002nsps.conf..273P'
         a1.cite = '\cite{2002_Pavlov}'
-        a1.info = ('page 10, radio quiet, no inf -> surface conversion, '
-                  'uncertainness in distance evaluation, no radio signal'
-                  ' \dot{P} 1e-14 1e-17  A_{\perp}')
+        a1.info = ('page 10, radio quiet, no inf -> surface conversion, uncertainness in distance evaluation, no radio signal \dot{P} 1e-14 1e-17  A_{\perp}')
         a1.dist = 2.45
         f1 = self.fit_get_add(a1, 0)
         f1.spectrum = 'BB'
@@ -1043,12 +981,11 @@ class Pulsars:
         self.calculate(p)
 
         #   J1357-6429     ####################################################
-        p = Pulsar.objects.get(Name='J1357-6429')
+        p = Pulsar.objects.get(name='J1357-6429')
         a1 = self.article_get_add(p, 0)
         a1.article = 'http://adsabs.harvard.edu/abs/2007ApJ...665L.143Z'
         a1.cite = '\cite{2007_Zavlin}'
-        a1.info = ('page 3, no inf -> surface conversion, A_{\perp}'
-                   'PL luminosities from Becker 2009 (review) in 0.1-10keV')
+        a1.info = ('page 3, no inf -> surface conversion, A_{\perp}PL luminosities from Becker 2009 (review) in 0.1-10keV')
         a1.dist = 2.5
         f1 = self.fit_get_add(a1, 0)
         f1.spectrum = 'BB + PL'
@@ -1084,13 +1021,12 @@ class Pulsars:
         self.calculate(p)
 
         #   B1706-44       ####################################################
-        p = Pulsar.objects.get(Name='B1706-44')
+        p = Pulsar.objects.get(name='B1706-44')
         p.comment = 'G343.1-02.3'
         a1 = self.article_get_add(p, 0)
         a1.article = 'http://adsabs.harvard.edu/abs/2002ApJ...567L.125G'
         a1.cite = '\cite{2002_Gotthelf}'
-        a1.info = ('page 5, no inf -> surface conversion, thermal + '
-                  'non-thermal components A_{\perp}')
+        a1.info = ('page 5, no inf -> surface conversion, thermal + non-thermal components A_{\perp}')
         a1.dist = 2.5
         f1 = self.fit_get_add(a1, 0)
         f1.spectrum = 'BB + PL'
@@ -1129,12 +1065,11 @@ class Pulsars:
         self.calculate(p)
 
         #   J1809-1917     ####################################################
-        p = Pulsar.objects.get(Name='J1809-1917')
+        p = Pulsar.objects.get(name='J1809-1917')
         a1 = self.article_get_add(p, 0)
         a1.article = 'http://adsabs.harvard.edu/abs/2007ApJ...670..655K'
         a1.cite = '\cite{2007_Kargaltsev}'
-        a1.info = ('page 5, 7(graph), no inf -> surface conversion, '
-                  'dist_dm_cl from paper A_{\perp}')
+        a1.info = ('page 5, 7(graph), no inf -> surface conversion, dist_dm_cl from paper A_{\perp}')
         a1.dist = 3.5
         f1 = self.fit_get_add(a1, 0)
         f1.spectrum = 'BB + PL'
@@ -1162,14 +1097,12 @@ class Pulsars:
         self.calculate(p)
 
         #   B1823-13       ####################################################
-        p = Pulsar.objects.get(Name='B1823-13')
+        p = Pulsar.objects.get(name='B1823-13')
         p.comment = 'Vela-like'
         a1 = self.article_get_add(p, 0)
         a1.article = 'http://adsabs.harvard.edu/abs/2008ApJ...675..683P'
         a1.cite = '\cite{2008_Pavlov}'
-        a1.info = ('page 13, no inf -> surface conversion, very bad '
-                  'photon statistics, R_BB fixed in fits - larger R_BB '
-                  'fit in paper, A_{\perp} PL luminosities from Becker 2009')
+        a1.info = ('page 13, no inf -> surface conversion, very bad photon statistics, R_BB fixed in fits - larger R_BB fit in paper, A_{\perp} PL luminosities from Becker 2009')
         a1.dist = 4
         f1 = self.fit_get_add(a1, 0)
         f1.spectrum = 'BB + PL'
@@ -1198,12 +1131,11 @@ class Pulsars:
         self.calculate(p)
 
         #    B1916+14      ####################################################
-        p = Pulsar.objects.get(Name='B1916+14')
+        p = Pulsar.objects.get(name='B1916+14')
         a1 = self.article_get_add(p, 0)
         a1.article = 'http://adsabs.harvard.edu/abs/2009ApJ...704.1321Z'
         a1.cite = '\cite{2009_Zhu}'
-        a1.info = ('page 12, BB, no inf -> surface conversion, check table '
-                  'for more pulsars, A_{\perp}')
+        a1.info = ('page 12, BB, no inf -> surface conversion, check table for more pulsars, A_{\perp}')
         a1.dist = 2.1
         f1 = self.fit_get_add(a1, 0)
         f1.spectrum = 'BB'
@@ -1235,14 +1167,11 @@ class Pulsars:
         self.calculate(p)
 
         #    J2043+2740    ####################################################
-        p = Pulsar.objects.get(Name='J2043+2740')
+        p = Pulsar.objects.get(name='J2043+2740')
         a1 = self.article_get_add(p, 0)
         a1.article = 'http://adsabs.harvard.edu/abs/2004ApJ...615..908B'
         a1.cite = '\cite{2004_Becker}'
-        a1.info = ('page 27, R_BB fixed in fits - larger R_BB fit in paper,'
-                   ' inf -> surface conversion done (see text T_inf), '
-                   'different values in second paper ?, errors from bb fit,'
-                   '  A_{\perp}?')
+        a1.info = ('page 27, R_BB fixed in fits - larger R_BB fit in paper, inf -> surface conversion done (see text T_inf), different values in second paper ?, errors from bb fit,  A_{\perp}?')
         a1.dist = 1.8
         f1 = self.fit_get_add(a1, 0)
         f1.spectrum = 'BB + PL'
@@ -1261,8 +1190,7 @@ class Pulsars:
         c2.pl = 2.8
         c2.pl_plus = 1
         c2.pl_minus = 0.8
-        c2.lum, c2.lum_plus, c2.lum_minus = \
-            self.lnonth_powers([[31.40,0.22,0.45],[29.90,0.22,0.45]])
+        c2.lum, c2.lum_plus, c2.lum_minus = self.lnonth_powers([[31.40,0.22,0.45],[29.90,0.22,0.45]])
         f2 = self.fit_get_add(a1, 1)
         f2.spectrum = 'AT'
         c3 = self.component_get_add(f2, 0)
@@ -1277,15 +1205,11 @@ class Pulsars:
         self.calculate(p)
 
         #    B2334+61      ####################################################
-        p = Pulsar.objects.get(Name='B2334+61')
+        p = Pulsar.objects.get(name='B2334+61')
         a1 = self.article_get_add(p, 0)
         a1.article = 'http://adsabs.harvard.edu/abs/2006ApJ...639..377M'
         a1.cite = '\cite{2006_McGowan}'
-        a1.info = ('pag 4,14, inf -> surface conversion done, no pulsation,'
-                   ' different values in second paper ? (, R_bb 1.66e5 from'
-                   ' text different fit?) A_{\perp}? no data (R_bb) for '
-                   'BB+PL (BB params from text), spectrum dominated by BB'
-                   'PL luminosity overestimated?')
+        a1.info = ('pag 4,14, inf -> surface conversion done, no pulsation, different values in second paper ? (, R_bb 1.66e5 from text different fit?) A_{\perp}? no data (R_bb) for BB+PL (BB params from text), spectrum dominated by BB PL luminosity overestimated?')
         a1.dist = 3.1
         f1 = self.fit_get_add(a1, 0)
         f1.spectrum = 'BB + PL'
@@ -1322,15 +1246,12 @@ class Pulsars:
         self.calculate(p)
 
         #    J0205+6449    ####################################################
-        p = Pulsar.objects.get(Name='J0205+6449')
+        p = Pulsar.objects.get(name='J0205+6449')
         p.comment = '3C58'
         a1 = self.article_get_add(p, 0)
         a1.article = 'http://adsabs.harvard.edu/abs/2004ApJ...616..403S'
         a1.cite = '\cite{2004_Slane}'
-        a1.info = ('page 8 (in text), different value in table (page 9) -'
-                   ' R_bb set to star radius there, PL from table, '
-                   'redshifted or unredshifted? PL luminositiy from Becker '
-                   '2009 (review) in 0.1-10keV')
+        a1.info = ('page 8 (in text), different value in table (page 9) - R_bb set to star radius there, PL from table, redshifted or unredshifted? PL luminositiy from Becker 2009 (review) in 0.1-10keV')
         a1.dist = 3.2
         f1 = self.fit_get_add(a1, 0)
         f1.spectrum = 'BB + PL'
@@ -1351,8 +1272,7 @@ class Pulsars:
         c2.pl_plus = 0.02
         c2.pl_minus = 0.04
         #c2.lum = 1.02e-12 * 4. * pi * (a1.dist * 1e3 * 3.0857e18) ** 2.
-        c2.lum, c2.lum_plus, c2.lum_minus = \
-            self.lnonth_powers([[32.64, 0.22, 0.45], [32.68, 0.22, 0.45]])
+        c2.lum, c2.lum_plus, c2.lum_minus = self.lnonth_powers([[32.64, 0.22, 0.45], [32.68, 0.22, 0.45]])
         f2 = self.fit_get_add(a1, 1)
         f2.spectrum = 'AT'
         c3 = self.component_get_add(f2, 0)
@@ -1363,7 +1283,7 @@ class Pulsars:
         self.calculate(p)
 
         #     B0355+54     ####################################################
-        p = Pulsar.objects.get(Name='B0355+54')
+        p = Pulsar.objects.get(name='B0355+54')
         a1 = self.article_get_add(p, 0)
         a1.article = 'http://adsabs.harvard.edu/abs/2007Ap%26SS.308..309M'
         a1.cite = '\cite{2007_McGowan}'
@@ -1386,8 +1306,7 @@ class Pulsars:
         c2.pl = 1.
         c2.pl_plus = 0.2
         c2.pl_minus = 0.2
-        c2.lum, c2.lum_plus, c2.lum_minus = \
-            self.lnonth_powers([[30.21,0.64,0.71],[30.83,0.57,0.33]])
+        c2.lum, c2.lum_plus, c2.lum_minus = self.lnonth_powers([[30.21,0.64,0.71],[30.83,0.57,0.33]])
         a2 = self.article_get_add(p, 1)
         a2.article = 'http://adsabs.harvard.edu/abs/1994ApJ...437..458S'
         a2.cite = '\cite{1994_Slane}'
@@ -1400,13 +1319,13 @@ class Pulsars:
         self.calculate(p)
 
         #   B0531+21       ####################################################
-        p = Pulsar.objects.get(Name='B0531+21')
+        p = Pulsar.objects.get(name='B0531+21')
         p.comment = 'Crab'
         a1 = self.article_get_add(p, 0)
         a1.article = 'http://adsabs.harvard.edu/abs/2009ASSL..357...91B'
         a1.cite = '\cite{2009_Becker}'
         a1.info = ('page 41 (Becker), (no BB fit, PL dominated)')
-        a1.dist = p.Dist
+        a1.dist = p.dist
         f1 = self.fit_get_add(a1, 0)
         f1.spectrum = 'PL'
         f1.ordinal = 99
@@ -1434,7 +1353,7 @@ class Pulsars:
         self.calculate(p)
 
         #     B1951+32     ####################################################
-        p = Pulsar.objects.get(Name='B1951+32')
+        p = Pulsar.objects.get(name='B1951+32')
         p.comment = 'CTB 80'
         a1 = self.article_get_add(p, 0)
         a1.article = 'http://adsabs.harvard.edu/abs/2005ApJ...628..931L'
@@ -1467,7 +1386,7 @@ class Pulsars:
         self.calculate(p)
 
         #    B1509-58      ####################################################
-        p = Pulsar.objects.get(Name='B1509-58')
+        p = Pulsar.objects.get(name='B1509-58')
         p.comment = 'Crab-like pulsar'
         a1 = self.article_get_add(p, 0)
         a1.article = 'http://adsabs.harvard.edu/abs/2001A%26A...375..397C'
@@ -1482,8 +1401,7 @@ class Pulsars:
         c1.pl = 1.19
         c1.pl_plus = 0.04
         c1.pl_minus = 0.04
-        c1.lum, c1.lum_plus, c1.lum_minus = \
-            self.lnonth_powers([[34.64,0.19,0.35],[35.12,0.2,0.37]])
+        c1.lum, c1.lum_plus, c1.lum_minus = self.lnonth_powers([[34.64,0.19,0.35],[35.12,0.2,0.37]])
         a2 = self.article_get_add(p, 1)
         a2.article = 'http://adsabs.harvard.edu/abs/2009ASSL..357...91B'
         a2.cite = '\cite{2009_Becker}'
@@ -1498,7 +1416,7 @@ class Pulsars:
         self.calculate(p)
 
         #     J1930+1852   ####################################################
-        p = Pulsar.objects.get(Name='J1930+1852')
+        p = Pulsar.objects.get(name='J1930+1852')
         p.comment = 'Crab-like pulsar'
         a1 = self.article_get_add(p, 0)
         a1.article = 'http://adsabs.harvard.edu/abs/2007ApJ...663..315L'
@@ -1513,8 +1431,7 @@ class Pulsars:
         c1.pl = 1.2
         c1.pl_plus = 0.2
         c1.pl_minus = 0.2
-        c1.lum, c1.lum_plus, c1.lum_minus = \
-            self.lnonth_powers([[33.42,0.22,0.45],[33.75,0.22,0.45]])
+        c1.lum, c1.lum_plus, c1.lum_minus = self.lnonth_powers([[33.42,0.22,0.45],[33.75,0.22,0.45]])
         a2 = self.article_get_add(p, 1)
         a2.article = 'http://adsabs.harvard.edu/abs/2002ApJ...574L..71C'
         a2.cite = '\cite{2002_Camilo}'
@@ -1522,13 +1439,12 @@ class Pulsars:
         self.calculate(p)
 
         #    J1617-5055    ####################################################
-        p = Pulsar.objects.get(Name='J1617-5055')
+        p = Pulsar.objects.get(name='J1617-5055')
         p.comment = 'Crab-like pulsar'
         a1 = self.article_get_add(p, 0)
         a1.article = 'http://adsabs.harvard.edu/abs/2009ApJ...690..891K'
         a1.cite = '\cite{2009_Kargaltsev}'
-        a1.info = ('page (899, table) underestimated errors in Karg paper for'
-                   ' PL? PL luminosity from Becker 2009 (review)')
+        a1.info = ('page (899, table) underestimated errors in Karg paper for PL? PL luminosity from Becker 2009 (review)')
         a1.dist = 6.5
         f1 = self.fit_get_add(a1, 0)
         f1.spectrum = 'PL'
@@ -1541,8 +1457,7 @@ class Pulsars:
         #c1.lum = 17.92e33
         #c1.lum_plus = 0.07e33
         #c1.lum_minus = 0.07e33
-        c1.lum, c1.lum_plus, c1.lum_minus = \
-            self.lnonth_powers([[33.85, 0.19, 0.35], [34.23, 0.18, 0.31]])
+        c1.lum, c1.lum_plus, c1.lum_minus = self.lnonth_powers([[33.85, 0.19, 0.35], [34.23, 0.18, 0.31]])
         a2 = self.article_get_add(p, 1)
         a2.article = 'http://adsabs.harvard.edu/abs/2002nsps.conf...64B'
         a2.cite = '\cite{2002_Becker}'
@@ -1551,7 +1466,7 @@ class Pulsars:
         self.calculate(p)
 
         #    J1747-2958    ####################################################
-        p = Pulsar.objects.get(Name='J1747-2958')
+        p = Pulsar.objects.get(name='J1747-2958')
         p.comment = 'Mouse'
         a1 = self.article_get_add(p, 0)
         a1.article = 'http://adsabs.harvard.edu/abs/2009ASSL..357...91B'
@@ -1566,8 +1481,7 @@ class Pulsars:
         c1.pl = 1.8
         c1.pl_plus = 0.08
         c1.pl_minus = 0.08
-        c1.lum, c1.lum_plus, c1.lum_minus = \
-            self.lnonth_powers([[33.82,0.26,0.23],[33.75,0.24,0.23]])
+        c1.lum, c1.lum_plus, c1.lum_minus = self.lnonth_powers([[33.82,0.26,0.23],[33.75,0.24,0.23]])
         a2 = self.article_get_add(p, 1)
         a2.article = 'http://adsabs.harvard.edu/abs/2004ApJ...616..383G'
         a2.cite = '\cite{2004_Gaensler}'
@@ -1589,7 +1503,7 @@ class Pulsars:
         self.calculate(p)
 
         #    J1124-5916    ####################################################
-        p = Pulsar.objects.get(Name='J1124-5916')
+        p = Pulsar.objects.get(name='J1124-5916')
         p.comment = 'Vela-like pulsar'
         a1 = self.article_get_add(p, 0)
         a1.article = 'http://adsabs.harvard.edu/abs/2009ASSL..357...91B'
@@ -1604,8 +1518,7 @@ class Pulsars:
         c1.pl = 1.6
         c1.pl_plus = 0.1
         c1.pl_minus = 0.1
-        c1.lum, c1.lum_plus, c1.lum_minus = \
-            self.lnonth_powers([[32.54,0.22,0.45],[32.66,0.22,0.45]])
+        c1.lum, c1.lum_plus, c1.lum_minus = self.lnonth_powers([[32.54,0.22,0.45],[32.66,0.22,0.45]])
         a2 = self.article_get_add(p, 1)
         a2.article = 'http://adsabs.harvard.edu/abs/2003ApJ...591L.139H'
         a2.cite = '\cite{2003_Hughes}'
@@ -1616,7 +1529,7 @@ class Pulsars:
         self.calculate(p)
 
         #   B1046-58       ####################################################
-        p = Pulsar.objects.get(Name='B1046-58')
+        p = Pulsar.objects.get(name='B1046-58')
         p.comment = 'Vela-like pulsar'
         a1 = self.article_get_add(p, 0)
         a1.article = 'http://adsabs.harvard.edu/abs/2009ASSL..357...91B'
@@ -1631,8 +1544,7 @@ class Pulsars:
         c1.pl = 1.7
         c1.pl_plus = 0.4
         c1.pl_minus = 0.2
-        c1.lum, c1.lum_plus, c1.lum_minus = \
-            self.lnonth_powers([[31.73,0.52,0.46],[31.75,0.3,0.43]])
+        c1.lum, c1.lum_plus, c1.lum_minus = self.lnonth_powers([[31.73,0.52,0.46],[31.75,0.3,0.43]])
         a2 = self.article_get_add(p, 1)
         a2.article = 'http://adsabs.harvard.edu/abs/2006ApJ...652..569G'
         a2.cite = '\cite{2006_Gonzalez}'
@@ -1645,7 +1557,7 @@ class Pulsars:
         self.calculate(p)
 
         #     J1811-1925   ####################################################
-        p = Pulsar.objects.get(Name='J1811-1925')
+        p = Pulsar.objects.get(name='J1811-1925')
         p.comment = 'G11.2-0.3'
         a1 = self.article_get_add(p, 0)
         a1.article = 'http://adsabs.harvard.edu/abs/2009ASSL..357...91B'
@@ -1660,8 +1572,7 @@ class Pulsars:
         c1.pl = 0.97
         c1.pl_plus = 0.39
         c1.pl_minus = 0.32
-        c1.lum, c1.lum_plus, c1.lum_minus = \
-            self.lnonth_powers([[33.23,0.29,0.4],[33.88,0.18,0.31]])
+        c1.lum, c1.lum_plus, c1.lum_minus = self.lnonth_powers([[33.23,0.29,0.4],[33.88,0.18,0.31]])
         a2 = self.article_get_add(p, 1)
         a2.article = 'http://adsabs.harvard.edu/abs/2003ApJ...588..992R'
         a2.cite = '\cite{2003_Roberts}'
@@ -1672,7 +1583,7 @@ class Pulsars:
         self.calculate(p)
 
         #  J0537-6910      ####################################################
-        p = Pulsar.objects.get(Name='J0537-6910')
+        p = Pulsar.objects.get(name='J0537-6910')
         p.comment = 'N157B, LMC'
         a1 = self.article_get_add(p, 0)
         a1.num = 0
@@ -1687,8 +1598,7 @@ class Pulsars:
         c1.pl = 1.8
         c1.pl_plus = 0.1
         c1.pl_minus = 0.1
-        c1.lum,  c1.lum_plus, c1.lum_minus = \
-            self.lnonth_powers([[35.68,0.19,0.34],[35.61,0.2,0.37]])
+        c1.lum,  c1.lum_plus, c1.lum_minus = self.lnonth_powers([[35.68,0.19,0.34],[35.61,0.2,0.37]])
         a2 = self.article_get_add(p, 1)
         a2.article = 'http://adsabs.harvard.edu/abs/2005A%26A...431..659M'
         a2.cite = '\cite{2005_Mignani}'
@@ -1696,7 +1606,7 @@ class Pulsars:
         self.calculate(p)
 
         #    B1259-63      ####################################################
-        p = Pulsar.objects.get(Name='B1259-63')
+        p = Pulsar.objects.get(name='B1259-63')
         p.comment = 'Be-star bin'
         a1 = self.article_get_add(p, 0)
         a1.article = 'http://adsabs.harvard.edu/abs/2009ASSL..357...91B'
@@ -1711,8 +1621,7 @@ class Pulsars:
         c1.pl = 1.69
         c1.pl_plus = 0.04
         c1.pl_minus = 0.04
-        c1.lum, c1.lum_plus, c1.lum_minus = \
-            self.lnonth_powers([[32.55,0.25,0.54], [32.58,0.39,0.51]])
+        c1.lum, c1.lum_plus, c1.lum_minus = self.lnonth_powers([[32.55,0.25,0.54], [32.58,0.39,0.51]])
         a2 = self.article_get_add(p, 1)
         a2.article = 'http://adsabs.harvard.edu/abs/2009MNRAS.397.2123C'
         a2.cite = '\cite{2009_Chernyakova}'
@@ -1723,7 +1632,7 @@ class Pulsars:
         self.calculate(p)
 
         #    J1420-6048    ####################################################
-        p = Pulsar.objects.get(Name='J1420-6048')
+        p = Pulsar.objects.get(name='J1420-6048')
         a1 = self.article_get_add(p, 0)
         a1.article = 'http://adsabs.harvard.edu/abs/2009ASSL..357...91B'
         a1.cite = '\cite{2009_Becker}'
@@ -1737,8 +1646,7 @@ class Pulsars:
         c1.pl = 1.6
         c1.pl_plus = 0.04
         c1.pl_minus = 0.04
-        c1.lum, c1.lum_plus, c1.lum_minus = \
-            self.lnonth_powers([[34.41,0.22,0.45], [34.52,0.22,0.45]])
+        c1.lum, c1.lum_plus, c1.lum_minus = self.lnonth_powers([[34.41,0.22,0.45], [34.52,0.22,0.45]])
         a2 = self.article_get_add(p, 1)
         a2.article = 'http://adsabs.harvard.edu/abs/2001ApJ...561L.187R'
         a2.cite = '\cite{2001_Roberts}'
@@ -1746,7 +1654,7 @@ class Pulsars:
         self.calculate(p)
 
         #   B1800-21       ####################################################
-        p = Pulsar.objects.get(Name='B1800-21')
+        p = Pulsar.objects.get(name='B1800-21')
         p.comment = 'Vela-like pulsar'
         a1 = self.article_get_add(p, 0)
         a1.article = 'http://adsabs.harvard.edu/abs/2007ApJ...660.1413K'
@@ -1773,13 +1681,12 @@ class Pulsars:
         c2.pl_plus = 0.6
         c2.pl_minus = 0.6
         #c2.lum = 4e31
-        c2.lum, c2.lum_plus, c2.lum_minus = \
-            self.lnonth_powers([[32.35, 0.49, 0.8], [32.64, 0.26, 0.53]])
+        c2.lum, c2.lum_plus, c2.lum_minus = self.lnonth_powers([[32.35, 0.49, 0.8], [32.64, 0.26, 0.53]])
         self.save_records([a1, f1, c1, c2], p)
         self.calculate(p)
 
         #   B1757-24       ####################################################
-        p = Pulsar.objects.get(Name='B1757-24')
+        p = Pulsar.objects.get(name='B1757-24')
         p.comment = 'Duck'
         a1 = self.article_get_add(p, 0)
         a1.article = 'http://adsabs.harvard.edu/abs/2001ApJ...562L.163K'
@@ -1794,8 +1701,7 @@ class Pulsars:
         c1.pl = 1.6
         c1.pl_plus = 0.6
         c1.pl_minus = 0.5
-        c1.lum, c1.lum_plus, c1.lum_minus = \
-            self.lnonth_powers([[33.1,0.54,0.53], [33.21,0.26,0.53]])
+        c1.lum, c1.lum_plus, c1.lum_minus = self.lnonth_powers([[33.1,0.54,0.53], [33.21,0.26,0.53]])
         a2 = self.article_get_add(p, 1)
         a2.article = 'http://adsabs.harvard.edu/abs/2009ASSL..357...91B'
         a2.cite = '\cite{2009_Becker}'
@@ -1803,7 +1709,7 @@ class Pulsars:
         self.calculate(p)
 
         #    B0540-69      ####################################################
-        p = Pulsar.objects.get(Name='B0540-69')
+        p = Pulsar.objects.get(name='B0540-69')
         p.comment = 'N158A, LMC'
         a1 = self.article_get_add(p, 0)
         a1.article = 'http://adsabs.harvard.edu/abs/2001ApJ...546.1159K'
@@ -1818,8 +1724,7 @@ class Pulsars:
         c1.pl = 1.92
         c1.pl_plus = 0.11
         c1.pl_minus = 0.11
-        c1.lum, c1.lum_plus, c1.lum_minus = \
-            self.lnonth_powers([[36.68,0.19,0.32], [36.49,0.21,0.37]])
+        c1.lum, c1.lum_plus, c1.lum_minus = self.lnonth_powers([[36.68,0.19,0.32], [36.49,0.21,0.37]])
         a2 = self.article_get_add(p, 1)
         a2.article = 'http://adsabs.harvard.edu/abs/2008MNRAS.389..691C'
         a2.cite = '\cite{2008_Campana}'
@@ -1827,7 +1732,7 @@ class Pulsars:
         self.calculate(p)
 
         #   J1105-6107     ####################################################
-        p = Pulsar.objects.get(Name='J1105-6107')
+        p = Pulsar.objects.get(name='J1105-6107')
         a1 = self.article_get_add(p, 0)
         a1.article = 'http://adsabs.harvard.edu/abs/1998ApJ...497L..29G'
         a1.cite = '\cite{1998_Gotthelf}'
@@ -1841,8 +1746,7 @@ class Pulsars:
         c1.pl = 1.8
         c1.pl_plus = 0.4
         c1.pl_minus = 0.4
-        c1.lum, c1.lum_plus, c1.lum_minus = \
-            self.lnonth_powers([[33.65,0.39,0.50], [33.57,0.18,0.31]])
+        c1.lum, c1.lum_plus, c1.lum_minus = self.lnonth_powers([[33.65,0.39,0.50], [33.57,0.18,0.31]])
         a2 = self.article_get_add(p, 1)
         a2.article = 'http://adsabs.harvard.edu/abs/2009ASSL..357...91B'
         a2.cite = '\cite{2009_Becker}'
@@ -1850,7 +1754,7 @@ class Pulsars:
         self.calculate(p)
 
         #   B1853+01     ######################################################
-        p = Pulsar.objects.get(Name='B1853+01')
+        p = Pulsar.objects.get(name='B1853+01')
         p.comment = 'W44'
         a1 = self.article_get_add(p, 0)
         a1.article = 'http://adsabs.harvard.edu/abs/2002ApJ...579..404P'
@@ -1865,8 +1769,7 @@ class Pulsars:
         c1.pl = 1.28
         c1.pl_plus = 0.48
         c1.pl_minus = 0.48
-        c1.lum, c1.lum_plus, c1.lum_minus = \
-            self.lnonth_powers([[31.53,0.44,0.54], [31.92,0.19,0.34]])
+        c1.lum, c1.lum_plus, c1.lum_minus = self.lnonth_powers([[31.53,0.44,0.54], [31.92,0.19,0.34]])
         a2 = self.article_get_add(p, 1)
         a2.article = 'http://adsabs.harvard.edu/abs/2009ASSL..357...91B'
         a2.cite = '\cite{2009_Becker}'
@@ -1874,7 +1777,7 @@ class Pulsars:
         self.calculate(p)
 
         #   J1509-5850     ####################################################
-        p = Pulsar.objects.get(Name='J1509-5850')
+        p = Pulsar.objects.get(name='J1509-5850')
         p.comment = 'MSH 15-52'
         a1 = self.article_get_add(p, 0)
         a1.article = 'http://adsabs.harvard.edu/abs/2007A%26A...470..965H'
@@ -1889,8 +1792,7 @@ class Pulsars:
         c1.pl = 1.
         c1.pl_plus = 0.2
         c1.pl_minus = 0.3
-        c1.lum, c1.lum_plus, c1.lum_minus = \
-            self.lnonth_powers([[31.43,0.2,0.4], [31.55,0.35,0.54]])
+        c1.lum, c1.lum_plus, c1.lum_minus = self.lnonth_powers([[31.43,0.2,0.4], [31.55,0.35,0.54]])
         a2 = self.article_get_add(p, 1)
         a2.article = 'http://adsabs.harvard.edu/abs/2009ASSL..357...91B'
         a2.cite = '\cite{2009_Becker}'
@@ -1900,13 +1802,11 @@ class Pulsars:
         self.calculate(p)
 
         #    J2021+3651    ####################################################
-        p = Pulsar.objects.get(Name='J2021+3651')
+        p = Pulsar.objects.get(name='J2021+3651')
         a1 = self.article_get_add(p, 0)
         a1.article = 'http://adsabs.harvard.edu/abs/2008ApJ...680.1417V'
         a1.cite = '\cite{2008_VanEtten}'
-        a1.info = ('page 10, page 9 (in second paper)  remove from B/T '
-                      'plot, The distance to PSR J2021+3651 is intriguing ,'
-                      ' L from Becker BB ')
+        a1.info = ('page 10, page 9 (in second paper)  remove from B/T plot, The distance to PSR J2021+3651 is intriguing , L from Becker BB ')
         a1.dist = 10.
         f1 = self.fit_get_add(a1, 0)
         f1.spectrum = 'BB'
@@ -1928,8 +1828,7 @@ class Pulsars:
         c2.pl = 1.7
         c2.pl_plus = 0.3
         c2.pl_minus = 0.2
-        c2.lum, c2.lum_plus, c2.lum_minus = \
-            self.lnonth_powers([[34.13,0.23,0.56], [33.97,0.18,0.33]])
+        c2.lum, c2.lum_plus, c2.lum_minus = self.lnonth_powers([[34.13,0.23,0.56], [33.97,0.18,0.33]])
         a2 = self.article_get_add(p, 1)
         a2.article = 'http://adsabs.harvard.edu/abs/2004ApJ...612..389H'
         a2.cite = '\cite{2004_Hessels}'
@@ -1942,12 +1841,11 @@ class Pulsars:
         self.calculate(p)
 
         #      B1610-50    ####################################################
-        p = Pulsar.objects.get(Name='B1610-50')
+        p = Pulsar.objects.get(name='B1610-50')
         a1 = self.article_get_add(p, 0)
         a1.article = 'http://adsabs.harvard.edu/abs/2000ApJ...528..436P'
         a1.cite = '\cite{2000_Pivovaroff}'
-        a1.info = ('X-ray emission from PSR B1610-50 is not detected ??'
-                   'upper limits in Becker')
+        a1.info = ('X-ray emission from PSR B1610-50 is not detected ?? upper limits in Becker')
         a1.dist = 7.3
         a2 = self.article_get_add(p, 1)
         a2.article = 'http://adsabs.harvard.edu/abs/2009ASSL..357...91B'
@@ -1956,7 +1854,7 @@ class Pulsars:
         self.calculate(p)
 
         #   J1846-0258     ####################################################
-        p = Pulsar.objects.get(Name='J1846-0258')
+        p = Pulsar.objects.get(name='J1846-0258')
         p.comment = 'Kes 75'
         a1 = self.article_get_add(p, 0)
         a1.article = 'http://adsabs.harvard.edu/abs/2008ApJ...686..508N'
@@ -1990,7 +1888,7 @@ class Pulsars:
         self.calculate(p)
 
         #     B1719-37     ####################################################
-        p = Pulsar.objects.get(Name='B1719-37')
+        p = Pulsar.objects.get(name='B1719-37')
         a1 = self.article_get_add(p, 0)
         a1.article = 'http://adsabs.harvard.edu/abs/2004NuPhS.132..636O'
         a1.cite = '\cite{2004_Oosterbroek}'
@@ -2019,7 +1917,7 @@ class Pulsars:
         self.calculate(p)
 
         #     J0631+1036   ####################################################
-        p = Pulsar.objects.get(Name='J0631+1036')
+        p = Pulsar.objects.get(name='J0631+1036')
         a1 = self.article_get_add(p, 0)
         a1.article = 'http://adsabs.harvard.edu/abs/2002astro.ph..2055K'
         a1.cite = '\cite{2002_Kennea}'
@@ -2032,7 +1930,7 @@ class Pulsars:
         self.calculate(p)
 
         #    B0823+26      ####################################################
-        p = Pulsar.objects.get(Name='B0823+26')
+        p = Pulsar.objects.get(name='B0823+26')
         a1 = self.article_get_add(p, 0)
         a1.article = 'http://adsabs.harvard.edu/abs/2009ASSL..357...91B'
         a1.cite = '\cite{2009_Becker}'
@@ -2046,8 +1944,7 @@ class Pulsars:
         c1.pl = 1.58
         c1.pl_plus = 0.43
         c1.pl_minus = 0.33
-        c1.lum, c1.lum_plus, c1.lum_minus = \
-            self.lnonth_powers([[29.36,0.69,0.56], [28.56,0.26,0.73]])
+        c1.lum, c1.lum_plus, c1.lum_minus = self.lnonth_powers([[29.36,0.69,0.56], [28.56,0.26,0.73]])
         a2 = self.article_get_add(p, 1)
         a2.article = 'http://adsabs.harvard.edu/abs/2004ApJ...615..908B'
         a2.cite = '\cite{2004_Becker}'
@@ -2055,7 +1952,7 @@ class Pulsars:
         self.calculate(p)
 
         #    B2224+65      ####################################################
-        p = Pulsar.objects.get(Name='B2224+65')
+        p = Pulsar.objects.get(name='B2224+65')
         p.comment = 'Guitar'
         a1 = self.article_get_add(p, 0)
         a1.article = 'http://adsabs.harvard.edu/abs/2012ApJ...747...74H'
@@ -2096,7 +1993,7 @@ class Pulsars:
         self.calculate(p)
 
         #      B1451-68    ####################################################
-        p = Pulsar.objects.get(Name='B1451-68')
+        p = Pulsar.objects.get(name='B1451-68')
         ge = self.geometry_get_add(p)
         ge.article = 'http://adsabs.harvard.edu/abs/1993ApJS...85..145R'
         ge.alpha = 37
@@ -2142,7 +2039,7 @@ class Pulsars:
         self.calculate(p)
 
         #    J0437-4715    ####################################################
-        p = Pulsar.objects.get(Name='J0437-4715')
+        p = Pulsar.objects.get(name='J0437-4715')
         ge = self.geometry_get_add(p)
         ge.alpha = 36.
         #ge.beta =
@@ -2195,7 +2092,7 @@ class Pulsars:
         self.calculate(p)
 
         #    J2021+4026    ####################################################
-        p = Pulsar.objects.get(Name='J2021+4026')
+        p = Pulsar.objects.get(name='J2021+4026')
         a1 = self.article_get_add(p, 0)
         a1.article = 'http://arxiv.org/abs/1305.0998'
         a1.cite = '\cite{2013_Lin}'
@@ -2257,7 +2154,7 @@ class Pulsars:
         self.calculate(p)
 
         #    J0007+7303    ####################################################
-        p = Pulsar.objects.get(Name='J0007+7303')
+        p = Pulsar.objects.get(name='J0007+7303')
         p.comment = 'CTA 1'
         a1 = self.article_get_add(p, 0)
         a1.article = 'http://adsabs.harvard.edu/abs/2010ApJ...725L...1L'
@@ -2276,7 +2173,7 @@ class Pulsars:
         c1.t_plus = self.ev_to_k(0.013e3)
         c1.t_minus = self.ev_to_k(0.013e3)
         c1.lum = self.lbol_radius(c1.t, c1.r)
-        print c1.lum, 3.3e-14 * 4. * pi * (a1.dist * 1e3 * 3.0857e18) ** 2.
+        #print c1.lum, 3.3e-14 * 4. * pi * (a1.dist * 1e3 * 3.0857e18) ** 2.
         c2 = self.component_get_add(f1, 1)
         c2.spec_type = 'PL'
         c2.pl = 1.52
@@ -2298,7 +2195,7 @@ class Pulsars:
 
         '''
         #        ####################################################
-        p = Pulsar.objects.get(Name='')
+        p = Pulsar.objects.get(name='')
         a1 = self.article_get_add(p, 0)
         a1.article = ''
         a1.cite = '\cite{}'
@@ -2395,21 +2292,20 @@ class Pulsars:
 
     def sort_ordinals(self):
 
-        fits = XrayFit.objects.filter(ordinal__gte=0,).\
-            filter(psr_id__P0__gt=0.01).order_by('psr_id__RaJD')
+        fits = XrayFit.objects.filter(ordinal__gte=0,).filter(psr_id__p0__gt=0.01).order_by('psr_id__rajd')
         ord = 1
         # why I need to use res?!
         res = fits[0]
         res.ordinal = 1
         res.save()
         for i in xrange(1, len(fits)):
-            if (fits[i-1].psr_id.Name != fits[i].psr_id.Name):
+            if (fits[i-1].psr_id.name != fits[i].psr_id.name):
                 ord += 1
                 fits[i].ordinal = ord
             else:
                 fits[i].ordinal = ord
             fits[i].save()
-            #print fits[i].psr_id.Name, ord, fits[i].id
+            #print fits[i].psr_id.name, ord, fits[i].id
 
     def save_records(self, list_, p):
         for l in list_:
@@ -2444,12 +2340,12 @@ class Pulsars:
 
         ca = self.calculation_get_add(p, num=num)
 
-        ca.dotP_15 = p.P1 / 1e-15
-        ca.a_dp = 6.58429132402614e8 / float(p.P0)
+        ca.dotp_15 = p.p1 / 1e-15
+        ca.a_dp = 6.58429132402614e8 / float(p.p0)
         ca.r_dp = (ca.a_dp / pi ) ** 0.5
-        ca.bsurf2 = 2.02 * 1e12 * float(p.P0) ** 0.5 * ca.dotP_15 ** 0.5
+        ca.bsurf2 = 2.02 * 1e12 * float(p.p0) ** 0.5 * ca.dotp_15 ** 0.5
         ca.b_14dp = ca.bsurf2 / 1e14
-        ca.l_sd = 3.94784176043574e31 * ca.dotP_15 / float(p.P0) ** 3.
+        ca.l_sd = 3.94784176043574e31 * ca.dotp_15 / float(p.p0) ** 3.
 
         # first BB component with ordinal >= 0
         skip = False
@@ -2488,7 +2384,7 @@ class Pulsars:
 
         ad = self.additional_get_add(p, 0)
         if ad.best_age is None:
-            ad.best_age = p.Age
+            ad.best_age = p.age
         ad.save()
         ca.save()
 
@@ -2505,18 +2401,6 @@ class Pulsars:
         l_nth_plus = l_nth_max - l_nth
         l_nth_minus = l_nth - l_nth_min
         return l_nth, l_nth_plus, l_nth_minus
-
-    '''
-    def lnonth_powers_sum(self, p1_, p2_, p1_errs, p2_errs):
-        for p in pow_:
-            l_nth += 10. ** p[0]
-            l_nth_max += 10 ** (p[0]+p[1])
-            l_nth_min += 10 ** (p[0]-p[2])
-        l_nth_plus = l_nth_max - l_nth
-        l_nth_minus = l_nth - l_nth_min
-        return l_nth, l_nth_plus, l_nth_minus
-    '''
-
 
     def radius_from_inf(self, r_inf, f=None):
         if f is  not None:

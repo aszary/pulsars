@@ -27,7 +27,7 @@
             {% for psr in psrs %}
                 {% for calc in psr.calculations.all %}
                     {%  if calc.b >= 1 %}
-                    <div class="tile one orangebg"> <a href="/database/psrs/{{ psr.id }}"><img src="{% static "database/images/psr.png" %}" /><p>{{ psr.Name }}</p></a></div>
+                    <div class="tile one orangebg"> <a href="/database/pulsars/{{ psr.id }}"><img src="{% static "database/images/psr.png" %}" /><p>{{ psr.name }}</p></a></div>
                     {% endif %}
                 {% endfor %}
             {% endfor %}
@@ -40,7 +40,7 @@
             {% for psr in psrs %}
                 {% for calc in psr.calculations.all %}
                     {%  if calc.b < 1 %}
-                    <div class="tile one tealbg"> <a href="/database/psrs/{{ psr.id }}"><img src="{% static "database/images/psr.png" %}" /><p>{{ psr.Name }}</p></a></div>
+                    <div class="tile one tealbg"> <a href="/database/pulsars/{{ psr.id }}"><img src="{% static "database/images/psr.png" %}" /><p>{{ psr.name }}</p></a></div>
                     {% endif %}
                 {% endfor %}
             {% endfor %}

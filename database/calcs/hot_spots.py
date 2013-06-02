@@ -22,31 +22,25 @@ class HotSpots:
         self.size = int(size)
 
     def lim_minus(self):
-        #return pi - acos(cos(self.alpha+self.beta)*cos(self.alpha) /
-        #                (sin(self.alpha+self.beta)*sin(self.alpha)))
+        #return pi - acos(cos(self.alpha+self.beta)*cos(self.alpha) / (sin(self.alpha+self.beta)*sin(self.alpha)))
         return pi - acos(1. / (tan(self.alpha+self.beta) * tan(self.alpha)))
 
 
     def lim_plus(self):
-        #return pi + acos(cos(self.alpha+self.beta)*cos(self.alpha) /
-        #                (sin(self.alpha+self.beta)*sin(self.alpha)))
+        #return pi + acos(cos(self.alpha+self.beta)*cos(self.alpha) / (sin(self.alpha+self.beta)*sin(self.alpha)))
         return pi + acos(1. / (tan(self.alpha+self.beta) * tan(self.alpha)))
 
     def primary_angle(self, x):
-        return acos(sin(self.alpha)*cos(x)*sin(self.alpha+self.beta) +
-                    cos(self.alpha)*cos(self.alpha+self.beta))
+        return acos(sin(self.alpha) * cos(x) * sin(self.alpha+self.beta) + cos(self.alpha) * cos(self.alpha+self.beta))
 
     def antipodal_angle(self, x):
-        return acos(-sin(self.alpha)*cos(x)*sin(self.alpha+self.beta) -
-                    cos(self.alpha)* cos(self.alpha+self.beta))
+        return acos(-sin(self.alpha) * cos(x) * sin(self.alpha+self.beta) - cos(self.alpha) * cos(self.alpha+self.beta))
 
     def primary_cos(self, x):
-        return (sin(self.alpha)*cos(x)*sin(self.alpha+self.beta) +
-                    cos(self.alpha)*cos(self.alpha+self.beta))
+        return (sin(self.alpha) * cos(x) * sin(self.alpha+self.beta) + cos(self.alpha) * cos(self.alpha+self.beta))
 
     def antipodal_cos(self, x):
-        return (-sin(self.alpha)*cos(x)*sin(self.alpha+self.beta) -
-                    cos(self.alpha)* cos(self.alpha+self.beta))
+        return (-sin(self.alpha) * cos(x) * sin(self.alpha+self.beta) - cos(self.alpha) * cos(self.alpha+self.beta))
 
     def pr_obs(self, x):
         return max([0, self.primary_cos(x)])
@@ -58,29 +52,29 @@ class HotSpots:
         return max([self.pr_obs(x), self.an_obs(x)])
 
     def flux_1(self, x):
-        res = self.primary_cos(x) * (1 - self.r_g / self.r) + self.r_g / self.r
+        res = self.primary_cos(x) * (1 - self.r_g/self.r) + self.r_g/self.r
         if res > - self.r_g / (self.r - self.r_g):
             return res
         else:
             return 0.
 
     def flux_1_obs(self, x):
-        res = self.primary_cos(x) * (1 - self.r_g / self.r) + self.r_g / self.r
+        res = self.primary_cos(x) * (1 - self.r_g/self.r) + self.r_g/self.r
         return max([0., res])
 
     def flux_2(self, x):
-        res =  self.antipodal_cos(x) * (1 - self.r_g / self.r) + self.r_g / self.r
+        res =  self.antipodal_cos(x) * (1 - self.r_g/self.r) + self.r_g/self.r
         if res > - self.r_g / (self.r - self.r_g):
             return res
         else:
             return 0.
 
     def flux_2_obs(self, x):
-        res =  self.antipodal_cos(x) * (1 - self.r_g / self.r) + self.r_g / self.r
+        res =  self.antipodal_cos(x) * (1 - self.r_g/self.r) + self.r_g/self.r
         return max([0., res])
 
     def flux_12(self, x):
-        return max([self.flux_1(x), 2. * self.r_g / self.r, self.flux_2(x)])
+        return max([self.flux_1(x), 2. * self.r_g/self.r, self.flux_2(x)])
 
 
     # integrates

@@ -23,6 +23,7 @@ def least_sq(x, y, fun, v0, size=200):
     y_new = fun(v, x_new)
     return x_new, y_new, v
 
+
 def least_sq1D(x, y, fun, err, v0, size=200):
     """
         err is 1D array (len=1)
@@ -31,8 +32,7 @@ def least_sq1D(x, y, fun, err, v0, size=200):
     x_1 = max(x)
     ## Error function
     errfunc = lambda v, x, y, err: (fun(v, x) - y) / err
-    v, success = leastsq(errfunc, v0, args=(np.array(x), np.array(y),
-                         np.array(err)), maxfev=10000)
+    v, success = leastsq(errfunc, v0, args=(np.array(x), np.array(y), np.array(err)), maxfev=10000)
     print sum(pow(errfunc(v, np.array(x), np.array(y), np.array(err)), 2.))
     x_new = np.linspace(x_0, x_1, size)
     y_new = fun(v, x_new)
@@ -55,8 +55,7 @@ def least_sq2D(x, y, fun, err, v0, size=200):
                 diff[i] /= err[1][i]
         return diff
     errors = np.array([np.array(err[0]), np.array(err[1])])
-    v, success = leastsq(errfunc, v0, args=(np.array(x), np.array(y),
-                         errors), maxfev=10000)
+    v, success = leastsq(errfunc, v0, args=(np.array(x), np.array(y), errors), maxfev=10000)
     print sum(pow(errfunc(v, np.array(x), np.array(y), errors), 2.))
     x_new = np.linspace(x_0, x_1, size)
     y_new = fun(v, x_new)

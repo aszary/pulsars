@@ -117,6 +117,15 @@ def xi_field(request):
     c = Context({'list_':list_, })
     return HttpResponse(template.render(c))
 
+
+def xi_sd(request):
+    fits = XrayFit.objects.filter(ordinal__gt=0).filter(psr_id__p0__gt=0.01).distinct()
+    list_ = plot.xi_sd(fits)
+    template = loader.get_template('database/plots/image.xhtml')
+    c = Context({'list_':list_, })
+    return HttpResponse(template.render(c))
+
+
 def pl_sd(request):
     fits = XrayFit.objects.filter(ordinal__gt=0).filter(components__spec_type='PL').filter(psr_id__p0__gt=0.01).distinct()
     list_ = plot.pl_sd(fits)
@@ -176,6 +185,15 @@ def xi_sd_radio(request):
     template = loader.get_template('database/plots/image2.xhtml')
     c = Context({'list_':list_, })
     return HttpResponse(template.render(c))
+
+
+def xi_age_radio(request):
+    psrs = Pulsar.objects.filter(binary='*')
+    list_ = plot.xi_age_radio(psrs)
+    template = loader.get_template('database/plots/image2.xhtml')
+    c = Context({'list_':list_, })
+    return HttpResponse(template.render(c))
+
 
 def l_sd_radio(request):
     psrs = Pulsar.objects.all()

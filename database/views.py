@@ -147,6 +147,14 @@ def b_parameter(request):
     c = Context({'list_':list_, })
     return HttpResponse(template.render(c))
 
+def b_age(request):
+    comps = XrayComponent.objects.filter(spec_type='BB').filter(xrayfit__ordinal__gt=0).filter(psr_id__calculations__b__gt=1).filter(psr_id__p0__gt=0.01).distinct()
+    list_ = plot.b_age(comps)
+    template = loader.get_template('database/plots/image.xhtml')
+    c = Context({'list_':list_, })
+    return HttpResponse(template.render(c))
+
+
 def t6_b14(request):
     comps = XrayComponent.objects.filter(spec_type='BB').filter(xrayfit__ordinal__gt=0).filter(psr_id__calculations__b__gt=1).filter(psr_id__p0__gt=0.01).distinct()
     list_ = plot.t6_b14(comps)
@@ -195,6 +203,22 @@ def xi_age_radio(request):
     return HttpResponse(template.render(c))
 
 
+def xi_sd_age_radio(request):
+    psrs = Pulsar.objects.all()
+    list_ = plot.xi_sd_age_radio(psrs)
+    template = loader.get_template('database/plots/image2.xhtml')
+    c = Context({'list_':list_, })
+    return HttpResponse(template.render(c))
+
+
+def xi_xray_gamma(request):
+    fits = XrayFit.objects.filter(ordinal__gt=0).filter(psr_id__p0__gt=0.01).distinct()
+    list_ = plot.xi_xray_gamma(fits)
+    template = loader.get_template('database/plots/image2.xhtml')
+    c = Context({'list_':list_, })
+    return HttpResponse(template.render(c))
+
+
 def l_sd_radio(request):
     psrs = Pulsar.objects.all()
     list_ = plot.l_sd_radio(psrs)
@@ -208,6 +232,14 @@ def ll_sd_radio(request):
     template = loader.get_template('database/plots/image2.xhtml')
     c = Context({'list_':list_, })
     return HttpResponse(template.render(c))
+
+def l_sd_radio_three(request):
+    psrs = Pulsar.objects.all()
+    list_ = plot.l_sd_radio_three(psrs)
+    template = loader.get_template('database/plots/image2.xhtml')
+    c = Context({'list_':list_, })
+    return HttpResponse(template.render(c))
+
 
 def flux_sd_radio(request):
     psrs = Pulsar.objects.all()

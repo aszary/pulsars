@@ -4,7 +4,7 @@ from django.template import Context, loader
 from django.core.exceptions import ObjectDoesNotExist
 
 from models import Pulsar, XrayArticle, XrayFit, XrayComponent, Geometry, \
-    Subpulse, Additional, Calculation
+    Subpulse, Additional, Calculation, GammaRayFermi
 from atnf import get_page, parse_page, parse_malov
 import latex
 import plot
@@ -42,6 +42,16 @@ def x_ray(request):
     template = loader.get_template('database/x-rays.xhtml')
     c = Context({'psrs':psrs})
     return HttpResponse(template.render(c))
+
+
+def gamma_ray(request):
+    """ show pulsars with X-ray data
+    """
+    psrs = Pulsar.objects.filter(gammarays__num__gte=0).distinct().order_by('name')
+    template = loader.get_template('database/all.xhtml')
+    c = Context({'psrs':psrs})
+    return HttpResponse(template.render(c))
+
 
 
 def get_atnf(request):
@@ -213,7 +223,8 @@ def xi_sd_age_radio(request):
 
 def xi_xray_gamma(request):
     fits = XrayFit.objects.filter(ordinal__gt=0).filter(psr_id__p0__gt=0.01).distinct()
-    list_ = plot.xi_xray_gamma(fits)
+    gamma_data = GammaRayFermi.objects.filter(num=0).order_by('psr_id__name')
+    list_ = plot.xi_xray_gamma(fits, gamma_data)
     template = loader.get_template('database/plots/image2.xhtml')
     c = Context({'list_':list_, })
     return HttpResponse(template.render(c))

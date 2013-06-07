@@ -1,5 +1,17 @@
 from django.db import models
 
+class GammaRayFermi(models.Model):
+    def __unicode__(self):
+        result = "GammaRayFermi ID : %d NUM : %d" % (self.id, self.num)
+        return result
+    psr_id = models.ForeignKey('Pulsar', null=True, blank=True, default=None)
+    num = models.IntegerField(null=True, blank=True, verbose_name='number of component')
+    lum = models.FloatField(null=True, blank=True, verbose_name='the total gamma-ray luminosity in the 0.1 - 100 GeV energy band (assuming f=1, isotropic)  [erg s^-1]')
+    lum_plus = models.FloatField(null=True, blank=True, verbose_name='statistical uncertainty in the spectral fit (plus) [erg s^-1]')
+    lum_minus = models.FloatField(null=True, blank=True, verbose_name='statistical uncertainty in the spectral fit (minus) [erg s^-1]')
+    lum_plus_dist = models.FloatField(null=True, blank=True, verbose_name='uncertainty due to the distance errors (plus) [erg s^-1]')
+    lum_minus_dist = models.FloatField(null=True, blank=True, verbose_name='uncertainty due to the distance errors (plus) [erg s^-1]')
+
 
 class XrayComponent(models.Model):
     def __unicode__(self):
@@ -250,3 +262,6 @@ class Pulsar(models.Model):
     subpulses = models.ManyToManyField(Subpulse)
     additionals = models.ManyToManyField(Additional)
     calculations = models.ManyToManyField(Calculation)
+    gammarays = models.ManyToManyField(GammaRayFermi)
+
+

@@ -1,6 +1,6 @@
 import os
 from shutil import copyfile
-from math import log10
+from math import log10, pi, sin
 from datetime import datetime
 os.environ['MPLCONFIGDIR'] = '/tmp'
 
@@ -13,7 +13,7 @@ from django.core.exceptions import ObjectDoesNotExist
 from models import XrayComponent
 from pulsars.settings import MEDIA_ROOT
 from calcs.interpolate import least_sq1D, least_sq2D, least_sq
-from calcs.functions import get_t6
+from calcs.functions import get_t6, radio_lum, pseudo_lum
 
 def bb_pl(fits, recreate=False):
     file_name = 'database/plots/bb_pl_age.'
@@ -636,22 +636,23 @@ def radio_plots(psrs, recreate=False):
     #copyfile(full_path+'eps', '/home/aszary/work/6_outer/images/s400_age.eps')
     return res
 
-def custom(pulsars, recreate=False, copy_=False):
+def custom(pulsars, recreate=True, copy_=False):
     file_name = 'database/plots/custom.'
     full_path = MEDIA_ROOT + file_name
 
     if recreate is True:
-        x_ = []
-        y_ = []
-        psr_ = []
+        x_ = [[], []]
+        y_ = [[], []]
+        psr_ = [[], []]
+
         # axis labels (for plot)
-        x_lab = r'$ \log (\dot{E}) $' # $ \tau [{\rm yr}] $   $ L_{\rm SD} $
-        y_lab = r'$\log (S_{\rm freq}) $' # $ b $'
+        x_lab = r'$ \log (P) $' # $ \tau [{\rm yr}] $   $ L_{\rm SD} $
+        y_lab = r'$\log (L) $' # $ b $'
         # get data
         for p in pulsars:
             co_bb, co_pl, calc, ad = get_custom(p)
             try:
-                x = log10(float(p.edot))
+                x = log10(float(p.bsurf))
                 #x = log10(float(p.P0) ** (-3.))
                 #x = float(ad.best_age)
                 #x = float(p.P0)
@@ -660,23 +661,30 @@ def custom(pulsars, recreate=False, copy_=False):
                 # L_{XXX MHz}
                 #y = log10(p.s400 / 1e3  * (p.dist * 3.08567758e21) ** 2. * 1e-23 / p.edot)
                 # L_radio
-                #y =  log10(7.4e27 * p.dist ** 2. * p.s1400 / p.edot)
-                y = log10(p.s1400 / 1e3 * 1e-23)
+                y =  log10(7.4e27 * p.dist ** 2. * p.s1400 / p.edot)
+                #y = log10(p.s1400 / 1e3 * 1e-23)
                 print y#, log10(y)
             except (ValueError, ZeroDivisionError, IndexError, TypeError, UnboundLocalError, AttributeError):
                 x = None
                 y = None
                 print 'Warning ValueError for %s' % p.name
             #if x > 0. and y > 0.:# and float(p.P0) < 0.01:
-            if x > 0. and y is not None:
-                x_.append(x)
-                y_.append(y)
-                psr_.append(p)
+            if x is not None and y is not None:
+                if float(p.p0) < 0.01 or p.binary != '*': # millisecond pulsars + Binary
+                    x_[1].append(x)
+                    y_[1].append(y)
+                    psr_[1].append(p)
+                else:
+                    x_[0].append(x)
+                    y_[0].append(y)
+                    psr_[0].append(p)
+
+        fun = lambda v , x: v[0] * x + v[1]
 
         ot, he, he2, axp = None, None, None, None
         mp.rcdefaults()
         mp.rc('font', size=9)
-        mp.rc('legend', fontsize=7)
+        mp.rc('legend', fontsize=5)
         #mp.rc('font', size=12)
         #mp.rc('legend', fontsize=10)
 
@@ -684,37 +692,24 @@ def custom(pulsars, recreate=False, copy_=False):
         #pl.figure(figsize=(5.90551, 5.90551)) #15x15cm
         pl.subplots_adjust(left=0.17, bottom=0.12, right=0.96, top=0.96)
         pl.minorticks_on()
-        #pl.semilogy()
-        #pl.semilogx()
-        #pl.loglog()
-        for i in xrange(len(x_)):
-            if psr_[i].binary !='*':
-                ot, = pl.plot(x_[i], y_[i], '^', mfc='blue', mec='blue', ms=1.5, zorder=50)
-            elif psr_[i].type.startswith('HE'):
-                he, = pl.plot(x_[i], y_[i], 's', mfc='magenta', mec='magenta', ms=1.5, zorder=40)
-            elif psr_[i].type.find('AXP') != -1:
-                axp, = pl.plot(x_[i], y_[i], 's', mfc='green', mec='green', ms=1.5, zorder=30)
-            elif psr_[i].type.startswith('NRAD'):
-                he2, = pl.plot(x_[i], y_[i], 'D', mfc='yellow', mec='yellow', ms=1.5, zorder=20)
+        for i in xrange(len(x_[0])):
+            if psr_[0][i].type.startswith('HE'):
+                he, = pl.plot(x_[0][i], y_[0][i], 's', mfc='magenta', mec='magenta', ms=1.5, zorder=40)
+            elif psr_[0][i].type.find('AXP') != -1:
+                axp, = pl.plot(x_[0][i], y_[0][i], 's', mfc='green', mec='green', ms=1.5, zorder=30)
+            elif psr_[0][i].type.startswith('NRAD'):
+                he2, = pl.plot(x_[0][i], y_[0][i], 'D', mfc='yellow', mec='yellow', ms=1.5, zorder=20)
             else:
-                pl.plot(x_[i], y_[i], 'o', mfc='red', mec='red', ms=1.0, zorder=1)
-            #pl.text(x_[i], y_[i], '%s'%psr_[i].name, fontsize=8)
+                no, = pl.plot(x_[0][i], y_[0][i], 'o', mfc='red', mec='red', ms=1.0, zorder=1)
 
-        leg_, lab_= [], []
-        if ot is not None:
-            leg_.append(ot)
-            lab_.append('Binary')
-        if he is not None:
-            leg_.append(he)
-            lab_.append('with pulsed HE radiation')
-        if he2 is not None:
-            leg_.append(he2)
-            lab_.append('HE (no radio)')
-        if axp is not None:
-            leg_.append(axp)
-            lab_.append('AXP')
-
-        pl.legend(leg_, lab_, loc='upper right')
+        for i in xrange(len(x_[1])):
+            ot, = pl.plot(x_[1][i], y_[1][i], '^', mfc='blue', mec='blue', ms=1.5, zorder=50)
+        x2_, y2_, v2 = least_sq(x_[0], y_[0], fun, [1, 1.])
+        li, = pl.plot(x2_, y2_, ls='--', c='black', lw=1.50, zorder=9999)
+        li.set_dashes([3, 3])
+        leg_ = [ot, he, he2, axp, no, li]
+        lab_ = ['Binary + MSP', 'with pulsed HE radiation', 'no radio', 'AXP', 'Other', '$^{%.2f}$'%v2[0]]
+        pl.legend(leg_, lab_, loc='upper left')
         pl.xlabel(x_lab)
         pl.ylabel(y_lab)
         ax = pl.axis()
@@ -923,50 +918,43 @@ def xi_age_radio(pulsars, recreate=False):
     return [ [full_path + 'svg', file_name + 'svg']]
 
 
-def xi_sd_age_radio(pulsars, recreate=False):
+def xi_sd_age_radio(pulsars, recreate=True):
     file_name = 'database/plots/radio/xi_sd_age.'
     full_path = MEDIA_ROOT + file_name
 
     if recreate is True:
         x_ = [[], []]
-        y_ = [[], []]
-        psr_ = [[], []]
-        xb_ = [[], []]
-        yb_ = [[], []]
-        psrb_ = [[], []]
+        y_ = [[]]
+        psr_ = [[]]
+        xb_ms_ = [[], []]
+        yb_ms_ = [[]]
+        psrb_ms_ = [[]]
+
+        sd_i = 0
+        age_i = 0
 
         # get data
         for p in pulsars:
             try:
                 x = log10(float(p.edot))
+                x2 = log10(float(p.age))
                 # L_{XXX MHz}
-                y =  log10(7.4e27 * p.dist ** 2. * p.s1400 / p.edot)
+                #y =  log10(7.4e27 * p.dist ** 2. * p.s1400 / p.edot)
+                y =  log10(radio_lum(p.s1400, p.dist, float(p.p0), p.w10)/ p.edot)
             except (ValueError, ZeroDivisionError, IndexError, TypeError,
                     UnboundLocalError, AttributeError):
                 pass
             else:
-                x_[0].append(x)
-                y_[0].append(y)
-                psr_[0].append(p)
-                if p.binary != '*':
-                    xb_[0].append(x)
-                    yb_[0].append(y)
-                    psrb_[0].append(p)
-            try:
-                x = log10(float(p.age))
-                y2 =  log10(7.4e27 * p.dist ** 2. * p.s1400 / p.edot)
-            except (ValueError, ZeroDivisionError, IndexError, TypeError,
-                    UnboundLocalError, AttributeError):
-                pass
-            else:
-                if p.binary == '*':#float(p.p0)>0.04:
-                    x_[1].append(x)
-                    y_[1].append(y2)
-                    psr_[1].append(p)
+                if p.binary != '*' or float(p.p0) < 0.01:
+                    xb_ms_[0].append(x)
+                    xb_ms_[1].append(x2)
+                    yb_ms_[0].append(y)
+                    psrb_ms_[0].append(p)
                 else:
-                    xb_[1].append(x)
-                    yb_[1].append(y2)
-                    psrb_[1].append(p)
+                    x_[0].append(x)
+                    x_[1].append(x2)
+                    y_[0].append(y)
+                    psr_[0].append(p)
 
         fun = lambda v , x: v[0] * x + v[1]
 
@@ -984,16 +972,17 @@ def xi_sd_age_radio(pulsars, recreate=False):
         pl.text(28.5, -1, '(a)')
         pl.minorticks_on()
         for i in xrange(len(x_[0])):
-            if psr_[0][i].binary !='*':
-                ot, = pl.plot(x_[0][i], y_[0][i], '^', mfc='blue', mec='blue', ms=1.5, zorder=50)
-            elif psr_[0][i].type.startswith('HE'):
+            if psr_[0][i].type.startswith('HE'):
                 he, = pl.plot(x_[0][i], y_[0][i], 's', mfc='magenta', mec='magenta', ms=1.5, zorder=40)
             elif psr_[0][i].type.find('AXP') != -1:
                 axp, = pl.plot(x_[0][i], y_[0][i], 'x', mfc='black', mec='black', ms=2., zorder=30)
             else:
                 no, = pl.plot(x_[0][i], y_[0][i], 'o', mfc='red', mec='red', ms=0.7, zorder=1)
+        for i in xrange(len(xb_ms_[0])):
+            ot, = pl.plot(xb_ms_[0][i], yb_ms_[0][i], '^', mfc='blue', mec='blue', ms=1.5, zorder=50)
+
         x2_, y2_, v2 = least_sq(x_[0], y_[0], fun, [1, 1.])
-        x3_, y3_, v3 = least_sq(xb_[0], yb_[0], fun, [1, 1.])
+        x3_, y3_, v3 = least_sq(xb_ms_[0], yb_ms_[0], fun, [1, 1.])
         li, = pl.plot(x2_, y2_, ls='--', c='black', lw=1.50, zorder=9999)
         li.set_dashes([3, 3])
         li2, = pl.plot(x3_, y3_, ls='--', c='green', lw=1.50, zorder=9999)
@@ -1003,25 +992,25 @@ def xi_sd_age_radio(pulsars, recreate=False):
         pl.xlabel(r'$ \log (\dot{E}) \, [{\rm erg / s}] $')
         pl.ylabel(r'$\log (\xi) $')
         pl.axis([28.01, 39.99, -10.5, -0.0])
-
         leg_ = [ot, he, axp, no]
-        lab_ = ['Binary', 'with pulsed HE radiation', 'AXP', 'Other']
+        lab_ = ['Binary + MSP', 'with pulsed HE radiation', 'AXP', 'Other']
         l2 = pl.figlegend(leg_, lab_, loc='upper center', ncol=4)
 
         ax2 = pl.subplot2grid((1,2), (0,1))
         pl.text(3.5, -1, '(b)')
         pl.minorticks_on()
         for i in xrange(len(x_[1])):
-            if psr_[1][i].type.startswith('HE'):
-                he, = pl.plot(x_[1][i], y_[1][i], 's', mfc='magenta', mec='magenta', ms=1.5, zorder=40)
-            elif psr_[1][i].type.find('AXP') != -1:
-                axp, = pl.plot(x_[1][i], y_[1][i], 'x', mfc='black', mec='black', ms=2., zorder=30)
+            if psr_[0][i].type.startswith('HE'):
+                he, = pl.plot(x_[1][i], y_[0][i], 's', mfc='magenta', mec='magenta', ms=1.5, zorder=40)
+            elif psr_[0][i].type.find('AXP') != -1:
+                axp, = pl.plot(x_[1][i], y_[0][i], 'x', mfc='black', mec='black', ms=2., zorder=30)
             else:
-                no, = pl.plot(x_[1][i], y_[1][i], 'o', mfc='red', mec='red', ms=0.7, zorder=1)
-        for i in xrange(len(xb_[1])):
-            ot, = pl.plot(xb_[1][i], yb_[1][i], '^', mfc='blue', mec='blue', ms=1.5, zorder=50)
-        x2_, y2_, v2 = least_sq(x_[1], y_[1], fun, [1, 1.])
-        #x3_, y3_, v3 = least_sq(xb_[1], yb_[1], fun, [1, 1.])
+                no, = pl.plot(x_[1][i], y_[0][i], 'o', mfc='red', mec='red', ms=0.7, zorder=1)
+        for i in xrange(len(xb_ms_[1])):
+            ot, = pl.plot(xb_ms_[1][i], yb_ms_[0][i], '^', mfc='blue', mec='blue', ms=1.5, zorder=50)
+            pass
+        #x2_, y2_, v2 = least_sq(xb_ms_[1], yb_ms_[0], fun, [1, 1.])
+        x2_, y2_, v2 = least_sq(x_[1], y_[0], fun, [1, 1.])
         li, = pl.plot(x2_, y2_, ls='--', c='black', lw=1., zorder=9999)
         li.set_dashes([2, 2])
         #li2, = pl.plot(x3_, y3_, ls='--', c='green', lw=1., zorder=9999)
@@ -1240,7 +1229,7 @@ def ll_sd_radio(pulsars, recreate=False):
     return [[full_path + 'svg', file_name + 'svg']]
 
 
-def l_sd_radio_three(pulsars, recreate=False):
+def l_sd_radio_three(pulsars, recreate=True):
     file_name = 'database/plots/radio/l_sd_three.'
     full_path = MEDIA_ROOT + file_name
 
@@ -1257,49 +1246,51 @@ def l_sd_radio_three(pulsars, recreate=False):
             try:
                 x = log10(float(p.edot))
                 # L_{XXX MHz}
-                y =  log10(7.4e27 * p.dist ** 2. * p.s1400)
+                y =  log10(radio_lum(p.s1400, p.dist, float(p.p0), p.w10))
             except (ValueError, ZeroDivisionError, IndexError, TypeError,
                     UnboundLocalError, AttributeError):
                 pass
             else:
-                x_[0].append(x)
-                y_[0].append(y)
-                psr_[0].append(p)
-                if p.binary != '*':
+                if p.binary != '*' or float(p.p0) < 0.01:
                     xb_[0].append(x)
                     yb_[0].append(y)
                     psrb_[0].append(p)
+                else:
+                    x_[0].append(x)
+                    y_[0].append(y)
+                    psr_[0].append(p)
             try:
                 x = log10(float(p.edot))
                 # L_{XXX MHz}
-                y2 = log10(p.s400 / 1e3  * (p.dist * 3.08567758e21) ** 2. * 1e-23 )
+                y2 = log10(pseudo_lum(p.s400, p.dist, float(p.p0)))
             except (ValueError, ZeroDivisionError, IndexError, TypeError,
                     UnboundLocalError, AttributeError):
                 pass
             else:
-                x_[1].append(x)
-                y_[1].append(y2)
-                psr_[1].append(p)
-                if p.binary != '*':
+                if p.binary != '*' or float(p.p0) < 0.01:
                     xb_[1].append(x)
                     yb_[1].append(y2)
                     psrb_[1].append(p)
+                else:
+                    x_[1].append(x)
+                    y_[1].append(y2)
+                    psr_[1].append(p)
             try:
                 x = log10(float(p.edot))
                 # L_{XXX MHz}
-                y3 = log10(p.s2000 / 1e3  * (p.dist * 3.08567758e21) ** 2. * 1e-23 )
+                y3 = log10(pseudo_lum(p.s2000, p.dist, float(p.p0)))
             except (ValueError, ZeroDivisionError, IndexError, TypeError,
                     UnboundLocalError, AttributeError):
                 pass
             else:
-                x_[2].append(x)
-                y_[2].append(y3)
-                psr_[2].append(p)
-                if p.binary != '*':
+                if p.binary != '*' or float(p.p0) < 0.01:
                     xb_[2].append(x)
                     yb_[2].append(y3)
                     psrb_[2].append(p)
-
+                else:
+                    x_[2].append(x)
+                    y_[2].append(y3)
+                    psr_[2].append(p)
 
         fun = lambda v , x: v[0] * x + v[1]
 
@@ -1317,14 +1308,14 @@ def l_sd_radio_three(pulsars, recreate=False):
         pl.text(28.5, 31.2, '(a)')
         pl.minorticks_on()
         for i in xrange(len(x_[0])):
-            if psr_[0][i].binary !='*':
-                ot, = pl.plot(x_[0][i], y_[0][i], '^', mfc='blue', mec='blue', ms=1.3, zorder=50)
-            elif psr_[0][i].type.startswith('HE'):
+            if psr_[0][i].type.startswith('HE'):
                 he, = pl.plot(x_[0][i], y_[0][i], 's', mfc='magenta', mec='magenta', ms=1.3, zorder=40)
             elif psr_[0][i].type.find('AXP') != -1:
                 axp, = pl.plot(x_[0][i], y_[0][i], 'x', mfc='black', mec='black', ms=2., zorder=30)
             else:
                 no, = pl.plot(x_[0][i], y_[0][i], 'o', mfc='red', mec='red', ms=0.5, zorder=1)
+        for i in xrange(len(xb_[0])):
+            ot, = pl.plot(xb_[0][i], yb_[0][i], '^', mfc='blue', mec='blue', ms=1.3, zorder=50)
         x2_, y2_, v2 = least_sq(x_[0], y_[0], fun, [1, 1.])
         x3_, y3_, v3 = least_sq(xb_[0], yb_[0], fun, [1, 1.])
         li, = pl.plot(x2_, y2_, ls='--', c='black', lw=1.50, zorder=9999)
@@ -1339,21 +1330,21 @@ def l_sd_radio_three(pulsars, recreate=False):
         pl.axis([28.01, 39.99, 25.7, 31.7])
 
         leg_ = [ot, he, axp, no]
-        lab_ = ['Binary', 'with pulsed HE radiation', 'AXP', 'Other']
+        lab_ = ['Binary + MSP', 'with pulsed HE radiation', 'AXP', 'Other']
         l2 = pl.figlegend(leg_, lab_, loc='upper center', ncol=4)
 
         ax2 = pl.subplot2grid((2,2), (0,1))
         pl.text(28.5, 18.8, '(b)')
         pl.minorticks_on()
         for i in xrange(len(x_[2])):
-            if psr_[2][i].binary !='*':
-                ot, = pl.plot(x_[2][i], y_[2][i], '^', mfc='blue', mec='blue', ms=1.7, zorder=50)
-            elif psr_[2][i].type.startswith('HE'):
+            if psr_[2][i].type.startswith('HE'):
                 he, = pl.plot(x_[2][i], y_[2][i], 's', mfc='magenta', mec='magenta', ms=1.7, zorder=40)
             elif psr_[2][i].type.find('AXP') != -1:
                 axp, = pl.plot(x_[2][i], y_[2][i], 'x', mfc='black', mec='black', ms=3., zorder=30)
             else:
                 no, = pl.plot(x_[2][i], y_[2][i], 'o', mfc='red', mec='red', ms=1.3, zorder=1)
+        for i in xrange(len(xb_[2])):
+            ot, = pl.plot(xb_[2][i], yb_[2][i], '^', mfc='blue', mec='blue', ms=1.3, zorder=50)
         x2_, y2_, v2 = least_sq(x_[2], y_[2], fun, [1, 1.])
         x3_, y3_, v3 = least_sq(xb_[2], yb_[2], fun, [1, 1.])
         li, = pl.plot(x2_, y2_, ls='--', c='black', lw=1., zorder=9999)
@@ -1373,14 +1364,14 @@ def l_sd_radio_three(pulsars, recreate=False):
         pl.text(28.5, 20.5, '(c)')
         pl.minorticks_on()
         for i in xrange(len(x_[1])):
-            if psr_[1][i].binary !='*':
-                ot, = pl.plot(x_[1][i], y_[1][i], '^', mfc='blue', mec='blue', ms=1.3, zorder=50)
-            elif psr_[1][i].type.startswith('HE'):
+            if psr_[1][i].type.startswith('HE'):
                 he, = pl.plot(x_[1][i], y_[1][i], 's', mfc='magenta', mec='magenta', ms=1.3, zorder=40)
             elif psr_[1][i].type.find('AXP') != -1:
                 axp, = pl.plot(x_[1][i], y_[1][i], 'x', mfc='black', mec='black', ms=2., zorder=30)
             else:
                 no, = pl.plot(x_[1][i], y_[1][i], 'o', mfc='red', mec='red', ms=0.5, zorder=1)
+        for i in xrange(len(xb_[1])):
+            ot, = pl.plot(xb_[1][i], yb_[1][i], '^', mfc='blue', mec='blue', ms=1.3, zorder=50)
         x2_, y2_, v2 = least_sq(x_[1], y_[1], fun, [1, 1.])
         x3_, y3_, v3 = least_sq(xb_[1], yb_[1], fun, [1, 1.])
         li, = pl.plot(x2_, y2_, ls='--', c='black', lw=1., zorder=9999)
@@ -1555,7 +1546,7 @@ def malov_radio(pulsars, recreate=False):
     return [ [full_path + 'svg', file_name + 'svg']]
 
 
-def xi_xray_gamma(xray_fits, recreate=False):
+def xi_xray_gamma(xray_fits, gamma_data, recreate=True):
     file_name = 'database/plots/xi_xray_gamma.'
     full_path = MEDIA_ROOT + file_name
 
@@ -1583,6 +1574,26 @@ def xi_xray_gamma(xray_fits, recreate=False):
                 x_.append(log10(fit.psr_id.edot))
                 y_.append(log10(lum / fit.psr_id.edot))
                 psr_.append(fit.psr_id)
+
+        x_ga_ = [[], []]
+        y_ga_ = [[], []]
+        psr_ga_ = [[], []]
+
+        for g in gamma_data:
+            try:
+                x = log10(g.psr_id.edot)
+                y = log10(g.lum / g.psr_id.edot)
+            except ValueError:
+                pass
+            else:
+                if float(g.psr_id.p0) > 0.01:
+                    x_ga_[0].append(x)
+                    y_ga_[0].append(y)
+                    psr_ga_[0].append(g.psr_id)
+                else:
+                    x_ga_[1].append(x)
+                    y_ga_[1].append(y)
+                    psr_ga_[1].append(g.psr_id)
 
 
         fun = lambda v , x: v[0] * x + v[1]
@@ -1616,10 +1627,22 @@ def xi_xray_gamma(xray_fits, recreate=False):
         ax2 = pl.subplot2grid((2,1), (1,0))
         pl.minorticks_on()
         #pl.text(3.5, -1, '(b)')
-        pl.plot([-2., -3.], [32., 36.], 'o', mfc='black', mec='black', ms=2., zorder=1)
-        pl.text(37., -3.8, r'$\xi_{\rm \gamma} \propto \dot{E}^{-0.50}$', size=text_size)
-        pl.axis([30.01, 38.99, -4.49, -0.51])
-        pl.yticks([-4,-3,-2,-1])
+        #pl.plot([-2., -3.], [32., 36.], 'o', mfc='black', mec='black', ms=2., zorder=1)
+        for i in xrange(len(x_ga_[0])):
+            pl.plot(x_ga_[0][i], y_ga_[0][i], 'o', mfc='black', mec='black', ms=2., zorder=1)
+        x2_, y2_, v2 = least_sq(x_ga_[0], y_ga_[0], fun, [1, 1.])
+        li, = pl.plot(x2_, y2_, ls='--', c='black', lw=1., zorder=9999)
+        li.set_dashes([3, 3])
+        pl.text(36., -4, r'$\xi_{\rm \gamma} \propto \dot{E}^{%.2f}$'%v2[0], size=text_size)
+        for i in xrange(len(x_ga_[1])):
+            pl.plot(x_ga_[1][i], y_ga_[1][i], '^', mfc='blue', mec='blue', ms=2., zorder=1)
+        x2_, y2_, v2 = least_sq(x_ga_[1], y_ga_[1], fun, [1, 1.])
+        li, = pl.plot(x2_, y2_, ls='--', c='green', lw=1., zorder=9999)
+        li.set_dashes([3, 3])
+        pl.text(31., -1, r'$\xi_{\rm \gamma} \propto \dot{E}^{%.2f}$'%v2[0], size=text_size, color='green')
+        pl.axis([30.01, 38.99, -4.49, 0.99])
+        #pl.xlim([30.01, 38.99])
+        pl.yticks([-4,-3,-2,-1, 0])
         pl.xlabel(r'$ \log (\dot{E}) \, [{\rm erg / s}] $')
         pl.ylabel(r'$\log (\xi_{\gamma})$')
 

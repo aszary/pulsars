@@ -1,5 +1,5 @@
 from django.contrib import admin
-from database.models import Pulsar, XrayArticle, XrayFit, XrayComponent, Additional, Geometry, Subpulse, Calculation
+from database.models import Pulsar, XrayArticle, XrayFit, XrayComponent, Additional, Geometry, Subpulse, Calculation, GammaRayFermi
 
 admin.site.register(Pulsar)
 admin.site.register(XrayArticle)
@@ -9,3 +9,4 @@ admin.site.register(Additional)
 admin.site.register(Geometry)
 admin.site.register(Subpulse)
 admin.site.register(Calculation)
+admin.site.register(GammaRayFermi)

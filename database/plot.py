@@ -383,7 +383,7 @@ def b_parameter(comps, recreate=False):
     return res
 
 
-def b_age(comps, recreate=False):
+def b_age(comps, recreate=True):
 
     file_name = 'database/plots/b_age.'
     full_path = MEDIA_ROOT + file_name
@@ -391,37 +391,115 @@ def b_age(comps, recreate=False):
     if recreate is True:
         b_, l_sd_, b_d_, age_, psr_ = get_b_parameters(comps)
 
+        age_ = [log10(a) for a in age_]
+        b_ = [log10(b) for b in b_]
+
+        age_new_ = [[], [], []]
+        b_new_ = [[], [], []]
+        psr_new_ = [[], [], []]
+        err_ = [[[], []], [[], []], [[], []]]
+        err_old_ = [[], []]
+
+        # get errors
+        for i in xrange(len(psr_)):
+            calc =  psr_[i].calculations.get(num=0)
+            b_max = (calc.b_14 + calc.b_14_plus) /  calc.b_14dp
+            b = calc.b_14  /  calc.b_14dp
+            b_min = (calc.b_14 - calc.b_14_minus) /  calc.b_14dp
+            err_old_[0].append(log10(b)-log10(b_min))
+            err_old_[1].append(log10(b_max)-log10(b))
+            if psr_[i].type.startswith('NRAD'):
+                if psr_[i] not in psr_new_[1]:# twice geminga correction
+                    err_[1][0].append(err_old_[0][-1])
+                    err_[1][1].append(err_old_[1][-1])
+                    age_new_[1].append(age_[i])
+                    b_new_[1].append(b_[i])
+                    psr_new_[1].append(psr_[i])
+            elif psr_[i] not in psr_new_[0] and psr_[i].name !='J0108-1431':
+                err_[0][0].append(err_old_[0][-1])
+                err_[0][1].append(err_old_[1][-1])
+                age_new_[0].append(age_[i])
+                b_new_[0].append(b_[i])
+                psr_new_[0].append(psr_[i])
+            elif psr_[i].name =='J0108-1431':
+                err_[2][0].append(err_old_[0][-1])
+                err_[2][1].append(err_old_[1][-1])
+                age_new_[2].append(age_[i])
+                b_new_[2].append(b_[i])
+                psr_new_[2].append(psr_[i])
+
+        # second observation for J0108-1431
+        co_bb = XrayComponent.objects.filter(psr_id=psr_new_[2][-1]).filter(spec_type='BB').filter(r__lt=10e2)[0]
+        calc = co_bb.psr_id.calculations.get(num=0)
+        b =  calc.r_dp ** 2. / co_bb.r ** 2.
+        b_max = calc.r_dp ** 2. / (co_bb.r - co_bb.r_minus) ** 2.
+        b_min =  calc.r_dp ** 2. / (co_bb.r + co_bb.r_plus) ** 2.
+        err_[2][0].append(log10(b)-log10(b_min))
+        err_[2][1].append(log10(b_max)-log10(b))
+        age_new_[2].append(age_new_[2][-1])
+        b_new_[2].append(log10(b))
+        psr_new_[2].append(psr_new_[2][-1])
+
         ot, he, he2, axp = None, None, None, None
         mp.rcdefaults()
-        mp.rc('font', size=7)
-        mp.rc('legend', fontsize=5)
+        mp.rc('font', size=9)
+        mp.rc('axes', linewidth=0.5)
+        mp.rc('legend', fontsize=7)
 
         pl.figure(figsize=(3.14961, 1.9464567)) #8x4.944cm (golden ratio)
-        pl.subplots_adjust(left=0.16, bottom=0.18, right=0.96, top=0.95)
-        pl.loglog()
+        pl.minorticks_on()
+        pl.subplots_adjust(left=0.105, bottom=0.18, right=0.99, top=0.99)
+        #pl.loglog()
+        '''
         for i in xrange(len(age_)):
             if psr_[i].type.startswith('NRAD'):
-                he2, = pl.plot(age_[i], b_[i], 'D', mfc='black', mec='black', ms=1.5, zorder=20)
+                he2, = pl.plot(age_[i], b_[i], 'D', mfc='black', mec='black', ms=2., zorder=20)
             else:
-                pl.plot(age_[i], b_[i], 'o', mfc='black', mec='black', ms=1.5, zorder=1)
-            #pl.text(age_[i], b_[i], '%s'%psr_[i].name, fontsize=3)
-        leg_, lab_= [], []
-        if he2 is not None:
-            leg_.append(he2)
-            lab_.append('no radio')
-        pl.legend(leg_, lab_, loc='upper left')
-        pl.xlabel(r'$\tau \, [{\rm yr}]}$')
-        pl.ylabel(r'$b = B_s / B_d$')
-        ax = pl.axis()
-        #pl.axis([5e10, 5e13, ax[2], ax[3]])
+                pl.plot(age_[i], b_[i], 'o', mfc='black', mec='black', ms=2., zorder=1)
+            pl.text(age_[i]-0.1, b_[i]+0.1, '%s'%psr_[i].name, fontsize=4)
+            #print psr_[i].name
+        '''
+        for i in xrange(len(psr_new_[0])):
+            pl.errorbar(age_new_[0], b_new_[0], yerr=err_[0], ls='None', marker='o', mec='black', ecolor='black', mfc='black', ms=2., lw=0.1, capsize=0.)
+        for i in xrange(len(psr_new_[1])):
+            if i == 0:
+                lab = 'no radio emission'
+            else:
+                lab=None
+            pl.errorbar(age_new_[1], b_new_[1], yerr=err_[1], ls='None', marker='D', mec='black', ecolor='black', mfc='None', ms=2., label=lab, lw=0.5, capsize=0.)
+        pl.errorbar(age_new_[2], b_new_[2], yerr=err_[2], ls='None', marker='s', mec='black', ecolor='black', mfc='None', ms=2., lw=0.5, capsize=0.)
+        pl.text(age_new_[2][0]-0.4, b_new_[2][0]-1.1, '%s'%psr_new_[2][0].name+'\n(BB+PL)', fontsize=5)
+        pl.text(age_new_[2][1]-0.4, b_new_[2][1]-1.1, '%s'%psr_new_[2][1].name+'\n(BB)', fontsize=5)
 
+        le = pl.legend(loc='upper left')
+        lf = le.get_frame()
+        lf.set_lw(0.5)
+        fun = lambda v , x: v[0] * x + v[1]
+        #x2_, y2_, v2 = least_sq(age_, b_, fun, [1, 1.])
+        #x2_, y2_, v2 = least_sq(age_new_[0], b_new_[0], fun, [1, 1.])
+        '''
+        x2_, y2_, v2 = least_sq2D(age_new_[0], b_new_[0], fun, err_[0], [1, 1.])
+        li, = pl.plot(x2_, y2_, ls='--', c='black', lw=1., zorder=9999)
+        li.set_dashes([2, 2])
+        pl.text(7.8, 3.2, r'$b \propto \tau^{%.2f}$'%v2[0], size=7)
+        #'''
+        xx_ = age_new_[0] +  [age_new_[2][1]]
+        yy_ = b_new_[0] + [b_new_[2][1]]
+        err_sum_ = [err_[0][0] + [err_[2][1][0]], err_[0][1] + [err_[2][1][1]]]
+        x3_, y3_, v3 = least_sq2D(xx_, yy_, fun, err_sum_, [1, 1.], times_max=1.05)
+        #x3_, y3_, v3 = least_sq(xx_, yy_, fun, [1, 1.])
+        li, = pl.plot(x3_, y3_, ls='--', c='black', lw=1., zorder=9999)
+        li.set_dashes([2, 2])
+        pl.text(7.8, 4.3, r'$b \propto \tau^{%.2f}$'%v3[0], size=9)
+        pl.xlabel(r'$\log (\tau) \, [{\rm yr}]}$')
+        pl.ylabel(r'$\log (b)$')
+        ax = pl.axis()
+        pl.axis([4.7, 8.7, -0.99, 4.99])
+        #pl.xticks([5, 6, 7, 8])
         pl.savefig(full_path + 'eps')
         pl.savefig(full_path + 'pdf')
         pl.savefig(full_path + 'svg')
     return [[ full_path + 'svg', file_name + 'svg']]
-
-
-
 
 
 def get_b_parameters(comps):
@@ -437,7 +515,7 @@ def get_b_parameters(comps):
         b_d_.append(co.psr_id.bsurf)
         age_.append(co.psr_id.age)
         psr_.append(co.psr_id)
-        print co.psr_id.name, co.psr_id.type
+        #print co.psr_id.name, co.psr_id.type
 
     return b_, l_sd_, b_d_, age_, psr_
 
@@ -646,13 +724,13 @@ def custom(pulsars, recreate=True, copy_=False):
         psr_ = [[], []]
 
         # axis labels (for plot)
-        x_lab = r'$ \log (P) $' # $ \tau [{\rm yr}] $   $ L_{\rm SD} $
-        y_lab = r'$\log (L) $' # $ b $'
+        x_lab = ''#r'$ \log (P) $' # $ \tau [{\rm yr}] $   $ L_{\rm SD} $
+        y_lab = ''#r'$\log (L) $' # $ b $'
         # get data
         for p in pulsars:
             co_bb, co_pl, calc, ad = get_custom(p)
             try:
-                x = log10(float(p.bsurf))
+                x = log10(float(p.age))
                 #x = log10(float(p.P0) ** (-3.))
                 #x = float(ad.best_age)
                 #x = float(p.P0)
@@ -661,7 +739,8 @@ def custom(pulsars, recreate=True, copy_=False):
                 # L_{XXX MHz}
                 #y = log10(p.s400 / 1e3  * (p.dist * 3.08567758e21) ** 2. * 1e-23 / p.edot)
                 # L_radio
-                y =  log10(7.4e27 * p.dist ** 2. * p.s1400 / p.edot)
+                #y =  log10(7.4e27 * p.dist ** 2. * p.s1400 / p.edot)
+                y =  log10(radio_lum(p))
                 #y = log10(p.s1400 / 1e3 * 1e-23)
                 print y#, log10(y)
             except (ValueError, ZeroDivisionError, IndexError, TypeError, UnboundLocalError, AttributeError):
@@ -940,7 +1019,7 @@ def xi_sd_age_radio(pulsars, recreate=True):
                 x2 = log10(float(p.age))
                 # L_{XXX MHz}
                 #y =  log10(7.4e27 * p.dist ** 2. * p.s1400 / p.edot)
-                y =  log10(radio_lum(p.s1400, p.dist, float(p.p0), p.w10)/ p.edot)
+                y =  log10(radio_lum(p)/ p.edot)
             except (ValueError, ZeroDivisionError, IndexError, TypeError,
                     UnboundLocalError, AttributeError):
                 pass
@@ -961,6 +1040,8 @@ def xi_sd_age_radio(pulsars, recreate=True):
         ot, he, he2, axp = None, None, None, None
         mp.rcdefaults()
         mp.rc('font', size=9)
+        mp.rc('legend', markerscale=2.)
+        mp.rc('axes', linewidth=0.5)
         mp.rc('legend', fontsize=7)
         text_size = 9.
 
@@ -983,10 +1064,10 @@ def xi_sd_age_radio(pulsars, recreate=True):
 
         x2_, y2_, v2 = least_sq(x_[0], y_[0], fun, [1, 1.])
         x3_, y3_, v3 = least_sq(xb_ms_[0], yb_ms_[0], fun, [1, 1.])
-        li, = pl.plot(x2_, y2_, ls='--', c='black', lw=1.50, zorder=9999)
-        li.set_dashes([3, 3])
-        li2, = pl.plot(x3_, y3_, ls='--', c='green', lw=1.50, zorder=9999)
-        li2.set_dashes([1.5, 1.5])
+        li, = pl.plot(x2_, y2_, ls='--', c='black', lw=1.0, zorder=9999)
+        li.set_dashes([2, 2])
+        li2, = pl.plot(x3_, y3_, ls='--', c='green', lw=1.0, zorder=9999)
+        li2.set_dashes([1., 1.])
         pl.text(37.5, -7.5, r'$\xi \propto \dot{E}^{%.2f}$'%v2[0], size=text_size)
         pl.text(34.5, -9., r' $\xi \propto \dot{E}^{%.2f}$'%v3[0], size=text_size, color='green')
         pl.xlabel(r'$ \log (\dot{E}) \, [{\rm erg / s}] $')
@@ -995,6 +1076,8 @@ def xi_sd_age_radio(pulsars, recreate=True):
         leg_ = [ot, he, axp, no]
         lab_ = ['Binary + MSP', 'with pulsed HE radiation', 'AXP', 'Other']
         l2 = pl.figlegend(leg_, lab_, loc='upper center', ncol=4)
+        fr = l2.get_frame()
+        fr.set_lw(0.5)
 
         ax2 = pl.subplot2grid((1,2), (0,1))
         pl.text(3.5, -1, '(b)')
@@ -1246,7 +1329,7 @@ def l_sd_radio_three(pulsars, recreate=True):
             try:
                 x = log10(float(p.edot))
                 # L_{XXX MHz}
-                y =  log10(radio_lum(p.s1400, p.dist, float(p.p0), p.w10))
+                y =  log10(radio_lum(p))
             except (ValueError, ZeroDivisionError, IndexError, TypeError,
                     UnboundLocalError, AttributeError):
                 pass
@@ -1262,7 +1345,7 @@ def l_sd_radio_three(pulsars, recreate=True):
             try:
                 x = log10(float(p.edot))
                 # L_{XXX MHz}
-                y2 = log10(pseudo_lum(p.s400, p.dist, float(p.p0)))
+                y2 = log10(pseudo_lum(p.s400, p))
             except (ValueError, ZeroDivisionError, IndexError, TypeError,
                     UnboundLocalError, AttributeError):
                 pass
@@ -1278,7 +1361,7 @@ def l_sd_radio_three(pulsars, recreate=True):
             try:
                 x = log10(float(p.edot))
                 # L_{XXX MHz}
-                y3 = log10(pseudo_lum(p.s2000, p.dist, float(p.p0)))
+                y3 = log10(pseudo_lum(p.s2000, p))
             except (ValueError, ZeroDivisionError, IndexError, TypeError,
                     UnboundLocalError, AttributeError):
                 pass
@@ -1298,6 +1381,8 @@ def l_sd_radio_three(pulsars, recreate=True):
         mp.rcdefaults()
         mp.rc('font', size=9)
         mp.rc('legend', fontsize=7)
+        mp.rc('legend', markerscale=2.)
+        mp.rc('axes', linewidth=0.5)
         text_size = 7.
 
         #pl.figure(figsize=(2*3.14961, 3.14961)) #16x8cm
@@ -1318,10 +1403,10 @@ def l_sd_radio_three(pulsars, recreate=True):
             ot, = pl.plot(xb_[0][i], yb_[0][i], '^', mfc='blue', mec='blue', ms=1.3, zorder=50)
         x2_, y2_, v2 = least_sq(x_[0], y_[0], fun, [1, 1.])
         x3_, y3_, v3 = least_sq(xb_[0], yb_[0], fun, [1, 1.])
-        li, = pl.plot(x2_, y2_, ls='--', c='black', lw=1.50, zorder=9999)
-        li.set_dashes([3, 3])
-        li2, = pl.plot(x3_, y3_, ls='--', c='green', lw=1.50, zorder=9999)
-        li2.set_dashes([1.5, 1.5])
+        li, = pl.plot(x2_, y2_, ls='--', c='black', lw=1.0, zorder=9999)
+        li.set_dashes([2, 2])
+        li2, = pl.plot(x3_, y3_, ls='--', c='green', lw=1.0, zorder=9999)
+        li2.set_dashes([1., 1.])
         #l0 = pl.legend([li, li2], [r'$L \propto \dot{E}^{%.2f}$ (all pulsars)'%v2[0], r'$L \propto \dot{E}^{%.2f}$ (Binary)'%v3[0]], loc='lower left')
         pl.text(37., 30., r'$L \propto \dot{E}^{%.2f}$'%v2[0], size=1.2*text_size)
         pl.text(35.3, 27.7, r' $L \propto \dot{E}^{%.2f}$'%v3[0], size=1.2*text_size, color='green')
@@ -1332,6 +1417,8 @@ def l_sd_radio_three(pulsars, recreate=True):
         leg_ = [ot, he, axp, no]
         lab_ = ['Binary + MSP', 'with pulsed HE radiation', 'AXP', 'Other']
         l2 = pl.figlegend(leg_, lab_, loc='upper center', ncol=4)
+        fr = l2.get_frame()
+        fr.set_lw(0.5)
 
         ax2 = pl.subplot2grid((2,2), (0,1))
         pl.text(28.5, 18.8, '(b)')
@@ -1395,7 +1482,7 @@ def l_sd_radio_three(pulsars, recreate=True):
 
     return [ [full_path + 'svg', file_name + 'svg']]
 
-def flux_sd_radio(pulsars, recreate=False):
+def flux_sd_radio(pulsars, recreate=True):
 
     file_name = 'database/plots/radio/flux_sd.'
     full_path = MEDIA_ROOT + file_name
@@ -1421,7 +1508,8 @@ def flux_sd_radio(pulsars, recreate=False):
                 # L_{XXX MHz}
                 y = log10(p.s1400 / 1e3 * 1e-23)
                 # L_radio
-                eff =  log10(7.4e27 * p.dist ** 2. * p.s1400 / p.edot)
+                #eff =  log10(7.4e27 * p.dist ** 2. * p.s1400 / p.edot)
+                eff =  log10(radio_lum(p) / p.edot)
             except (ValueError, ZeroDivisionError, IndexError, TypeError, UnboundLocalError, AttributeError):
                 x = None
                 y = None
@@ -1439,7 +1527,8 @@ def flux_sd_radio(pulsars, recreate=False):
         ot, he, he2, axp = None, None, None, None
         mp.rcdefaults()
         mp.rc('font', size=9)
-        mp.rc('legend', fontsize=5)
+        mp.rc('axes', linewidth=0.5)
+        mp.rc('legend', fontsize=7)
 
         fig =   pl.figure(figsize=(3.14961, 3.14961)) #8x8cm
         #pl.figure(figsize=(5.90551, 5.90551)) #15x15cm
@@ -1463,14 +1552,14 @@ def flux_sd_radio(pulsars, recreate=False):
     return [ [full_path + 'svg', file_name + 'svg']]
 
 
-def malov_radio(pulsars, recreate=False):
+def malov_radio(pulsars, recreate=True):
     file_name = 'database/plots/radio/l_sd_malov.'
     full_path = MEDIA_ROOT + file_name
 
     if recreate is True:
-        x_ = []
-        y_ = []
-        psr_ = []
+        x_ = [[], []]
+        y_ = [[], []]
+        psr_ = [[], []]
 
         # axis labels (for plot)
         x_lab = r'$ \log (\dot{E}) \, [{\rm erg \, s^{-1}}] $' # $ \tau [{\rm yr}] $   $ L_{\rm SD} $
@@ -1479,6 +1568,7 @@ def malov_radio(pulsars, recreate=False):
         # get data
         for p in pulsars:
             try:
+                #x = log10(float(p.edot))
                 x = log10(float(p.edot))
                 # L_{XXX MHz}
                 y = log10(p.lum_malov / p.edot)
@@ -1488,14 +1578,18 @@ def malov_radio(pulsars, recreate=False):
                 x = None
                 y = None
                 print 'Warning ValueError for %s' % p.name
-            if x > 0. and y is not None:
-                x_.append(x)
-                y_.append(y)
-                psr_.append(p)
+            if x is not None and y is not None:
+                if p.binary != '*' or float(p.p0) < 0.01:
+                    x_[1].append(x)
+                    y_[1].append(y)
+                    psr_[1].append(p)
+                else:
+                    x_[0].append(x)
+                    y_[0].append(y)
+                    psr_[0].append(p)
 
         fun = lambda v , x: v[0] * x + v[1]
-        x2_, y2_, v2 = least_sq(x_, y_, fun, [1, 1.])
-
+        x2_, y2_, v2 = least_sq(x_[0], y_[0], fun, [1, 1.])
 
         ot, he, he2, axp = None, None, None, None
         mp.rcdefaults()
@@ -1506,16 +1600,16 @@ def malov_radio(pulsars, recreate=False):
         #pl.figure(figsize=(5.90551, 5.90551)) #15x15cm
         pl.subplots_adjust(left=0.17, bottom=0.12, right=0.96, top=0.96)
         pl.minorticks_on()
-        for i in xrange(len(x_)):
-            if psr_[i].binary !='*':
-                ot, = pl.plot(x_[i], y_[i], '^', mfc='blue', mec='blue', ms=1.5, zorder=50)
-            elif psr_[i].type.startswith('HE'):
-                he, = pl.plot(x_[i], y_[i], 's', mfc='magenta', mec='magenta', ms=1.5, zorder=40)
-            elif psr_[i].type.find('AXP') != -1:
-                axp, = pl.plot(x_[i], y_[i], 's', mfc='yellow', mec='yellow', ms=1.5, zorder=30)
+        for i in xrange(len(x_[0])):
+            if psr_[0][i].type.startswith('HE'):
+                he, = pl.plot(x_[0][i], y_[0][i], 's', mfc='magenta', mec='magenta', ms=1.5, zorder=40)
+            elif psr_[0][i].type.find('AXP') != -1:
+                axp, = pl.plot(x_[0][i], y_[0][i], 's', mfc='yellow', mec='yellow', ms=1.5, zorder=30)
             else:
-                no, = pl.plot(x_[i], y_[i], 'o', mfc='red', mec='red', ms=0.7, zorder=1)
+                no, = pl.plot(x_[0][i], y_[0][i], 'o', mfc='red', mec='red', ms=0.7, zorder=1)
             #pl.text(x_[i], y_[i], '%s'%psr_[i].name, fontsize=8)
+        for i in xrange(len(x_[1])):
+            ot, = pl.plot(x_[1][i], y_[1][i], '^', mfc='blue', mec='blue', ms=1.5, zorder=50)
         li, = pl.plot(x2_, y2_, ls='--', c='black', lw=1.50, zorder=9999)
         li.set_dashes([3, 3])
         l0 = pl.legend([li],
@@ -1551,9 +1645,9 @@ def xi_xray_gamma(xray_fits, gamma_data, recreate=True):
     full_path = MEDIA_ROOT + file_name
 
     if recreate is True:
-        x_ = []
-        y_ = []
-        psr_ = []
+        x_ = [[], []]
+        y_ = [[], []]
+        psr_ = [[], []]
 
         for fit in xray_fits:
             bb = fit.components.filter(spec_type='BB').order_by('r')
@@ -1570,10 +1664,15 @@ def xi_xray_gamma(xray_fits, gamma_data, recreate=True):
                     lum += pp.lum
                 except TypeError:
                     pass
-            if lum != 0. and (lum / fit.psr_id.edot) < 1.:
-                x_.append(log10(fit.psr_id.edot))
-                y_.append(log10(lum / fit.psr_id.edot))
-                psr_.append(fit.psr_id)
+            if lum != 0. and fit.psr_id.edot > 0. and (lum / fit.psr_id.edot) < 1.:
+                if float(fit.psr_id.p0) < 0.01 or fit.psr_id.binary != '*':
+                    x_[1].append(log10(fit.psr_id.edot))
+                    y_[1].append(log10(lum / fit.psr_id.edot))
+                    psr_[1].append(fit.psr_id)
+                else:
+                    x_[0].append(log10(fit.psr_id.edot))
+                    y_[0].append(log10(lum / fit.psr_id.edot))
+                    psr_[0].append(fit.psr_id)
 
         x_ga_ = [[], []]
         y_ga_ = [[], []]
@@ -1586,14 +1685,14 @@ def xi_xray_gamma(xray_fits, gamma_data, recreate=True):
             except ValueError:
                 pass
             else:
-                if float(g.psr_id.p0) > 0.01:
-                    x_ga_[0].append(x)
-                    y_ga_[0].append(y)
-                    psr_ga_[0].append(g.psr_id)
-                else:
+                if float(g.psr_id.p0) < 0.01 or g.psr_id.binary != '*':
                     x_ga_[1].append(x)
                     y_ga_[1].append(y)
                     psr_ga_[1].append(g.psr_id)
+                else:
+                    x_ga_[0].append(x)
+                    y_ga_[0].append(y)
+                    psr_ga_[0].append(g.psr_id)
 
 
         fun = lambda v , x: v[0] * x + v[1]
@@ -1601,6 +1700,7 @@ def xi_xray_gamma(xray_fits, gamma_data, recreate=True):
         mp.rcdefaults()
         mp.rc('font', size=9)
         mp.rc('legend', fontsize=7)
+        mp.rc('axes', linewidth=0.5)
         text_size = 9.
 
         #pl.figure(figsize=(2*3.14961, 3.14961)) #16x8cm
@@ -1609,16 +1709,22 @@ def xi_xray_gamma(xray_fits, gamma_data, recreate=True):
         pl.subplots_adjust(left=0.14, bottom=0.11, right=0.99, top=0.91, wspace=0., hspace=0.)
 
         ax1 = pl.subplot2grid((2,1), (0,0))
-        #pl.text(28.5, -1, '(a)')
+        pl.text(30.5, -1, '(a)')
         pl.minorticks_on()
-        for i in xrange(len(x_)):
-            pl.plot(x_[i], y_[i], 'o', mfc='black', mec='black', ms=2., zorder=1)
-        x2_, y2_, v2 = least_sq(x_, y_, fun, [1, 1.])
+        for i in xrange(len(x_[0])):
+            pl.plot(x_[0][i], y_[0][i], 'o', mfc='black', mec='black', ms=2., zorder=1)
+        x2_, y2_, v2 = least_sq(x_[0], y_[0], fun, [1, 1.])
         li, = pl.plot(x2_, y2_, ls='--', c='black', lw=1., zorder=9999)
         li.set_dashes([3, 3])
-        pl.text(37., -3.8, r'$\xi_{\rm x} \propto \dot{E}^{%.2f}$'%v2[0], size=text_size)
-        pl.axis([30.01, 38.99, -4.49, -0.51])
-        pl.yticks([-4,-3,-2,-1])
+        pl.text(37.05, -2.6, r'$\xi_{\rm x} \propto \dot{E}^{%.2f}$'%v2[0], size=text_size)
+        for i in xrange(len(x_[1])):
+            pl.plot(x_[1][i], y_[1][i], 's', mfc='none', mec='black', ms=3., zorder=1)
+        x2_, y2_, v2 = least_sq(x_[1], y_[1], fun, [1, 1.])
+        li, = pl.plot(x2_, y2_, ls='--', c='black', lw=1., zorder=9999)
+        li.set_dashes([1, 1])
+        pl.text(30.5, -4.3, r'$\xi_{\rm x, ms} \propto \dot{E}$', size=text_size, color='black')
+        pl.axis([30.01, 38.99, -5.3, -0.51])
+        pl.yticks([-5, -4,-3,-2,-1])
         pl.xlabel(r'$ \log (\dot{E}) \, [{\rm erg / s}] $')
         pl.ylabel(r'$\log (\xi_{\rm x})$')
         ax1.xaxis.set_label_position('top')
@@ -1626,23 +1732,23 @@ def xi_xray_gamma(xray_fits, gamma_data, recreate=True):
 
         ax2 = pl.subplot2grid((2,1), (1,0))
         pl.minorticks_on()
-        #pl.text(3.5, -1, '(b)')
+        pl.text(30.5, 0.5, '(b)')
         #pl.plot([-2., -3.], [32., 36.], 'o', mfc='black', mec='black', ms=2., zorder=1)
         for i in xrange(len(x_ga_[0])):
             pl.plot(x_ga_[0][i], y_ga_[0][i], 'o', mfc='black', mec='black', ms=2., zorder=1)
         x2_, y2_, v2 = least_sq(x_ga_[0], y_ga_[0], fun, [1, 1.])
         li, = pl.plot(x2_, y2_, ls='--', c='black', lw=1., zorder=9999)
         li.set_dashes([3, 3])
-        pl.text(36., -4, r'$\xi_{\rm \gamma} \propto \dot{E}^{%.2f}$'%v2[0], size=text_size)
+        pl.text(36.5, -2.9, r'$\xi_{\rm \gamma} \propto \dot{E}^{%.2f}$'%v2[0], size=text_size)
         for i in xrange(len(x_ga_[1])):
-            pl.plot(x_ga_[1][i], y_ga_[1][i], '^', mfc='blue', mec='blue', ms=2., zorder=1)
+            pl.plot(x_ga_[1][i], y_ga_[1][i], 's', mfc='none', mec='black', ms=3., zorder=1)
         x2_, y2_, v2 = least_sq(x_ga_[1], y_ga_[1], fun, [1, 1.])
-        li, = pl.plot(x2_, y2_, ls='--', c='green', lw=1., zorder=9999)
-        li.set_dashes([3, 3])
-        pl.text(31., -1, r'$\xi_{\rm \gamma} \propto \dot{E}^{%.2f}$'%v2[0], size=text_size, color='green')
-        pl.axis([30.01, 38.99, -4.49, 0.99])
+        li, = pl.plot(x2_, y2_, ls='--', c='black', lw=1., zorder=9999)
+        li.set_dashes([1, 1])
+        pl.text(30.5, -1.05, r'$\xi_{\rm \gamma, ms} \propto \dot{E}^{%.2f}$'%v2[0], size=text_size, color='black')
+        pl.axis([30.01, 38.99, -3.49, 0.99])
         #pl.xlim([30.01, 38.99])
-        pl.yticks([-4,-3,-2,-1, 0])
+        pl.yticks([-3,-2,-1, 0])
         pl.xlabel(r'$ \log (\dot{E}) \, [{\rm erg / s}] $')
         pl.ylabel(r'$\log (\xi_{\gamma})$')
 

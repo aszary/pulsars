@@ -21,11 +21,11 @@ class Pulsars:
         self.gr = (1 - 2. * c.G * self.m / (self.r * c.c ** 2.)) ** 0.5
 
     def add_pulsars(self):
-
+        '''
         #    J0108-1431    ####################################################
         p = Pulsar.objects.get(name='J0108-1431')
         a1 = self.article_get_add(p, num=0)
-        a1.articile = 'http://adsabs.harvard.edu/abs/2012ApJ...761..117P'
+        a1.article = 'http://adsabs.harvard.edu/abs/2012ApJ...761..117P'
         a1.cite = '\cite{2012_Posselt}'
         a1.info = ('page 4, 5(lum) BB + PL (51 counts) no inf -> surface conversion, second BB fit taken (0.73 c. d.), A_{\perp} here [last update: 2013-05-15]')
         a1.dist = 0.210
@@ -2192,8 +2192,717 @@ class Pulsars:
         a3.cite = '\cite{2007_Halpern}'
         self.save_records([a1, a2, a3, f1, c1, c2], p)
         self.calculate(p)
+        '''
+
+        # millisecond pulsars
+        #        ####################################################
+        p = Pulsar.objects.get(name='J0437-4715')
+        a1 = self.article_get_add(p, 0)
+        a1.article = 'http://adsabs.harvard.edu/abs/2009ASSL..357...91B'
+        a1.cite = '\cite{2009_Becker}'
+        f1 = self.fit_get_add(a1, 0)
+        f1.ordinal = 333
+        f1.spectrum = 'PL'
+        c1 = self.component_get_add(f1, 0)
+        c1.spec_type = 'PL'
+        c1.lum, c1.lum_plus, c1.lum_minus = self.lnonth_powers([[30.81, 0.33, 0.78], [29.32, 0.33, 0.75]])
+        self.save_records([a1, f1, c1], p)
+        self.calculate(p)
+
+        #        ####################################################
+        p = Pulsar.objects.get(name='J0034-0534')
+        a1 = self.article_get_add(p, 0)
+        a1.article = 'http://adsabs.harvard.edu/abs/2009ASSL..357...91B'
+        a1.cite = '\cite{2009_Becker}'
+        f1 = self.fit_get_add(a1, 0)
+        f1.ordinal = 333
+        f1.spectrum = 'PL'
+        c1 = self.component_get_add(f1, 0)
+        c1.spec_type = 'PL'
+        c1.lum, c1.lum_plus, c1.lum_minus = self.lnonth_powers([[29.65, 0.22, 0.45]])
+        self.save_records([a1, f1, c1], p)
+        self.calculate(p)
+
+        #        ####################################################
+        p = Pulsar.objects.get(name='J2124-3358')
+        a1 = self.article_get_add(p, 0)
+        a1.article = 'http://adsabs.harvard.edu/abs/2009ASSL..357...91B'
+        a1.cite = '\cite{2009_Becker}'
+        f1 = self.fit_get_add(a1, 0)
+        f1.ordinal = 333
+        f1.spectrum = 'PL'
+        c1 = self.component_get_add(f1, 0)
+        c1.spec_type = 'PL'
+        c1.lum, c1.lum_plus, c1.lum_minus = self.lnonth_powers([[30.45, 0.31, 0.52], [29.52, 0.33, 0.99]])
+        self.save_records([a1, f1, c1], p)
+        self.calculate(p)
+
+        #        ####################################################
+        p = Pulsar.objects.get(name='B1937+21')
+        a1 = self.article_get_add(p, 0)
+        a1.article = 'http://adsabs.harvard.edu/abs/2009ASSL..357...91B'
+        a1.cite = '\cite{2009_Becker}'
+        f1 = self.fit_get_add(a1, 0)
+        f1.ordinal = 333
+        f1.spectrum = 'PL'
+        c1 = self.component_get_add(f1, 0)
+        c1.spec_type = 'PL'
+        c1.lum, c1.lum_plus, c1.lum_minus = self.lnonth_powers([[33.01, 0.22, 0.35], [32.8, 0.18, 0.31]])
+        self.save_records([a1, f1, c1], p)
+        self.calculate(p)
+
+        #        ####################################################
+        p = Pulsar.objects.get(name='J1744-1134')
+        a1 = self.article_get_add(p, 0)
+        a1.article = 'http://adsabs.harvard.edu/abs/2009ASSL..357...91B'
+        a1.cite = '\cite{2009_Becker}'
+        f1 = self.fit_get_add(a1, 0)
+        f1.ordinal = 333
+        f1.spectrum = 'PL'
+        c1 = self.component_get_add(f1, 0)
+        c1.spec_type = 'PL'
+        c1.lum, c1.lum_plus, c1.lum_minus = self.lnonth_powers([[29.18, 0.22, 0.45], [28.91, 0.22, 0.45]])
+        self.save_records([a1, f1, c1], p)
+        self.calculate(p)
+
+        #        ####################################################
+        p = Pulsar.objects.get(name='B1257+12')
+        a1 = self.article_get_add(p, 0)
+        a1.article = 'http://adsabs.harvard.edu/abs/2009ASSL..357...91B'
+        a1.cite = '\cite{2009_Becker}'
+        f1 = self.fit_get_add(a1, 0)
+        f1.ordinal = 333
+        f1.spectrum = 'PL'
+        c1 = self.component_get_add(f1, 0)
+        c1.spec_type = 'PL'
+        c1.lum, c1.lum_plus, c1.lum_minus = self.lnonth_powers([[29.74, 0.31, 0.52], [28.66, 0.32, 0.52]])
+        self.save_records([a1, f1, c1], p)
+        self.calculate(p)
+
+        #        ####################################################
+        p = Pulsar.objects.get(name='B1821-24A')
+        a1 = self.article_get_add(p, 0)
+        a1.article = 'http://adsabs.harvard.edu/abs/2009ASSL..357...91B'
+        a1.cite = '\cite{2009_Becker}'
+        f1 = self.fit_get_add(a1, 0)
+        f1.ordinal = 333
+        f1.spectrum = 'PL'
+        c1 = self.component_get_add(f1, 0)
+        c1.spec_type = 'PL'
+        c1.lum, c1.lum_plus, c1.lum_minus = self.lnonth_powers([[32.63, 0.19, 0.32], [33.09, 0.18, 0.31]])
+        self.save_records([a1, f1, c1], p)
+        self.calculate(p)
+
+        #        ####################################################
+        p = Pulsar.objects.get(name='B1957+20')
+        a1 = self.article_get_add(p, 0)
+        a1.article = 'http://adsabs.harvard.edu/abs/2009ASSL..357...91B'
+        a1.cite = '\cite{2009_Becker}'
+        f1 = self.fit_get_add(a1, 0)
+        f1.ordinal = 333
+        f1.spectrum = 'PL'
+        c1 = self.component_get_add(f1, 0)
+        c1.spec_type = 'PL'
+        c1.lum, c1.lum_plus, c1.lum_minus = self.lnonth_powers([[31.30, 0.44, 0.43], [31.00, 0.46, 0.69]])
+        self.save_records([a1, f1, c1], p)
+        self.calculate(p)
+
+        #        ####################################################
+        p = Pulsar.objects.get(name='J0030+0451')
+        a1 = self.article_get_add(p, 0)
+        a1.article = 'http://adsabs.harvard.edu/abs/2009ASSL..357...91B'
+        a1.cite = '\cite{2009_Becker}'
+        f1 = self.fit_get_add(a1, 0)
+        f1.ordinal = 333
+        f1.spectrum = 'PL'
+        c1 = self.component_get_add(f1, 0)
+        c1.spec_type = 'PL'
+        c1.lum, c1.lum_plus, c1.lum_minus = self.lnonth_powers([[30.81, 0.22, 0.45], [29.34, 0.22, 0.45]])
+        self.save_records([a1, f1, c1], p)
+        self.calculate(p)
+
+        #        ####################################################
+        p = Pulsar.objects.get(name='J1024-0719')
+        a1 = self.article_get_add(p, 0)
+        a1.article = 'http://adsabs.harvard.edu/abs/2009ASSL..357...91B'
+        a1.cite = '\cite{2009_Becker}'
+        f1 = self.fit_get_add(a1, 0)
+        f1.ordinal = 333
+        f1.spectrum = 'PL'
+        c1 = self.component_get_add(f1, 0)
+        c1.spec_type = 'PL'
+        c1.lum, c1.lum_plus, c1.lum_minus = self.lnonth_powers([[29.64, 0.42, 0.88]])
+        self.save_records([a1, f1, c1], p)
+        self.calculate(p)
+
+        #        ####################################################
+        p = Pulsar.objects.get(name='J0737-3039A')
+        a1 = self.article_get_add(p, 0)
+        a1.article = 'http://adsabs.harvard.edu/abs/2009ASSL..357...91B'
+        a1.cite = '\cite{2009_Becker}'
+        f1 = self.fit_get_add(a1, 0)
+        f1.ordinal = 333
+        f1.spectrum = 'PL'
+        c1 = self.component_get_add(f1, 0)
+        c1.spec_type = 'PL'
+        c1.lum, c1.lum_plus, c1.lum_minus = self.lnonth_powers([[30.62, 0.23, 0.41], [29.33, 0.34, 0.58]])
+        self.save_records([a1, f1, c1], p)
+        self.calculate(p)
+
+        #        ####################################################
+        p = Pulsar.objects.get(name='J1012+5307')
+        a1 = self.article_get_add(p, 0)
+        a1.article = 'http://adsabs.harvard.edu/abs/2009ASSL..357...91B'
+        a1.cite = '\cite{2009_Becker}'
+        f1 = self.fit_get_add(a1, 0)
+        f1.ordinal = 333
+        f1.spectrum = 'PL'
+        c1 = self.component_get_add(f1, 0)
+        c1.spec_type = 'PL'
+        c1.lum, c1.lum_plus, c1.lum_minus = self.lnonth_powers([[30.36, 0.22, 0.45], [30.30, 0.22, 0.45]])
+        self.save_records([a1, f1, c1], p)
+        self.calculate(p)
+
+        #        ####################################################
+        t = ''' pulsar not in database
+        p = Pulsar.objects.get(name='J2018+4232')
+        a1 = self.article_get_add(p, 0)
+        a1.article = 'http://adsabs.harvard.edu/abs/2009ASSL..357...91B'
+        a1.cite = '\cite{2009_Becker}'
+        f1 = self.fit_get_add(a1, 0)
+        f1.ordinal = 333
+        f1.spectrum = 'PL'
+        c1 = self.component_get_add(f1, 0)
+        c1.spec_type = 'PL'
+        c1.lum, c1.lum_plus, c1.lum_minus = self.lnonth_powers([[32.56, 0.19, 0.33], [33.10, 0.18, 0.31]])
+        self.save_records([a1, f1, c1], p)
+        self.calculate(p)
+        #'''
+
+        #        ####################################################
+        p = Pulsar.objects.get(name='B1620-26')
+        a1 = self.article_get_add(p, 0)
+        a1.article = 'http://adsabs.harvard.edu/abs/2009ASSL..357...91B'
+        a1.cite = '\cite{2009_Becker}'
+        f1 = self.fit_get_add(a1, 0)
+        f1.ordinal = 333
+        f1.spectrum = 'PL'
+        c1 = self.component_get_add(f1, 0)
+        c1.spec_type = 'PL'
+        c1.lum, c1.lum_plus, c1.lum_minus = self.lnonth_powers([[30.55, 0.22, 0.45], [29.97, 0.22, 0.45]])
+        self.save_records([a1, f1, c1], p)
+        self.calculate(p)
+
+        #        ####################################################
+        p = Pulsar.objects.get(name='J0751+1807')
+        a1 = self.article_get_add(p, 0)
+        a1.article = 'http://adsabs.harvard.edu/abs/2009ASSL..357...91B'
+        a1.cite = '\cite{2009_Becker}'
+        f1 = self.fit_get_add(a1, 0)
+        f1.ordinal = 333
+        f1.spectrum = 'PL'
+        c1 = self.component_get_add(f1, 0)
+        c1.spec_type = 'PL'
+        c1.lum, c1.lum_plus, c1.lum_minus = self.lnonth_powers([[30.98, 0.22, 0.45], [31.10, 0.22, 0.45]])
+        self.save_records([a1, f1, c1], p)
+        self.calculate(p)
+
+        #        ####################################################
+        p = Pulsar.objects.get(name='B1534+12')
+        a1 = self.article_get_add(p, 0)
+        a1.article = 'http://adsabs.harvard.edu/abs/2009ASSL..357...91B'
+        a1.cite = '\cite{2009_Becker}'
+        f1 = self.fit_get_add(a1, 0)
+        f1.ordinal = 333
+        f1.spectrum = 'PL'
+        c1 = self.component_get_add(f1, 0)
+        c1.spec_type = 'PL'
+        c1.lum, c1.lum_plus, c1.lum_minus = self.lnonth_powers([[30.13, 0.49, 0.74], [28.55, 0.42, 0.67]])
+        self.save_records([a1, f1, c1], p)
+        self.calculate(p)
+
+        #        ####################################################
+        p = Pulsar.objects.get(name='J1824-2452H')
+        a1 = self.article_get_add(p, 0)
+        a1.article = 'http://adsabs.harvard.edu/abs/2009ASSL..357...91B'
+        a1.cite = '\cite{2009_Becker}'
+        f1 = self.fit_get_add(a1, 0)
+        f1.ordinal = 333
+        f1.spectrum = 'PL'
+        c1 = self.component_get_add(f1, 0)
+        c1.spec_type = 'PL'
+        c1.lum, c1.lum_plus, c1.lum_minus = self.lnonth_powers([[29.97, 0.22, 0.45], [29.7, 0.22, 0.45]])
+        self.save_records([a1, f1, c1], p)
+        self.calculate(p)
+
+        #        ####################################################
+        p = Pulsar.objects.get(name='J1953+1846A')
+        a1 = self.article_get_add(p, 0)
+        a1.article = 'http://adsabs.harvard.edu/abs/2009ASSL..357...91B'
+        a1.cite = '\cite{2009_Becker}'
+        f1 = self.fit_get_add(a1, 0)
+        f1.ordinal = 333
+        f1.spectrum = 'PL'
+        c1 = self.component_get_add(f1, 0)
+        c1.spec_type = 'PL'
+        c1.lum, c1.lum_plus, c1.lum_minus = self.lnonth_powers([[30.81, 0.22, 0.45], [30.87, 0.22, 0.45]])
+        self.save_records([a1, f1, c1], p)
+        self.calculate(p)
+
+        #        ####################################################
+        p = Pulsar.objects.get(name='B0021-72F')
+        a1 = self.article_get_add(p, 0)
+        a1.article = 'http://adsabs.harvard.edu/abs/2009ASSL..357...91B'
+        a1.cite = '\cite{2009_Becker}'
+        f1 = self.fit_get_add(a1, 0)
+        f1.ordinal = 333
+        f1.spectrum = 'PL'
+        c1 = self.component_get_add(f1, 0)
+        c1.spec_type = 'PL'
+        c1.lum, c1.lum_plus, c1.lum_minus = self.lnonth_powers([[31.15, 0.18, 0.32], [28.81, 0.23, 0.44]])
+        self.save_records([a1, f1, c1], p)
+        self.calculate(p)
+
+        #        ####################################################
+        p = Pulsar.objects.get(name='B0021-72E')
+        a1 = self.article_get_add(p, 0)
+        a1.article = 'http://adsabs.harvard.edu/abs/2009ASSL..357...91B'
+        a1.cite = '\cite{2009_Becker}'
+        f1 = self.fit_get_add(a1, 0)
+        f1.ordinal = 333
+        f1.spectrum = 'PL'
+        c1 = self.component_get_add(f1, 0)
+        c1.spec_type = 'PL'
+        c1.lum, c1.lum_plus, c1.lum_minus = self.lnonth_powers([[30.78, 0.18, 0.33], [27.69, 0.3, 0.57]])
+        self.save_records([a1, f1, c1], p)
+        self.calculate(p)
+
+        #        ####################################################
+        p = Pulsar.objects.get(name='J0024-7204O')
+        a1 = self.article_get_add(p, 0)
+        a1.article = 'http://adsabs.harvard.edu/abs/2009ASSL..357...91B'
+        a1.cite = '\cite{2009_Becker}'
+        f1 = self.fit_get_add(a1, 0)
+        f1.ordinal = 333
+        f1.spectrum = 'PL'
+        c1 = self.component_get_add(f1, 0)
+        c1.spec_type = 'PL'
+        c1.lum, c1.lum_plus, c1.lum_minus = self.lnonth_powers([[31.11, 0.21, 0.34], [28.05, 0.47, 0.82]])
+        self.save_records([a1, f1, c1], p)
+        self.calculate(p)
+
+        #        ####################################################
+        p = Pulsar.objects.get(name='J0024-7204U')
+        a1 = self.article_get_add(p, 0)
+        a1.article = 'http://adsabs.harvard.edu/abs/2009ASSL..357...91B'
+        a1.cite = '\cite{2009_Becker}'
+        f1 = self.fit_get_add(a1, 0)
+        f1.ordinal = 333
+        f1.spectrum = 'PL'
+        c1 = self.component_get_add(f1, 0)
+        c1.spec_type = 'PL'
+        c1.lum, c1.lum_plus, c1.lum_minus = self.lnonth_powers([[30.52, 0.18, 0.37], [29.01, 0.26, 0.58]])
+        self.save_records([a1, f1, c1], p)
+        self.calculate(p)
+
+        #        ####################################################
+        p = Pulsar.objects.get(name='J0024-7204T')
+        a1 = self.article_get_add(p, 0)
+        a1.article = 'http://adsabs.harvard.edu/abs/2009ASSL..357...91B'
+        a1.cite = '\cite{2009_Becker}'
+        f1 = self.fit_get_add(a1, 0)
+        f1.ordinal = 333
+        f1.spectrum = 'PL'
+        c1 = self.component_get_add(f1, 0)
+        c1.spec_type = 'PL'
+        c1.lum, c1.lum_plus, c1.lum_minus = self.lnonth_powers([[30.29, 0.20, 0.44], [26.61, 0.56, 1.39]])
+        self.save_records([a1, f1, c1], p)
+        self.calculate(p)
+
+        #        ####################################################
+        p = Pulsar.objects.get(name='J0024-7204Q')
+        a1 = self.article_get_add(p, 0)
+        a1.article = 'http://adsabs.harvard.edu/abs/2009ASSL..357...91B'
+        a1.cite = '\cite{2009_Becker}'
+        f1 = self.fit_get_add(a1, 0)
+        f1.ordinal = 333
+        f1.spectrum = 'PL'
+        c1 = self.component_get_add(f1, 0)
+        c1.spec_type = 'PL'
+        c1.lum, c1.lum_plus, c1.lum_minus = self.lnonth_powers([[30.43, 0.18, 0.38], [28.29, 0.18, 0.38]])
+        self.save_records([a1, f1, c1], p)
+        self.calculate(p)
+
+        #        ####################################################
+        p = Pulsar.objects.get(name='J0024-7204W')
+        a1 = self.article_get_add(p, 0)
+        a1.article = 'http://adsabs.harvard.edu/abs/2009ASSL..357...91B'
+        a1.cite = '\cite{2009_Becker}'
+        f1 = self.fit_get_add(a1, 0)
+        f1.ordinal = 333
+        f1.spectrum = 'PL'
+        c1 = self.component_get_add(f1, 0)
+        c1.spec_type = 'PL'
+        c1.lum, c1.lum_plus, c1.lum_minus = self.lnonth_powers([[30.83, 0.22, 0.45], [31.29, 0.23, 0.55]])
+        self.save_records([a1, f1, c1], p)
+        self.calculate(p)
+
+        #        ####################################################
+        p = Pulsar.objects.get(name='J0024-7204S')
+        a1 = self.article_get_add(p, 0)
+        a1.article = 'http://adsabs.harvard.edu/abs/2009ASSL..357...91B'
+        a1.cite = '\cite{2009_Becker}'
+        f1 = self.fit_get_add(a1, 0)
+        f1.ordinal = 333
+        f1.spectrum = 'PL'
+        c1 = self.component_get_add(f1, 0)
+        c1.spec_type = 'PL'
+        c1.lum, c1.lum_plus, c1.lum_minus = self.lnonth_powers([[31.01, 0.18, 0.32], [28.81, 0.23, 0.44]])
+        self.save_records([a1, f1, c1], p)
+        self.calculate(p)
+
+        #        ####################################################
+        p = Pulsar.objects.get(name='J0024-7204R')
+        a1 = self.article_get_add(p, 0)
+        a1.article = 'http://adsabs.harvard.edu/abs/2009ASSL..357...91B'
+        a1.cite = '\cite{2009_Becker}'
+        f1 = self.fit_get_add(a1, 0)
+        f1.ordinal = 333
+        f1.spectrum = 'PL'
+        c1 = self.component_get_add(f1, 0)
+        c1.spec_type = 'PL'
+        c1.lum, c1.lum_plus, c1.lum_minus = self.lnonth_powers([[30.87, 0.18, 0.34], [29.09, 0.24, 0.50]])
+        self.save_records([a1, f1, c1], p)
+        self.calculate(p)
+
+        #        ####################################################
+        p = Pulsar.objects.get(name='J0024-7204Y')
+        a1 = self.article_get_add(p, 0)
+        a1.article = 'http://adsabs.harvard.edu/abs/2009ASSL..357...91B'
+        a1.cite = '\cite{2009_Becker}'
+        f1 = self.fit_get_add(a1, 0)
+        f1.ordinal = 333
+        f1.spectrum = 'PL'
+        c1 = self.component_get_add(f1, 0)
+        c1.spec_type = 'PL'
+        c1.lum, c1.lum_plus, c1.lum_minus = self.lnonth_powers([[30.44, 0.18, 0.37], [28.31, 0.31, 0.68]])
+        self.save_records([a1, f1, c1], p)
+        self.calculate(p)
+
+        #        ####################################################
+        p = Pulsar.objects.get(name='B0021-72N')
+        a1 = self.article_get_add(p, 0)
+        a1.article = 'http://adsabs.harvard.edu/abs/2009ASSL..357...91B'
+        a1.cite = '\cite{2009_Becker}'
+        f1 = self.fit_get_add(a1, 0)
+        f1.ordinal = 333
+        f1.spectrum = 'PL'
+        c1 = self.component_get_add(f1, 0)
+        c1.spec_type = 'PL'
+        c1.lum, c1.lum_plus, c1.lum_minus = self.lnonth_powers([[30.43, 0.19, 0.40], [28.03, 0.36, 0.83]])
+        self.save_records([a1, f1, c1], p)
+        self.calculate(p)
+
+        #        ####################################################
+        p = Pulsar.objects.get(name='B0021-72M')
+        a1 = self.article_get_add(p, 0)
+        a1.article = 'http://adsabs.harvard.edu/abs/2009ASSL..357...91B'
+        a1.cite = '\cite{2009_Becker}'
+        f1 = self.fit_get_add(a1, 0)
+        f1.ordinal = 333
+        f1.spectrum = 'PL'
+        c1 = self.component_get_add(f1, 0)
+        c1.spec_type = 'PL'
+        c1.lum, c1.lum_plus, c1.lum_minus = self.lnonth_powers([[30.43, 0.86, 0.53], [28.27, 0.86, 0.53]])
+        self.save_records([a1, f1, c1], p)
+        self.calculate(p)
+
+        #        ####################################################
+        p = Pulsar.objects.get(name='B0021-72L')
+        a1 = self.article_get_add(p, 0)
+        a1.article = 'http://adsabs.harvard.edu/abs/2009ASSL..357...91B'
+        a1.cite = '\cite{2009_Becker}'
+        f1 = self.fit_get_add(a1, 0)
+        f1.ordinal = 333
+        f1.spectrum = 'PL'
+        c1 = self.component_get_add(f1, 0)
+        c1.spec_type = 'PL'
+        c1.lum, c1.lum_plus, c1.lum_minus = self.lnonth_powers([[30.97, 0.18, 0.32], [28.89, 0.22, 0.43]])
+        self.save_records([a1, f1, c1], p)
+        self.calculate(p)
+
+        #        ####################################################
+        p = Pulsar.objects.get(name='B0021-72J')
+        a1 = self.article_get_add(p, 0)
+        a1.article = 'http://adsabs.harvard.edu/abs/2009ASSL..357...91B'
+        a1.cite = '\cite{2009_Becker}'
+        f1 = self.fit_get_add(a1, 0)
+        f1.ordinal = 333
+        f1.spectrum = 'PL'
+        c1 = self.component_get_add(f1, 0)
+        c1.spec_type = 'PL'
+        c1.lum, c1.lum_plus, c1.lum_minus = self.lnonth_powers([[31.15, 0.2, 0.41], [27.99, 0.56, 1.56]])
+        self.save_records([a1, f1, c1], p)
+        self.calculate(p)
+
+        #        ####################################################
+        p = Pulsar.objects.get(name='B0021-72I')
+        a1 = self.article_get_add(p, 0)
+        a1.article = 'http://adsabs.harvard.edu/abs/2009ASSL..357...91B'
+        a1.cite = '\cite{2009_Becker}'
+        f1 = self.fit_get_add(a1, 0)
+        f1.ordinal = 333
+        f1.spectrum = 'PL'
+        c1 = self.component_get_add(f1, 0)
+        c1.spec_type = 'PL'
+        c1.lum, c1.lum_plus, c1.lum_minus = self.lnonth_powers([[30.83, 0.18, 0.34], [28.65, 0.25, 0.50]])
+        self.save_records([a1, f1, c1], p)
+        self.calculate(p)
+
+        #        ####################################################
+        p = Pulsar.objects.get(name='B0021-72H')
+        a1 = self.article_get_add(p, 0)
+        a1.article = 'http://adsabs.harvard.edu/abs/2009ASSL..357...91B'
+        a1.cite = '\cite{2009_Becker}'
+        f1 = self.fit_get_add(a1, 0)
+        f1.ordinal = 333
+        f1.spectrum = 'PL'
+        c1 = self.component_get_add(f1, 0)
+        c1.spec_type = 'PL'
+        c1.lum, c1.lum_plus, c1.lum_minus = self.lnonth_powers([[30.56, 1.03, 0.59], [27.88, 1.04, 0.6]])
+        self.save_records([a1, f1, c1], p)
+        self.calculate(p)
+
+        #        ####################################################
+        p = Pulsar.objects.get(name='B0021-72G')
+        a1 = self.article_get_add(p, 0)
+        a1.article = 'http://adsabs.harvard.edu/abs/2009ASSL..357...91B'
+        a1.cite = '\cite{2009_Becker}'
+        f1 = self.fit_get_add(a1, 0)
+        f1.ordinal = 333
+        f1.spectrum = 'PL'
+        c1 = self.component_get_add(f1, 0)
+        c1.spec_type = 'PL'
+        c1.lum, c1.lum_plus, c1.lum_minus = self.lnonth_powers([[30.83, 0.18, 0.34], [28.65, 0.25, 0.50]])
+        self.save_records([a1, f1, c1], p)
+        self.calculate(p)
+
+        #        ####################################################
+        p = Pulsar.objects.get(name='B0021-72D')
+        a1 = self.article_get_add(p, 0)
+        a1.article = 'http://adsabs.harvard.edu/abs/2009ASSL..357...91B'
+        a1.cite = '\cite{2009_Becker}'
+        f1 = self.fit_get_add(a1, 0)
+        f1.ordinal = 333
+        f1.spectrum = 'PL'
+        c1 = self.component_get_add(f1, 0)
+        c1.spec_type = 'PL'
+        c1.lum, c1.lum_plus, c1.lum_minus = self.lnonth_powers([[30.57, 0.18, 0.37], [28.28, 0.31, 0.68]])
+        self.save_records([a1, f1, c1], p)
+        self.calculate(p)
+
+        #        ####################################################
+        p = Pulsar.objects.get(name='B0021-72C')
+        a1 = self.article_get_add(p, 0)
+        a1.article = 'http://adsabs.harvard.edu/abs/2009ASSL..357...91B'
+        a1.cite = '\cite{2009_Becker}'
+        f1 = self.fit_get_add(a1, 0)
+        f1.ordinal = 333
+        f1.spectrum = 'PL'
+        c1 = self.component_get_add(f1, 0)
+        c1.spec_type = 'PL'
+        c1.lum, c1.lum_plus, c1.lum_minus = self.lnonth_powers([[30.29, 0.19, 0.43], [27.79, 0.4, 0.85]])
+        self.save_records([a1, f1, c1], p)
+        self.calculate(p)
+
+        #        ####################################################
+        p = Pulsar.objects.get(name='J1740-5340A')
+        a1 = self.article_get_add(p, 0)
+        a1.article = 'http://adsabs.harvard.edu/abs/2009ASSL..357...91B'
+        a1.cite = '\cite{2009_Becker}'
+        f1 = self.fit_get_add(a1, 0)
+        f1.ordinal = 333
+        f1.spectrum = 'PL'
+        c1 = self.component_get_add(f1, 0)
+        c1.spec_type = 'PL'
+        c1.lum, c1.lum_plus, c1.lum_minus = self.lnonth_powers([[30.9, None, None]])
+        self.save_records([a1, f1, c1], p)
+        self.calculate(p)
+
+        #        ####################################################
+        p = Pulsar.objects.get(name='J1701-3006B')
+        a1 = self.article_get_add(p, 0)
+        a1.article = 'http://adsabs.harvard.edu/abs/2009ASSL..357...91B'
+        a1.cite = '\cite{2009_Becker}'
+        f1 = self.fit_get_add(a1, 0)
+        f1.ordinal = 333
+        f1.spectrum = 'PL'
+        c1 = self.component_get_add(f1, 0)
+        c1.spec_type = 'PL'
+        c1.lum, c1.lum_plus, c1.lum_minus = self.lnonth_powers([[32.62, None, None], [32.35, None, None]])
+        self.save_records([a1, f1, c1], p)
+        self.calculate(p)
+
+        #        ####################################################
+        p = Pulsar.objects.get(name='J1910-5959B')
+        a1 = self.article_get_add(p, 0)
+        a1.article = 'http://adsabs.harvard.edu/abs/2009ASSL..357...91B'
+        a1.cite = '\cite{2009_Becker}'
+        f1 = self.fit_get_add(a1, 0)
+        f1.ordinal = 333
+        f1.spectrum = 'PL'
+        c1 = self.component_get_add(f1, 0)
+        c1.spec_type = 'PL'
+        c1.lum, c1.lum_plus, c1.lum_minus = self.lnonth_powers([[30.53, None, None], [29.73, None, None]])
+        self.save_records([a1, f1, c1], p)
+        self.calculate(p)
+
+        t=''' not in database
+        #        ####################################################
+        p = Pulsar.objects.get(name='J1911-6000C')
+        a1 = self.article_get_add(p, 0)
+        a1.article = 'http://adsabs.harvard.edu/abs/2009ASSL..357...91B'
+        a1.cite = '\cite{2009_Becker}'
+        f1 = self.fit_get_add(a1, 0)
+        f1.ordinal = 333
+        f1.spectrum = 'PL'
+        c1 = self.component_get_add(f1, 0)
+        c1.spec_type = 'PL'
+        c1.lum, c1.lum_plus, c1.lum_minus = self.lnonth_powers([[30.84, None, None], [30.04, None, None]])
+        self.save_records([a1, f1, c1], p)
+        self.calculate(p)
+        #'''
+
+        #        ####################################################
+        p = Pulsar.objects.get(name='J1910-5959D')
+        a1 = self.article_get_add(p, 0)
+        a1.article = 'http://adsabs.harvard.edu/abs/2009ASSL..357...91B'
+        a1.cite = '\cite{2009_Becker}'
+        f1 = self.fit_get_add(a1, 0)
+        f1.ordinal = 333
+        f1.spectrum = 'PL'
+        c1 = self.component_get_add(f1, 0)
+        c1.spec_type = 'PL'
+        c1.lum, c1.lum_plus, c1.lum_minus = self.lnonth_powers([[31.06, None, None], [30.79, None, None]])
+        self.save_records([a1, f1, c1], p)
+        self.calculate(p)
 
         '''
+        #        ####################################################
+        p = Pulsar.objects.get(name='')
+        a1 = self.article_get_add(p, 0)
+        a1.article = 'http://adsabs.harvard.edu/abs/2009ASSL..357...91B'
+        a1.cite = '\cite{2009_Becker}'
+        f1 = self.fit_get_add(a1, 0)
+        f1.ordinal = 333
+        f1.spectrum = 'PL'
+        c1 = self.component_get_add(f1, 0)
+        c1.spec_type = 'PL'
+        c1.lum, c1.lum_plus, c1.lum_minus = self.lnonth_powers([[, , ], [, , ]])
+        self.save_records([a1, f1, c1], p)
+        self.calculate(p)
+
+        #        ####################################################
+        p = Pulsar.objects.get(name='')
+        a1 = self.article_get_add(p, 0)
+        a1.article = 'http://adsabs.harvard.edu/abs/2009ASSL..357...91B'
+        a1.cite = '\cite{2009_Becker}'
+        f1 = self.fit_get_add(a1, 0)
+        f1.ordinal = 333
+        f1.spectrum = 'PL'
+        c1 = self.component_get_add(f1, 0)
+        c1.spec_type = 'PL'
+        c1.lum, c1.lum_plus, c1.lum_minus = self.lnonth_powers([[, , ], [, , ]])
+        self.save_records([a1, f1, c1], p)
+        self.calculate(p)
+
+        #        ####################################################
+        p = Pulsar.objects.get(name='')
+        a1 = self.article_get_add(p, 0)
+        a1.article = 'http://adsabs.harvard.edu/abs/2009ASSL..357...91B'
+        a1.cite = '\cite{2009_Becker}'
+        f1 = self.fit_get_add(a1, 0)
+        f1.ordinal = 333
+        f1.spectrum = 'PL'
+        c1 = self.component_get_add(f1, 0)
+        c1.spec_type = 'PL'
+        c1.lum, c1.lum_plus, c1.lum_minus = self.lnonth_powers([[, , ], [, , ]])
+        self.save_records([a1, f1, c1], p)
+        self.calculate(p)
+
+        #        ####################################################
+        p = Pulsar.objects.get(name='')
+        a1 = self.article_get_add(p, 0)
+        a1.article = 'http://adsabs.harvard.edu/abs/2009ASSL..357...91B'
+        a1.cite = '\cite{2009_Becker}'
+        f1 = self.fit_get_add(a1, 0)
+        f1.ordinal = 333
+        f1.spectrum = 'PL'
+        c1 = self.component_get_add(f1, 0)
+        c1.spec_type = 'PL'
+        c1.lum, c1.lum_plus, c1.lum_minus = self.lnonth_powers([[, , ], [, , ]])
+        self.save_records([a1, f1, c1], p)
+        self.calculate(p)
+
+        #        ####################################################
+        p = Pulsar.objects.get(name='')
+        a1 = self.article_get_add(p, 0)
+        a1.article = 'http://adsabs.harvard.edu/abs/2009ASSL..357...91B'
+        a1.cite = '\cite{2009_Becker}'
+        f1 = self.fit_get_add(a1, 0)
+        f1.ordinal = 333
+        f1.spectrum = 'PL'
+        c1 = self.component_get_add(f1, 0)
+        c1.spec_type = 'PL'
+        c1.lum, c1.lum_plus, c1.lum_minus = self.lnonth_powers([[, , ], [, , ]])
+        self.save_records([a1, f1, c1], p)
+        self.calculate(p)
+
+        #        ####################################################
+        p = Pulsar.objects.get(name='')
+        a1 = self.article_get_add(p, 0)
+        a1.article = 'http://adsabs.harvard.edu/abs/2009ASSL..357...91B'
+        a1.cite = '\cite{2009_Becker}'
+        f1 = self.fit_get_add(a1, 0)
+        f1.ordinal = 333
+        f1.spectrum = 'PL'
+        c1 = self.component_get_add(f1, 0)
+        c1.spec_type = 'PL'
+        c1.lum, c1.lum_plus, c1.lum_minus = self.lnonth_powers([[, , ], [, , ]])
+        self.save_records([a1, f1, c1], p)
+        self.calculate(p)
+
+        #        ####################################################
+        p = Pulsar.objects.get(name='')
+        a1 = self.article_get_add(p, 0)
+        a1.article = 'http://adsabs.harvard.edu/abs/2009ASSL..357...91B'
+        a1.cite = '\cite{2009_Becker}'
+        f1 = self.fit_get_add(a1, 0)
+        f1.ordinal = 333
+        f1.spectrum = 'PL'
+        c1 = self.component_get_add(f1, 0)
+        c1.spec_type = 'PL'
+        c1.lum, c1.lum_plus, c1.lum_minus = self.lnonth_powers([[, , ], [, , ]])
+        self.save_records([a1, f1, c1], p)
+        self.calculate(p)
+
+        #        ####################################################
+        p = Pulsar.objects.get(name='')
+        a1 = self.article_get_add(p, 0)
+        a1.article = 'http://adsabs.harvard.edu/abs/2009ASSL..357...91B'
+        a1.cite = '\cite{2009_Becker}'
+        f1 = self.fit_get_add(a1, 0)
+        f1.ordinal = 333
+        f1.spectrum = 'PL'
+        c1 = self.component_get_add(f1, 0)
+        c1.spec_type = 'PL'
+        c1.lum, c1.lum_plus, c1.lum_minus = self.lnonth_powers([[, , ], [, , ]])
+        self.save_records([a1, f1, c1], p)
+        self.calculate(p)
+
+
+
+
         #        ####################################################
         p = Pulsar.objects.get(name='')
         a1 = self.article_get_add(p, 0)
@@ -2222,6 +2931,21 @@ class Pulsars:
         c2.lum_plus =
         c2.lum_minus =
         self.save_records([a1, f1, c1, c2], p)
+        self.calculate(p)
+
+        # millisecond pulsars
+        #        ####################################################
+        p = Pulsar.objects.get(name='')
+        a1 = self.article_get_add(p, 0)
+        a1.article = 'http://adsabs.harvard.edu/abs/2009ASSL..357...91B'
+        a1.cite = '\cite{2009_Becker}'
+        f1 = self.fit_get_add(a1, 0)
+        f1.ordinal = 333
+        f1.spectrum = 'PL'
+        c1 = self.component_get_add(f1, 0)
+        c1.spec_type = 'PL'
+        c1.lum, c1.lum_plus, c1.lum_minus = self.lnonth_powers([[, , ], [, , ]])
+        self.save_records([a1, f1, c1], p)
         self.calculate(p)
         '''
 
@@ -2337,14 +3061,14 @@ class Pulsars:
             x.delete()
 
     def calculate(self, p, num=0):
-
         ca = self.calculation_get_add(p, num=num)
 
         ca.dotp_15 = p.p1 / 1e-15
         ca.a_dp = 6.58429132402614e8 / float(p.p0)
         ca.r_dp = (ca.a_dp / pi ) ** 0.5
-        ca.bsurf2 = 2.02 * 1e12 * float(p.p0) ** 0.5 * ca.dotp_15 ** 0.5
-        ca.b_14dp = ca.bsurf2 / 1e14
+        if ca.dotp_15 > 0.:
+            ca.bsurf2 = 2.02 * 1e12 * float(p.p0) ** 0.5 * ca.dotp_15 ** 0.5
+            ca.b_14dp = ca.bsurf2 / 1e14
         ca.l_sd = 3.94784176043574e31 * ca.dotp_15 / float(p.p0) ** 3.
 
         # first BB component with ordinal >= 0
@@ -2396,8 +3120,11 @@ class Pulsars:
         l_nth_max = 0.
         for p in pow_:
             l_nth += 10. ** p[0]
-            l_nth_max += 10 ** (p[0]+p[1])
-            l_nth_min += 10 ** (p[0]-p[2])
+            try:
+                l_nth_max += 10 ** (p[0]+p[1])
+                l_nth_min += 10 ** (p[0]-p[2])
+            except TypeError:
+                pass
         l_nth_plus = l_nth_max - l_nth
         l_nth_minus = l_nth - l_nth_min
         return l_nth, l_nth_plus, l_nth_minus

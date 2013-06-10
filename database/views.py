@@ -222,7 +222,7 @@ def xi_sd_age_radio(request):
 
 
 def xi_xray_gamma(request):
-    fits = XrayFit.objects.filter(ordinal__gt=0).filter(psr_id__p0__gt=0.01).distinct()
+    fits = XrayFit.objects.filter(ordinal__gt=0).distinct()
     gamma_data = GammaRayFermi.objects.filter(num=0).order_by('psr_id__name')
     list_ = plot.xi_xray_gamma(fits, gamma_data)
     template = loader.get_template('database/plots/image2.xhtml')

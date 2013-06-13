@@ -19,9 +19,5 @@ urlpatterns = patterns('',
     url(r'^admin/', include(admin.site.urls)),
 )
 
-if settings.DEBUG or settings.PYTHON_ANYWHERE:
+if settings.DEBUG:
     urlpatterns += patterns(url(r'^media/(?P<path>.*)$', 'django.views.static.serve', {'document_root': settings.MEDIA_ROOT,}),)
-
-if settings.PYTHON_ANYWHERE is True:
-    from django.contrib.staticfiles.urls import staticfiles_urlpatterns
-    urlpatterns += staticfiles_urlpatterns()

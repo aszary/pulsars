@@ -384,7 +384,7 @@ def b_parameter(comps, recreate=False):
     return res
 
 
-def b_age(comps, recreate=True):
+def b_age(comps, recreate=False):
 
     file_name = 'database/plots/b_age.'
     full_path = os.path.join(MEDIA_ROOT, file_name)
@@ -715,7 +715,7 @@ def radio_plots(psrs, recreate=False):
     #copyfile(full_path+'eps', '/home/aszary/work/6_outer/images/s400_age.eps')
     return res
 
-def custom(pulsars, recreate=True, copy_=False):
+def custom(pulsars, recreate=False, copy_=False):
     file_name = 'database/plots/custom.'
     full_path = os.path.join(MEDIA_ROOT, file_name)
 
@@ -998,7 +998,7 @@ def xi_age_radio(pulsars, recreate=False):
     return [ [full_path + 'svg', file_name + 'svg']]
 
 
-def xi_sd_age_radio(pulsars, recreate=True):
+def xi_sd_age_radio(pulsars, recreate=False):
     file_name = 'database/plots/radio/xi_sd_age.'
     full_path = os.path.join(MEDIA_ROOT, file_name)
 
@@ -1313,7 +1313,7 @@ def ll_sd_radio(pulsars, recreate=False):
     return [[full_path + 'svg', file_name + 'svg']]
 
 
-def l_sd_radio_three(pulsars, recreate=True):
+def l_sd_radio_three(pulsars, recreate=False):
     file_name = 'database/plots/radio/l_sd_three.'
     full_path = os.path.join(MEDIA_ROOT, file_name)
 
@@ -1483,7 +1483,7 @@ def l_sd_radio_three(pulsars, recreate=True):
 
     return [ [full_path + 'svg', file_name + 'svg']]
 
-def flux_sd_radio(pulsars, recreate=True):
+def flux_sd_radio(pulsars, recreate=False):
 
     file_name = 'database/plots/radio/flux_sd.'
     full_path = os.path.join(MEDIA_ROOT, file_name)
@@ -1553,7 +1553,7 @@ def flux_sd_radio(pulsars, recreate=True):
     return [ [full_path + 'svg', file_name + 'svg']]
 
 
-def malov_radio(pulsars, recreate=True):
+def malov_radio(pulsars, recreate=False):
     file_name = 'database/plots/radio/l_sd_malov.'
     full_path = os.path.join(MEDIA_ROOT, file_name)
 
@@ -1641,7 +1641,7 @@ def malov_radio(pulsars, recreate=True):
     return [ [full_path + 'svg', file_name + 'svg']]
 
 
-def xi_xray_gamma(xray_fits, gamma_data, recreate=True):
+def xi_xray_gamma(xray_fits, gamma_data, recreate=False):
     file_name = 'database/plots/xi_xray_gamma.'
     full_path = os.path.join(MEDIA_ROOT, file_name)
 

@@ -1,12 +1,14 @@
 __author__ = 'aszary'
-
+import os
 from decimal import Decimal
 
 from urllib import urlopen
 from django.core.exceptions import ObjectDoesNotExist
-from pulsars.settings import MEDIA_ROOT
 
 from models import Pulsar
+
+
+MEDIA_PATH = os.path.join(os.path.abspath(os.path.dirname(__file__)), 'media')
 
 
 def get_page_old():
@@ -16,7 +18,7 @@ def get_page_old():
     page = urlopen(url)
     s = page.read()
     page.close()
-    f = open(MEDIA_ROOT+'database/atnf.html', 'w')
+    f = open(os.path.join(MEDIA_PATH, 'database/atnf.html'), 'w')
     f.write(s)
     f.close()
 
@@ -28,14 +30,14 @@ def get_page():
     page = urlopen(url)
     s = page.read()
     page.close()
-    f = open(MEDIA_ROOT+'database/atnf.html', 'w')
+    f = open(os.path.join(MEDIA_PATH, 'database/atnf.html'), 'w')
     f.write(s)
     f.close()
 
 
 def parse_page():
     # read page
-    f = open(MEDIA_ROOT + 'database/atnf.html', 'r')
+    f = open(os.path.join(MEDIA_PATH, 'database/atnf.html'), 'r')
     lines = f.readlines()
     f.close()
 
@@ -195,7 +197,7 @@ def to_int(str_):
 
 
 def parse_malov():
-    f = open(MEDIA_ROOT+'database/malov_2007.tsv', 'r')
+    f = open(os.path.join(MEDIA_PATH, 'database/malov_2007.tsv'), 'r')
     lines = f.readlines()
     for line in lines:
         if not line.startswith('#'):

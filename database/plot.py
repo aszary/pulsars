@@ -11,15 +11,18 @@ import numpy as np
 from django.core.exceptions import ObjectDoesNotExist
 
 from models import XrayComponent
-from pulsars.settings import MEDIA_ROOT
 from calcs.interpolate import least_sq1D, least_sq2D, least_sq
 from calcs.functions import get_t6, radio_lum, pseudo_lum
 
+
+MEDIA_PATH = os.path.join(os.path.abspath(os.path.dirname(__file__)), 'media')
+
+
 def bb_pl(fits, recreate=False):
     file_name = 'database/plots/bb_pl_age.'
-    full_path = MEDIA_ROOT + file_name
+    full_path = MEDIA_PATH + file_name
     file_name2 = 'database/plots/bb_pl_field.'
-    full_path2 = MEDIA_ROOT + file_name2
+    full_path2 = MEDIA_PATH + file_name2
 
     if recreate is True:
         lbb_lnts, ages, bds, ordinals = get_bb_pl(fits)
@@ -87,7 +90,7 @@ def get_bb_pl(fits):
 
 def xi_age(fits, recreate=False):
     file_name = 'database/plots/xi_age.'
-    full_path = MEDIA_ROOT + file_name
+    full_path = MEDIA_PATH + file_name
 
     if recreate is True:
         xi_x, ages, ordinals, psrs = get_xi_age(fits)
@@ -154,7 +157,7 @@ def get_xi_age(fits):
 
 def xi_field(fits, recreate=False):
     file_name = 'database/plots/xi_field.'
-    full_path = MEDIA_ROOT + file_name
+    full_path = MEDIA_PATH + file_name
 
     if recreate is True:
         l_x = []
@@ -208,7 +211,7 @@ def xi_field(fits, recreate=False):
 
 def xi_sd(fits, recreate=False):
     file_name = 'database/plots/xi_sd.'
-    full_path = MEDIA_ROOT + file_name
+    full_path = MEDIA_PATH + file_name
 
     if recreate is True:
         xi_ = []
@@ -270,7 +273,7 @@ def xi_sd(fits, recreate=False):
 
 def pl_sd(fits, recreate=False):
     file_name = 'database/plots/pl_sd.'
-    full_path = MEDIA_ROOT + file_name
+    full_path = MEDIA_PATH + file_name
 
     if recreate is True:
         log_lsd_, log_lpl_, err_, ordinals, psrs, log_lsd_left_, log_lpl_left_,  err_left_, log_lsd_right_, log_lpl_right_, err_right_ = get_pl_sd(fits)
@@ -386,7 +389,7 @@ def b_parameter(comps, recreate=False):
 def b_age(comps, recreate=True):
 
     file_name = 'database/plots/b_age.'
-    full_path = MEDIA_ROOT + file_name
+    full_path = MEDIA_PATH + file_name
 
     if recreate is True:
         b_, l_sd_, b_d_, age_, psr_ = get_b_parameters(comps)
@@ -522,7 +525,7 @@ def get_b_parameters(comps):
 
 def t6_b14(comps, recreate=False):
     file_name = 'database/plots/t6_b14.'
-    full_path = MEDIA_ROOT + file_name
+    full_path = MEDIA_PATH + file_name
 
     if recreate is True:
         t_6_, t6_err_, b_14_, b14_err_, psr_  = get_t6_b14(comps)
@@ -710,13 +713,13 @@ def radio_plots(psrs, recreate=False):
                xlab=r"$\tau \,  [ {\rm yr} ]$",
                ylab=r"$B_{\rm d}$", recreate=recreate ))
 
-    #full_path = MEDIA_ROOT + file_name
+    #full_path = MEDIA_PATH + file_name
     #copyfile(full_path+'eps', '/home/aszary/work/6_outer/images/s400_age.eps')
     return res
 
 def custom(pulsars, recreate=True, copy_=False):
     file_name = 'database/plots/custom.'
-    full_path = MEDIA_ROOT + file_name
+    full_path = MEDIA_PATH + file_name
 
     if recreate is True:
         x_ = [[], []]
@@ -799,8 +802,8 @@ def custom(pulsars, recreate=True, copy_=False):
         d = datetime.now()
         if copy_ is True:
             try:
-                copyfile(full_path+'pdf', MEDIA_ROOT+'database/plots/custom/%d-%d-%dT%d:%d.pdf' % (d.year, d.month, d.day, d.hour, d.minute))
-                copyfile(full_path+'svg', MEDIA_ROOT+'database/plots/custom/%d-%d-%dT%d:%d.svg' % (d.year, d.month, d.day, d.hour, d.minute))
+                copyfile(full_path+'pdf', MEDIA_PATH+'database/plots/custom/%d-%d-%dT%d:%d.pdf' % (d.year, d.month, d.day, d.hour, d.minute))
+                copyfile(full_path+'svg', MEDIA_PATH+'database/plots/custom/%d-%d-%dT%d:%d.svg' % (d.year, d.month, d.day, d.hour, d.minute))
             except IOError:
                 print 'Warning: customs copy error'
     return [[full_path + 'svg', file_name + 'svg']]
@@ -823,7 +826,7 @@ def get_custom(p):
 
 def xi_sd_radio(pulsars, recreate=False):
     file_name = 'database/plots/radio/xi_sd.'
-    full_path = MEDIA_ROOT + file_name
+    full_path = MEDIA_PATH + file_name
 
     if recreate is True:
         x_ = []
@@ -919,7 +922,7 @@ def xi_sd_radio(pulsars, recreate=False):
 
 def xi_age_radio(pulsars, recreate=False):
     file_name = 'database/plots/radio/xi_age.'
-    full_path = MEDIA_ROOT + file_name
+    full_path = MEDIA_PATH + file_name
 
     if recreate is True:
         x_ = []
@@ -999,7 +1002,7 @@ def xi_age_radio(pulsars, recreate=False):
 
 def xi_sd_age_radio(pulsars, recreate=True):
     file_name = 'database/plots/radio/xi_sd_age.'
-    full_path = MEDIA_ROOT + file_name
+    full_path = MEDIA_PATH + file_name
 
     if recreate is True:
         x_ = [[], []]
@@ -1070,7 +1073,7 @@ def xi_sd_age_radio(pulsars, recreate=True):
         li2.set_dashes([1., 1.])
         pl.text(37.5, -7.5, r'$\xi \propto \dot{E}^{%.2f}$'%v2[0], size=text_size)
         pl.text(34.5, -9., r' $\xi \propto \dot{E}^{%.2f}$'%v3[0], size=text_size, color='green')
-        pl.xlabel(r'$ \log (\dot{E}) \, [{\rm erg / s}] $')
+        pl.xlabel(r'$ \log (\dot{E}) \, \left [ {\rm erg \, s^{-1}} \right ] $')
         pl.ylabel(r'$\log (\xi) $')
         pl.axis([28.01, 39.99, -10.5, -0.0])
         leg_ = [ot, he, axp, no]
@@ -1116,7 +1119,7 @@ def xi_sd_age_radio(pulsars, recreate=True):
 
 def l_sd_radio(pulsars, recreate=False):
     file_name = 'database/plots/radio/l1400_sd.'
-    full_path = MEDIA_ROOT + file_name
+    full_path = MEDIA_PATH + file_name
 
     if recreate is True:
 
@@ -1212,7 +1215,7 @@ def l_sd_radio(pulsars, recreate=False):
 def ll_sd_radio(pulsars, recreate=False):
 
     file_name = 'database/plots/radio/ll_sd.'
-    full_path = MEDIA_ROOT + file_name
+    full_path = MEDIA_PATH + file_name
 
     if recreate is True:
         x_ = []
@@ -1314,7 +1317,7 @@ def ll_sd_radio(pulsars, recreate=False):
 
 def l_sd_radio_three(pulsars, recreate=True):
     file_name = 'database/plots/radio/l_sd_three.'
-    full_path = MEDIA_ROOT + file_name
+    full_path = MEDIA_PATH + file_name
 
     if recreate is True:
         x_ = [[], [], []]
@@ -1387,7 +1390,7 @@ def l_sd_radio_three(pulsars, recreate=True):
 
         #pl.figure(figsize=(2*3.14961, 3.14961)) #16x8cm
         pl.figure(figsize=(6.889764, 3.54331)) #17.5x9cm
-        pl.subplots_adjust(left=0.063, bottom=0.11, right=0.94, top=0.92, wspace=0.03, hspace=0.)
+        pl.subplots_adjust(left=0.063, bottom=0.11, right=0.937, top=0.92, wspace=0.03, hspace=0.)
 
         ax1 = pl.subplot2grid((2,2), (0,0), rowspan=2)
         pl.text(28.5, 31.2, '(a)')
@@ -1410,8 +1413,8 @@ def l_sd_radio_three(pulsars, recreate=True):
         #l0 = pl.legend([li, li2], [r'$L \propto \dot{E}^{%.2f}$ (all pulsars)'%v2[0], r'$L \propto \dot{E}^{%.2f}$ (Binary)'%v3[0]], loc='lower left')
         pl.text(37., 30., r'$L \propto \dot{E}^{%.2f}$'%v2[0], size=1.2*text_size)
         pl.text(35.3, 27.7, r' $L \propto \dot{E}^{%.2f}$'%v3[0], size=1.2*text_size, color='green')
-        pl.xlabel(r'$ \log (\dot{E}) \, [{\rm erg / s}] $')
-        pl.ylabel(r'$\log (L)  \, [{\rm erg / s}]  $')
+        pl.xlabel(r'$ \log ( \dot{E} ) \, \left [ {\rm erg \, s^{-1}} \right ] $')
+        pl.ylabel(r'$\log ( L )  \, \left [ {\rm erg \, s^{-1}} \right ]  $')
         pl.axis([28.01, 39.99, 25.7, 31.7])
 
         leg_ = [ot, he, axp, no]
@@ -1444,8 +1447,8 @@ def l_sd_radio_three(pulsars, recreate=True):
         pl.axis([28.01, 39.99, 14.5, 19.5])
         ax2.yaxis.set_ticks_position('right')
         ax2.yaxis.set_label_position('right')
-        pl.xlabel(r'$ \log (\dot{E}) \, [{\rm erg / s}] $')
-        pl.ylabel(r'$\log (L_{2000})  \, [{\rm erg / s}]  $')
+        pl.xlabel(r'$ \log ( \dot{E} ) \, \left [ {\rm erg \, s^{-1} } \right ] $')
+        pl.ylabel(r'$\log (L_{2000})  \, \left [{\rm erg \, s^{-1} \, Hz^{-1}} \right ]$', size=8)
 
         ax3 = pl.subplot2grid((2,2), (1,1))
         pl.text(28.5, 20.5, '(c)')
@@ -1473,8 +1476,8 @@ def l_sd_radio_three(pulsars, recreate=True):
         pl.axis([28.01, 39.99, 15.5, 21.5])
         ax3.yaxis.set_ticks_position('right')
         ax3.yaxis.set_label_position('right')
-        pl.xlabel(r'$ \log (\dot{E}) \, [{\rm erg / s}] $')
-        pl.ylabel(r'$\log (L_{400})  \, [{\rm erg / s}]  $')
+        pl.xlabel(r'$ \log (\dot{E}) \, \left [{\rm erg \, s^{-1}} \right ] $')
+        pl.ylabel(r'$\log (L_{400})  \, \left [{\rm erg \, s^{-1} \, Hz^{-1}} \right ]$', size=8)
 
         pl.savefig(full_path + 'eps')
         pl.savefig(full_path + 'pdf')
@@ -1485,7 +1488,7 @@ def l_sd_radio_three(pulsars, recreate=True):
 def flux_sd_radio(pulsars, recreate=True):
 
     file_name = 'database/plots/radio/flux_sd.'
-    full_path = MEDIA_ROOT + file_name
+    full_path = MEDIA_PATH + file_name
 
     if recreate is True:
         x_ = []
@@ -1554,7 +1557,7 @@ def flux_sd_radio(pulsars, recreate=True):
 
 def malov_radio(pulsars, recreate=True):
     file_name = 'database/plots/radio/l_sd_malov.'
-    full_path = MEDIA_ROOT + file_name
+    full_path = MEDIA_PATH + file_name
 
     if recreate is True:
         x_ = [[], []]
@@ -1642,7 +1645,7 @@ def malov_radio(pulsars, recreate=True):
 
 def xi_xray_gamma(xray_fits, gamma_data, recreate=True):
     file_name = 'database/plots/xi_xray_gamma.'
-    full_path = MEDIA_ROOT + file_name
+    full_path = MEDIA_PATH + file_name
 
     if recreate is True:
         x_ = [[], []]
@@ -1725,7 +1728,7 @@ def xi_xray_gamma(xray_fits, gamma_data, recreate=True):
         pl.text(30.5, -4.3, r'$\xi_{\rm x, ms} \propto \dot{E}$', size=text_size, color='black')
         pl.axis([30.01, 38.99, -5.3, -0.51])
         pl.yticks([-5, -4,-3,-2,-1])
-        pl.xlabel(r'$ \log (\dot{E}) \, [{\rm erg / s}] $')
+        pl.xlabel(r'$ \log (\dot{E}) \, \left [{\rm erg \, s^{-1}} \right] $')
         pl.ylabel(r'$\log (\xi_{\rm x})$')
         ax1.xaxis.set_label_position('top')
         ax1.xaxis.set_ticks_position('top')
@@ -1749,7 +1752,7 @@ def xi_xray_gamma(xray_fits, gamma_data, recreate=True):
         pl.axis([30.01, 38.99, -3.49, 0.99])
         #pl.xlim([30.01, 38.99])
         pl.yticks([-3,-2,-1, 0])
-        pl.xlabel(r'$ \log (\dot{E}) \, [{\rm erg / s}] $')
+        pl.xlabel(r'$ \log (\dot{E}) \, \left [{\rm erg \, s^{-1}} \right ] $')
         pl.ylabel(r'$\log (\xi_{\gamma})$')
 
         pl.savefig(full_path + 'eps')
@@ -1763,7 +1766,7 @@ def plot_data(x_, y_, psrs, name, xlab=r"$\tau \,  [ {\rm yr} ]$",
          ylab=r"$L_{1400} / L_{\rm SD}$", recreate=False, loc_='upper right'):
 
     file_name = 'database/plots/%s.'%name
-    full_path = MEDIA_ROOT + file_name
+    full_path = MEDIA_PATH + file_name
 
     if recreate:
         ot, he, he2, axp = None, None, None, None

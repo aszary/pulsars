@@ -1,8 +1,11 @@
+import os
 from math import log10, pi
 from shutil import copyfile
 
-from pulsars.settings import MEDIA_ROOT
 from models import XrayComponent, XrayFit
+
+
+MEDIA_PATH = os.path.join(os.path.abspath(os.path.dirname(__file__)), 'media')
 
 def table_bb(pulsars):
 
@@ -84,12 +87,12 @@ def table_bb(pulsars):
 
     res =  start_table + body + end_table
 
-    f = open(MEDIA_ROOT + 'database/latex/table_bb.tex', 'w')
+    f = open(os.path.join(MEDIA_PATH, 'database/latex/table_bb.tex'), 'w')
     for line in res:
         f.write(line)
     f.close()
     try:
-        copyfile(MEDIA_ROOT + 'database/latex/table_bb.tex', '/home/aszary/work/1_x-ray/includes/table_bb.tex')
+        copyfile(os.path.join(MEDIA_PATH,'database/latex/table_bb.tex'), '/home/aszary/work/1_x-ray/includes/table_bb.tex')
     except IOError:
         print 'Warning: table_bb.tex copy error'
     return res
@@ -145,12 +148,12 @@ def table_psrs(pulsars):
         i += 1
     res = start_float + body + end_float
 
-    f = open(MEDIA_ROOT + 'database/latex/table_psrs.tex', 'w')
+    f = open(os.path.join(MEDIA_PATH, 'database/latex/table_psrs.tex'), 'w')
     for line in res:
         f.write(line)
     f.close()
     try:
-        copyfile(MEDIA_ROOT + 'database/latex/table_psrs.tex', '/home/aszary/work/1_x-ray/includes/table_psrs.tex')
+        copyfile(os.path.join(MEDIA_PATH, 'database/latex/table_psrs.tex'), '/home/aszary/work/1_x-ray/includes/table_psrs.tex')
     except IOError:
         print 'Warning: table_psrs.tex copy error'
     return res
@@ -221,12 +224,12 @@ def table_pl(pulsars):
             body = body + record
     res = start_table + body + end_table
 
-    f = open(MEDIA_ROOT + 'database/latex/table_pl.tex', 'w')
+    f = open(os.path.join(MEDIA_PATH, 'database/latex/table_pl.tex'), 'w')
     for line in res:
         f.write(line)
     f.close()
     try:
-        copyfile(MEDIA_ROOT + 'database/latex/table_pl.tex', '/home/aszary/work/1_x-ray/includes/table_pl.tex')
+        copyfile(os.path.join(MEDIA_PATH, 'database/latex/table_pl.tex'), '/home/aszary/work/1_x-ray/includes/table_pl.tex')
     except IOError:
         print 'Warning: table_pl.tex copy error'
     return res
@@ -244,7 +247,7 @@ def custom(pulsars):
         res += '%s,%s\n' % (p.raj, p.decj)
         if i%500 == 0 and i > 0:
             num += 1
-    f = open(MEDIA_ROOT + 'database/latex/chandra.csv', 'w')
+    f = open(os.path.join(MEDIA_PATH, 'database/latex/chandra.csv'), 'w')
     for line in res:
         f.write(line)
     f.close()

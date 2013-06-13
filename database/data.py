@@ -21,7 +21,7 @@ class Pulsars:
         self.gr = (1 - 2. * c.G * self.m / (self.r * c.c ** 2.)) ** 0.5
 
     def add_pulsars(self):
-        '''
+
         #    J0108-1431    ####################################################
         p = Pulsar.objects.get(name='J0108-1431')
         a1 = self.article_get_add(p, num=0)
@@ -495,10 +495,7 @@ class Pulsars:
         c2.pl = 1.56
         c2.pl_plus = 0.18
         c2.pl_minus = 0.23
-        # TODO add nonthermal luminosities
-        #c2.lum =
-        #c2.lum_plus =
-        #c2.lum_minus =
+        c2.lum, c2.lum_plus, c2.lum_minus = self.lnonth_powers([[30.9, None, None]])
         a2 = self.article_get_add(p, 1)
         a2.article = 'http://adsabs.harvard.edu/abs/2002ApJ...581..470G'
         a2.cite = '\cite{2002_Grindlay}'
@@ -2179,7 +2176,7 @@ class Pulsars:
         c2.pl = 1.52
         c2.pl_plus = 0.1
         c2.pl_minus = 0.09
-        #c2.lum = 1.6e-13 * 4. * pi * (a1.dist * 1e3 * 3.0857e18) ** 2.
+        c2.lum = 1.6e-13 * 4. * pi * (a1.dist * 1e3 * 3.0857e18) ** 2. # are you sure?
         # TODO add luminosity errors
         #c2.lum_plus =
         #c2.lum_minus =
@@ -2192,7 +2189,6 @@ class Pulsars:
         a3.cite = '\cite{2007_Halpern}'
         self.save_records([a1, a2, a3, f1, c1, c2], p)
         self.calculate(p)
-        '''
 
         # millisecond pulsars
         #        ####################################################
@@ -2715,6 +2711,8 @@ class Pulsars:
         self.save_records([a1, f1, c1], p)
         self.calculate(p)
 
+
+        t = ''' already in the database
         #        ####################################################
         p = Pulsar.objects.get(name='J1740-5340A')
         a1 = self.article_get_add(p, 0)
@@ -2728,6 +2726,7 @@ class Pulsars:
         c1.lum, c1.lum_plus, c1.lum_minus = self.lnonth_powers([[30.9, None, None]])
         self.save_records([a1, f1, c1], p)
         self.calculate(p)
+        '''
 
         #        ####################################################
         p = Pulsar.objects.get(name='J1701-3006B')

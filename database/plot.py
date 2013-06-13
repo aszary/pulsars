@@ -10,19 +10,17 @@ import matplotlib.pyplot as pl
 import numpy as np
 from django.core.exceptions import ObjectDoesNotExist
 
+from pulsars.settings import MEDIA_ROOT
 from models import XrayComponent
 from calcs.interpolate import least_sq1D, least_sq2D, least_sq
 from calcs.functions import get_t6, radio_lum, pseudo_lum
 
 
-MEDIA_PATH = os.path.join(os.path.abspath(os.path.dirname(__file__)), 'media')
-
-
 def bb_pl(fits, recreate=False):
     file_name = 'database/plots/bb_pl_age.'
-    full_path = MEDIA_PATH + file_name
+    full_path = os.path.join(MEDIA_ROOT, file_name)
     file_name2 = 'database/plots/bb_pl_field.'
-    full_path2 = MEDIA_PATH + file_name2
+    full_path2 = os.path.join(MEDIA_ROOT, file_name2)
 
     if recreate is True:
         lbb_lnts, ages, bds, ordinals = get_bb_pl(fits)
@@ -90,7 +88,7 @@ def get_bb_pl(fits):
 
 def xi_age(fits, recreate=False):
     file_name = 'database/plots/xi_age.'
-    full_path = MEDIA_PATH + file_name
+    full_path = os.path.join(MEDIA_ROOT, file_name)
 
     if recreate is True:
         xi_x, ages, ordinals, psrs = get_xi_age(fits)
@@ -157,7 +155,7 @@ def get_xi_age(fits):
 
 def xi_field(fits, recreate=False):
     file_name = 'database/plots/xi_field.'
-    full_path = MEDIA_PATH + file_name
+    full_path = os.path.join(MEDIA_ROOT, file_name)
 
     if recreate is True:
         l_x = []
@@ -211,7 +209,7 @@ def xi_field(fits, recreate=False):
 
 def xi_sd(fits, recreate=False):
     file_name = 'database/plots/xi_sd.'
-    full_path = MEDIA_PATH + file_name
+    full_path = os.path.join(MEDIA_ROOT, file_name)
 
     if recreate is True:
         xi_ = []
@@ -273,7 +271,7 @@ def xi_sd(fits, recreate=False):
 
 def pl_sd(fits, recreate=False):
     file_name = 'database/plots/pl_sd.'
-    full_path = MEDIA_PATH + file_name
+    full_path = os.path.join(MEDIA_ROOT, file_name)
 
     if recreate is True:
         log_lsd_, log_lpl_, err_, ordinals, psrs, log_lsd_left_, log_lpl_left_,  err_left_, log_lsd_right_, log_lpl_right_, err_right_ = get_pl_sd(fits)
@@ -389,7 +387,7 @@ def b_parameter(comps, recreate=False):
 def b_age(comps, recreate=True):
 
     file_name = 'database/plots/b_age.'
-    full_path = MEDIA_PATH + file_name
+    full_path = os.path.join(MEDIA_ROOT, file_name)
 
     if recreate is True:
         b_, l_sd_, b_d_, age_, psr_ = get_b_parameters(comps)
@@ -525,7 +523,7 @@ def get_b_parameters(comps):
 
 def t6_b14(comps, recreate=False):
     file_name = 'database/plots/t6_b14.'
-    full_path = MEDIA_PATH + file_name
+    full_path = os.path.join(MEDIA_ROOT, file_name)
 
     if recreate is True:
         t_6_, t6_err_, b_14_, b14_err_, psr_  = get_t6_b14(comps)
@@ -713,13 +711,13 @@ def radio_plots(psrs, recreate=False):
                xlab=r"$\tau \,  [ {\rm yr} ]$",
                ylab=r"$B_{\rm d}$", recreate=recreate ))
 
-    #full_path = MEDIA_PATH + file_name
+    #full_path = MEDIA_ROOT + file_name
     #copyfile(full_path+'eps', '/home/aszary/work/6_outer/images/s400_age.eps')
     return res
 
 def custom(pulsars, recreate=True, copy_=False):
     file_name = 'database/plots/custom.'
-    full_path = MEDIA_PATH + file_name
+    full_path = os.path.join(MEDIA_ROOT, file_name)
 
     if recreate is True:
         x_ = [[], []]
@@ -802,8 +800,8 @@ def custom(pulsars, recreate=True, copy_=False):
         d = datetime.now()
         if copy_ is True:
             try:
-                copyfile(full_path+'pdf', MEDIA_PATH+'database/plots/custom/%d-%d-%dT%d:%d.pdf' % (d.year, d.month, d.day, d.hour, d.minute))
-                copyfile(full_path+'svg', MEDIA_PATH+'database/plots/custom/%d-%d-%dT%d:%d.svg' % (d.year, d.month, d.day, d.hour, d.minute))
+                copyfile(full_path+'pdf', os.path.join(MEDIA_ROOT, 'database/plots/custom/%d-%d-%dT%d:%d.pdf' % (d.year, d.month, d.day, d.hour, d.minute)))
+                copyfile(full_path+'svg', os.path.join(MEDIA_ROOT, 'database/plots/custom/%d-%d-%dT%d:%d.svg' % (d.year, d.month, d.day, d.hour, d.minute)))
             except IOError:
                 print 'Warning: customs copy error'
     return [[full_path + 'svg', file_name + 'svg']]
@@ -826,7 +824,7 @@ def get_custom(p):
 
 def xi_sd_radio(pulsars, recreate=False):
     file_name = 'database/plots/radio/xi_sd.'
-    full_path = MEDIA_PATH + file_name
+    full_path = os.path.join(MEDIA_ROOT, file_name)
 
     if recreate is True:
         x_ = []
@@ -922,7 +920,7 @@ def xi_sd_radio(pulsars, recreate=False):
 
 def xi_age_radio(pulsars, recreate=False):
     file_name = 'database/plots/radio/xi_age.'
-    full_path = MEDIA_PATH + file_name
+    full_path = os.path.join(MEDIA_ROOT, file_name)
 
     if recreate is True:
         x_ = []
@@ -1002,7 +1000,7 @@ def xi_age_radio(pulsars, recreate=False):
 
 def xi_sd_age_radio(pulsars, recreate=True):
     file_name = 'database/plots/radio/xi_sd_age.'
-    full_path = MEDIA_PATH + file_name
+    full_path = os.path.join(MEDIA_ROOT, file_name)
 
     if recreate is True:
         x_ = [[], []]
@@ -1119,7 +1117,7 @@ def xi_sd_age_radio(pulsars, recreate=True):
 
 def l_sd_radio(pulsars, recreate=False):
     file_name = 'database/plots/radio/l1400_sd.'
-    full_path = MEDIA_PATH + file_name
+    full_path = os.path.join(MEDIA_ROOT, file_name)
 
     if recreate is True:
 
@@ -1215,7 +1213,7 @@ def l_sd_radio(pulsars, recreate=False):
 def ll_sd_radio(pulsars, recreate=False):
 
     file_name = 'database/plots/radio/ll_sd.'
-    full_path = MEDIA_PATH + file_name
+    full_path = os.path.join(MEDIA_ROOT, file_name)
 
     if recreate is True:
         x_ = []
@@ -1317,7 +1315,7 @@ def ll_sd_radio(pulsars, recreate=False):
 
 def l_sd_radio_three(pulsars, recreate=True):
     file_name = 'database/plots/radio/l_sd_three.'
-    full_path = MEDIA_PATH + file_name
+    full_path = os.path.join(MEDIA_ROOT, file_name)
 
     if recreate is True:
         x_ = [[], [], []]
@@ -1488,7 +1486,7 @@ def l_sd_radio_three(pulsars, recreate=True):
 def flux_sd_radio(pulsars, recreate=True):
 
     file_name = 'database/plots/radio/flux_sd.'
-    full_path = MEDIA_PATH + file_name
+    full_path = os.path.join(MEDIA_ROOT, file_name)
 
     if recreate is True:
         x_ = []
@@ -1557,7 +1555,7 @@ def flux_sd_radio(pulsars, recreate=True):
 
 def malov_radio(pulsars, recreate=True):
     file_name = 'database/plots/radio/l_sd_malov.'
-    full_path = MEDIA_PATH + file_name
+    full_path = os.path.join(MEDIA_ROOT, file_name)
 
     if recreate is True:
         x_ = [[], []]
@@ -1645,7 +1643,7 @@ def malov_radio(pulsars, recreate=True):
 
 def xi_xray_gamma(xray_fits, gamma_data, recreate=True):
     file_name = 'database/plots/xi_xray_gamma.'
-    full_path = MEDIA_PATH + file_name
+    full_path = os.path.join(MEDIA_ROOT, file_name)
 
     if recreate is True:
         x_ = [[], []]
@@ -1766,7 +1764,7 @@ def plot_data(x_, y_, psrs, name, xlab=r"$\tau \,  [ {\rm yr} ]$",
          ylab=r"$L_{1400} / L_{\rm SD}$", recreate=False, loc_='upper right'):
 
     file_name = 'database/plots/%s.'%name
-    full_path = MEDIA_PATH + file_name
+    full_path = os.path.join(MEDIA_ROOT, file_name)
 
     if recreate:
         ot, he, he2, axp = None, None, None, None
@@ -1812,3 +1810,21 @@ def plot_data(x_, y_, psrs, name, xlab=r"$\tau \,  [ {\rm yr} ]$",
         pl.savefig(full_path + 'pdf')
         pl.savefig(full_path + 'svg')
     return [ full_path + 'svg', file_name + 'svg']
+
+def dist_hist(dist_, eff_, lum_):
+    file_name = 'database/plots/radio/xi_high_dist.'
+    full_path = os.path.join(MEDIA_ROOT, file_name)
+
+    #pl.hist(dist_, bins=10)
+    lum_ = [log10(l) for l in lum_]
+    dist_ = [log10(d) for d in dist_]
+    eff_ = [log10(e) for e in eff_]
+
+
+    sc = pl.scatter(dist_, eff_, c=lum_, s=30, edgecolor='none')
+    cb = pl.colorbar(sc)
+    #pl.xlabel(r'$D \, {\rm kpc}$ ')
+
+    pl.savefig(full_path + 'eps')
+    pl.savefig(full_path + 'pdf')
+    pl.savefig(full_path + 'svg')

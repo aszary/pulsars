@@ -3,9 +3,9 @@ from math import log10, pi
 from shutil import copyfile
 
 from models import XrayComponent, XrayFit
-
-
-MEDIA_PATH = os.path.join(os.path.abspath(os.path.dirname(__file__)), 'media')
+from calcs.functions import radio_lum
+from plot import dist_hist
+from pulsars.settings import MEDIA_ROOT
 
 def table_bb(pulsars):
 
@@ -87,12 +87,12 @@ def table_bb(pulsars):
 
     res =  start_table + body + end_table
 
-    f = open(os.path.join(MEDIA_PATH, 'database/latex/table_bb.tex'), 'w')
+    f = open(os.path.join(MEDIA_ROOT, 'database/latex/table_bb.tex'), 'w')
     for line in res:
         f.write(line)
     f.close()
     try:
-        copyfile(os.path.join(MEDIA_PATH,'database/latex/table_bb.tex'), '/home/aszary/work/1_x-ray/includes/table_bb.tex')
+        copyfile(os.path.join(MEDIA_ROOT,'database/latex/table_bb.tex'), '/home/aszary/work/1_x-ray/includes/table_bb.tex')
     except IOError:
         print 'Warning: table_bb.tex copy error'
     return res
@@ -148,12 +148,12 @@ def table_psrs(pulsars):
         i += 1
     res = start_float + body + end_float
 
-    f = open(os.path.join(MEDIA_PATH, 'database/latex/table_psrs.tex'), 'w')
+    f = open(os.path.join(MEDIA_ROOT, 'database/latex/table_psrs.tex'), 'w')
     for line in res:
         f.write(line)
     f.close()
     try:
-        copyfile(os.path.join(MEDIA_PATH, 'database/latex/table_psrs.tex'), '/home/aszary/work/1_x-ray/includes/table_psrs.tex')
+        copyfile(os.path.join(MEDIA_ROOT, 'database/latex/table_psrs.tex'), '/home/aszary/work/1_x-ray/includes/table_psrs.tex')
     except IOError:
         print 'Warning: table_psrs.tex copy error'
     return res
@@ -224,21 +224,67 @@ def table_pl(pulsars):
             body = body + record
     res = start_table + body + end_table
 
-    f = open(os.path.join(MEDIA_PATH, 'database/latex/table_pl.tex'), 'w')
+    f = open(os.path.join(MEDIA_ROOT, 'database/latex/table_pl.tex'), 'w')
     for line in res:
         f.write(line)
     f.close()
     try:
-        copyfile(os.path.join(MEDIA_PATH, 'database/latex/table_pl.tex'), '/home/aszary/work/1_x-ray/includes/table_pl.tex')
+        copyfile(os.path.join(MEDIA_ROOT, 'database/latex/table_pl.tex'), '/home/aszary/work/1_x-ray/includes/table_pl.tex')
     except IOError:
         print 'Warning: table_pl.tex copy error'
     return res
 
 def custom(pulsars):
     res = ''
-    pulsars = pulsars.order_by('-decj_err')
-    for i,p in enumerate(pulsars):
-        res += r'%s   %s    %s<br />' % (p.name, p.raj_err, p.decj_err)
+    psr_radio_ = []
+    radio_eff_ = []
+    for i, p in enumerate(pulsars):
+        try:
+            radio = radio_lum(p)
+        except ZeroDivisionError:
+            radio = 0.
+        xray = 0.
+        comp = XrayComponent.objects.filter(psr_id=p).filter(xrayfit__ordinal__gt=0)
+        for c in comp:
+            try:
+                xray += c.lum
+            except TypeError:
+                pass
+
+        if radio > 0. and xray > 0.:
+            if radio > xray:
+                res += r'%s   %s    %s<br />' % (p.name, p.raj_err, p.decj_err)
+            try:
+                #print radio/p.edot, xray/p.edot
+                radio_eff_.append(radio/p.edot)
+                res += r'%s  &nbsp;&nbsp;&nbsp;&nbsp; xi_radio = %.1e  &nbsp;&nbsp;&nbsp;  xi_xray = %.1e<br />' % (p.name, radio/p.edot, xray/p.edot)
+            except:
+                pass
+        if radio > 0.:
+            psr_radio_.append(p)
+
+    max_radio = max(radio_eff_)
+    print max_radio
+
+    radio_high_eff_ = []
+    dist_ = []
+    eff_ = []
+    lum_ = []
+
+    for p in psr_radio_:
+        radio = radio_lum(p)
+        try:
+            eff = radio / p.edot
+            if eff > max_radio and p.dist<5.:
+                radio_high_eff_.append(p)
+                dist_.append(p.dist)
+                eff_.append(eff)
+                lum_.append(radio)
+        except:
+            pass
+
+    dist_hist(dist_, eff_, lum_)
+
 
     '''
     num = 0
@@ -247,7 +293,7 @@ def custom(pulsars):
         res += '%s,%s\n' % (p.raj, p.decj)
         if i%500 == 0 and i > 0:
             num += 1
-    f = open(os.path.join(MEDIA_PATH, 'database/latex/chandra.csv'), 'w')
+    f = open(os.path.join(MEDIA_ROOT, 'database/latex/chandra.csv'), 'w')
     for line in res:
         f.write(line)
     f.close()

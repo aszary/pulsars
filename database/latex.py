@@ -4,7 +4,6 @@ from shutil import copyfile
 
 from models import XrayComponent, XrayFit
 from calcs.functions import radio_lum
-from plot import dist_hist
 from pulsars.settings import MEDIA_ROOT
 
 def table_bb(pulsars):
@@ -234,6 +233,7 @@ def table_pl(pulsars):
         print 'Warning: table_pl.tex copy error'
     return res
 
+
 def custom(pulsars):
     res = ''
     psr_radio_ = []
@@ -282,8 +282,6 @@ def custom(pulsars):
                 lum_.append(radio)
         except:
             pass
-
-    dist_hist(dist_, eff_, lum_)
 
 
     '''

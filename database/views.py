@@ -259,9 +259,18 @@ def flux_sd_radio(request):
     c = Context({'list_':list_, })
     return HttpResponse(template.render(c))
 
+
 def malov_radio(request):
     psrs = Pulsar.objects.filter(lum_malov__isnull=False)
     list_ = plot.malov_radio(psrs)
     template = loader.get_template('database/plots/image2.xhtml')
     c = Context({'list_':list_, })
     return HttpResponse(template.render(c))
+
+def xray_radio(request):
+    psrs = Pulsar.objects.filter(s1400__gt=0)
+    list_ = plot.xray_radio(psrs)
+    template = loader.get_template('database/plots/image2.xhtml')
+    c = Context({'list_':list_, })
+    return HttpResponse(template.render(c))
+

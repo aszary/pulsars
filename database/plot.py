@@ -1811,20 +1811,86 @@ def plot_data(x_, y_, psrs, name, xlab=r"$\tau \,  [ {\rm yr} ]$",
         pl.savefig(full_path + 'svg')
     return [ full_path + 'svg', file_name + 'svg']
 
-def dist_hist(dist_, eff_, lum_):
-    file_name = 'database/plots/radio/xi_high_dist.'
+
+def xray_radio(pulsars, recreate=False):
+    file_name = 'database/plots/xray_radio.'
     full_path = os.path.join(MEDIA_ROOT, file_name)
 
-    #pl.hist(dist_, bins=10)
-    lum_ = [log10(l) for l in lum_]
-    dist_ = [log10(d) for d in dist_]
-    eff_ = [log10(e) for e in eff_]
+    if recreate is True:
+
+        radio_psrs = []
+        radio_effs = []
+        xray_psrs = []
+        xray_effs = []
+        xray_true_fluxes = []
+        xray_distances = []
+
+        max_radio_eff = -1e50
+        max_radio_eff_ind = 0
 
 
-    sc = pl.scatter(dist_, eff_, c=lum_, s=30, edgecolor='none')
-    cb = pl.colorbar(sc)
-    #pl.xlabel(r'$D \, {\rm kpc}$ ')
+        for p in pulsars:
+            try:
+                radio_lumi = radio_lum(p)
+            except ZeroDivisionError:
+                radio_lumi= 0.
+            xray_lum = 0.
+            comp = XrayComponent.objects.filter(psr_id=p).filter(xrayfit__ordinal__gt=0)
+            for c in comp:
+                print p.name
+                try:
+                    xray_lum += c.lum
+                except TypeError:
+                    pass
+            if p.edot > 0.:
+                if radio_lumi > 0.:
+                    radio_psrs.append(p)
+                    radio_effs.append(radio_lumi / p.edot)
+                if xray_lum > 0.:
+                    xray_psrs.append(p)
+                    xray_effs.append(xray_lum / p.edot)
+                    xray_true_fluxes.append(xray_lum / (4. * pi * (p.dist * 1e3 * 3.08567758e18) ** 2.))
+                    xray_distances.append(p.dist)
+                # get highest radio eff
+                if radio_lumi > 0. and xray_lum > 0.:
+                    if radio_effs[-1] > max_radio_eff:
+                        max_radio_eff = radio_effs[-1]
+                        max_radio_eff_ind = len(radio_effs) - 1
 
-    pl.savefig(full_path + 'eps')
-    pl.savefig(full_path + 'pdf')
-    pl.savefig(full_path + 'svg')
+
+        print 'Maximum radio eff: %.1e (for pulsars with x-ray data: %s)' % (max_radio_eff, radio_psrs[max_radio_eff_ind].name)
+
+        # get all pulsars with higher radio efficiency
+        psrs_high = []
+        dists = []
+        xray_fluxes = []
+        effs_high = []
+
+        for i, p in enumerate(radio_psrs):
+            if radio_effs[i] > max_radio_eff:
+                psrs_high.append(radio_psrs[i])
+                effs_high.append(radio_effs[i])
+                dists.append(psrs_high[-1].dist)
+                xray_fluxes.append(p.edot * 1e-3 / (4. * pi * (dists[-1] * 1e3 * 3.08567758e18) ** 2.))
+
+        effs_log10 = [log10(e) for e in effs_high]
+
+        pl.figure()
+        pl.subplots_adjust(left=0.1, bottom=0.1, top=0.9, right=0.99)
+
+        #pl.plot(dists, xray_fluxes, 'ro')
+        pl.loglog()
+        sc = pl.scatter(dists, xray_fluxes, c=effs_log10, s=30, edgecolor='none')
+        pl.plot(xray_distances, xray_true_fluxes, 'rx', label='X-ray pulsars')
+        cb = pl.colorbar(sc)
+        cb.ax.set_ylabel(r'$\log(\xi_{\rm radio})$')#, labelpad=-35)
+        #pl.axis([1e-1, 1e2, 1e-20, 1e-14])
+        pl.xlabel(r'$D \, {\rm kpc}$ ')
+        pl.ylabel(r'$F_{\rm x}$ ')
+        pl.legend()
+
+        pl.savefig(full_path + 'eps')
+        pl.savefig(full_path + 'pdf')
+        pl.savefig(full_path + 'svg')
+
+    return [ [full_path + 'svg', file_name + 'svg']]

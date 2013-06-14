@@ -36,5 +36,6 @@ urlpatterns = patterns('',
     url(r'^plots/b_age', views.b_age, name='b_age'),
     url(r'^plots/t6_b14', views.t6_b14, name='t6_b14'),
     url(r'^plots/custom', views.custom, name='custom'),
+    url(r'^plots/xray_radio', views.xray_radio, name='xray_radio'),
 )
 
